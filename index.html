@@ -3,149 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOAT Voting Viral</title>
-
-<script type="module">
-import { db, doc, getDoc, updateDoc } from "./firebase.js";
-
-window.vote = async function(choice) {
-
-    showPage("loadingPage");
-
-    let ref = doc(db, "votes", "global");
-    let snap = await getDoc(ref);
-
-    let data = snap.data();
-
-    let ronaldo = data.ronaldo;
-    let messi = data.messi;
-
-    // TAMBAH SUARA REAL
-    if (choice === "ronaldo") ronaldo++;
-    else messi++;
-
-    await updateDoc(ref, {
-        ronaldo: ronaldo,
-        messi: messi
-    });
-
-    let total = ronaldo + messi;
-    let rPercent = Math.round((ronaldo / total) * 100);
-    let mPercent = Math.round((messi / total) * 100);
-
-    document.getElementById("rScore").innerText = ronaldo;
-    document.getElementById("mScore").innerText = messi;
-
-    showPage("resultPage");
-
-    setTimeout(() => {
-        document.getElementById("rBar").style.width = rPercent + "%";
-        document.getElementById("mBar").style.width = mPercent + "%";
-    }, 300);
-
-    setTimeout(() => {
-
-        let winner = ronaldo > messi ? "ronaldo" : "messi";
-
-        if (choice === winner) {
-            showPage("page2");
-        } else {
-            showPage("page3");
-        }
-
-    }, 3000);
-}
-</script>
+<title>GOAT Voting</title>
 
 <style>
-/* Sama seperti sebelumnya + tambahan glow */
-body {
-    background: linear-gradient(135deg, #000, #111);
-    color: white;
-    font-family: Arial;
-    text-align: center;
-}
-
+body { background:black; color:white; text-align:center; font-family:Arial; }
 .page { display:none; height:100vh; justify-content:center; align-items:center; flex-direction:column;}
 .active { display:flex; }
 
 .btn {
-    background: linear-gradient(45deg,#fff,#ddd);
+    background:white;
+    color:black;
     padding:15px;
     margin:10px;
-    width:260px;
-    border-radius:12px;
-    font-weight:bold;
+    width:250px;
     cursor:pointer;
 }
-
-.join {
-    color:#00ffcc;
-    font-size:30px;
-    animation:pulse 1s infinite;
-}
-
-@keyframes pulse {
-    50% { transform: scale(1.1); }
-}
-
-.bar {
-    width:260px;
-    height:20px;
-    background:#333;
-    border-radius:10px;
-    overflow:hidden;
-}
-
-.fill {
-    height:100%;
-    background:#00ffcc;
-    width:0%;
-}
-
 </style>
-</head>
 
+</head>
 <body>
 
 <div id="page1" class="page active">
-    <h1>🔥 Who's The GOAT?</h1>
+    <h1>Who's The GOAT?</h1>
     <div class="btn" onclick="vote('ronaldo')">Cristiano Ronaldo</div>
     <div class="btn" onclick="vote('messi')">Lionel Messi</div>
 </div>
 
-<div id="loadingPage" class="page">
-    <h1>⏳ Menghitung suara global...</h1>
-</div>
-
 <div id="resultPage" class="page">
-    <h2>Hasil Global 🌍</h2>
-
-    <p>Ronaldo (<span id="rScore"></span>)</p>
-    <div class="bar"><div id="rBar" class="fill"></div></div>
-
-    <p>Messi (<span id="mScore"></span>)</p>
-    <div class="bar"><div id="mBar" class="fill"></div></div>
+    <h2>Hasil</h2>
+    <p>Ronaldo: <span id="rScore"></span></p>
+    <p>Messi: <span id="mScore"></span></p>
 </div>
 
 <div id="page2" class="page">
-    <h1 class="join" onclick="window.location.href='https://t.me/+_USPbo5cDCowM2Q1'">
-        🚀 JOIN TELEGRAM SEKARANG
-    </h1>
+    <h1 onclick="goTG()">JOIN TELEGRAM</h1>
 </div>
 
 <div id="page3" class="page">
-    <h2 style="color:orange;">
-        ❌ Suara kamu kalah<br>
-        Coba lagi besok
-    </h2>
+    <h2>Kalah, coba lagi besok</h2>
 </div>
 
-<script>
+<script type="module">
+
+// 🔥 IMPORT FIREBASE LANGSUNG (NO FILE TERPISAH)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// ⚠️ GANTI INI DENGAN PUNYA KAMU
+const firebaseConfig = {
+  apiKey: "ISI_API_KEY",
+  authDomain: "ISI_AUTH_DOMAIN",
+  projectId: "ISI_PROJECT_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.vote = async function(choice){
+
+    try {
+
+        let ref = doc(db, "votes", "global");
+        let snap = await getDoc(ref);
+
+        if(!snap.exists()){
+            alert("Database belum dibuat!");
+            return;
+        }
+
+        let data = snap.data();
+
+        let ronaldo = data.ronaldo;
+        let messi = data.messi;
+
+        if(choice === "ronaldo") ronaldo++;
+        else messi++;
+
+        await updateDoc(ref, {
+            ronaldo: ronaldo,
+            messi: messi
+        });
+
+        document.getElementById("rScore").innerText = ronaldo;
+        document.getElementById("mScore").innerText = messi;
+
+        showPage("resultPage");
+
+        setTimeout(()=>{
+            let winner = ronaldo > messi ? "ronaldo" : "messi";
+
+            if(choice === winner){
+                showPage("page2");
+            } else {
+                showPage("page3");
+            }
+        },2000);
+
+    } catch(e){
+        alert("ERROR: " + e.message);
+        console.log(e);
+    }
+
+}
+
+window.goTG = function(){
+    window.location.href = "https://t.me/+_USPbo5cDCowM2Q1";
+}
+
 function showPage(id){
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
 }
+
 </script>
 
 </body>
