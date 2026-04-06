@@ -3,150 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Join Telegram</title>
+<title>GOAT Survey</title>
 
 <style>
 body {
     margin: 0;
+    font-family: Arial, sans-serif;
     background: black;
     color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     text-align: center;
 }
 
-.container {
-    padding: 20px;
+.page {
+    display: none;
+    padding: 50px 20px;
 }
 
-/* Text atas */
-.top-text {
-    font-size: 5vw;
-    line-height: 1.5;
-    font-style: italic;
-}
-
-/* GRATIS */
-.gratis {
+.active {
     display: block;
-    margin-top: 10px;
 }
 
-/* Panah */
-.arrow {
-    font-size: 12vw;
-    color: red;
-    margin: 30px 0;
-    animation: bounce 1s infinite;
+h1 {
+    font-size: 40px;
 }
 
-/* Animasi panah */
-@keyframes bounce {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(20px); }
-    100% { transform: translateY(0); }
-}
-
-/* Link bawah */
-.cta {
-    font-size: 6vw;
+.btn {
+    background: white;
+    color: black;
+    padding: 15px;
+    margin: 20px auto;
+    width: 300px;
+    font-size: 20px;
     font-weight: bold;
-    color: gold;
-    text-decoration: none;
-    line-height: 1.4;
-    display: inline-block;
+    cursor: pointer;
 }
 
-.cta:hover {
-    opacity: 0.8;
+.result {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    color: black;
+    padding: 15px;
+    margin: 20px auto;
+    width: 300px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-/* Desktop */
-@media (min-width: 768px) {
-    .top-text { font-size: 28px; }
-    .arrow { font-size: 80px; }
-    .cta { font-size: 32px; }
-}
-
-/* NOTIFICATION ATAS */
-.notif {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%) translateY(-100%);
-    background: rgba(0,0,0,0.95);
-    color: white;
-    padding: 12px 18px;
-    border-radius: 0 0 10px 10px;
-    font-size: 14px;
-    text-align: center;
-    width: 100%;
-    max-width: 500px;
-    opacity: 0;
-    transition: all 0.5s ease;
-    border-bottom: 2px solid #444;
-    z-index: 999;
-}
-
-.notif.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+.red {
+    color: red;
+    font-size: 28px;
 }
 </style>
-</head>
 
+</head>
 <body>
 
-<div class="container">
+<!-- HALAMAN 1 -->
+<div id="page1" class="page active">
+    <h1>Who's the GOAT?</h1>
 
-    <div class="top-text">
-        Semua Asupan <br>
-        Di Channel Telegram <br>
-        <span class="gratis">GRATIS</span>
+    <div class="btn" onclick="vote('ronaldo')">Cristiano Ronaldo</div>
+    <div class="btn" onclick="vote('messi')">Lionel Messi</div>
+</div>
+
+<!-- HALAMAN HASIL -->
+<div id="resultPage" class="page">
+    <h1>Hasil Voting</h1>
+
+    <div class="result">
+        <span>Cristiano Ronaldo</span>
+        <span id="ronaldoScore">100</span>
     </div>
 
-    <div class="arrow">⬇️</div>
-
-    <a href="https://t.me/+znhyzPsJnmYyYWI1" target="_blank" class="cta">
-        Klik disini <br>
-        Join Telegram
-    </a>
-
+    <div class="result">
+        <span>Lionel Messi</span>
+        <span id="messiScore">50</span>
+    </div>
 </div>
 
-<!-- NOTIFICATION -->
-<div id="notif" class="notif">
-    Kami tidak menyediakan channel VVIP, grup rahasia, maupun akses tidak resmi lainnya.<br>
-    Seluruh konten tersedia gratis dan dapat ditonton melalui channel telegram.
+<!-- HALAMAN 2 -->
+<div id="page2" class="page">
+    <h1 class="red">KLIK DISINI</h1>
+    <h1 class="red">JOIN CHANNEL TELEGRAM</h1>
 </div>
 
-<!-- SOUND -->
-<audio id="notifSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
+<!-- HALAMAN 3 -->
+<div id="page3" class="page">
+    <h1 style="color: orange;">
+        Maaf suara anda tidak cukup <br>
+        Untuk Goat yg anda pilih <br>
+        Coba lagi besok
+    </h1>
+</div>
 
 <script>
-const notif = document.getElementById("notif");
-const sound = document.getElementById("notifSound");
 
-function showNotif() {
-    notif.classList.add("show");
+function vote(choice) {
 
-    // play sound
-    sound.currentTime = 0;
-    sound.play().catch(() => {});
+    // random biar terlihat real
+    let ronaldo = Math.floor(Math.random() * 200) + 50;
+    let messi = Math.floor(Math.random() * 200) + 50;
+
+    document.getElementById("ronaldoScore").innerText = ronaldo;
+    document.getElementById("messiScore").innerText = messi;
+
+    showPage("resultPage");
 
     setTimeout(() => {
-        notif.classList.remove("show");
-    }, 2500);
+
+        let winner = ronaldo > messi ? "ronaldo" : "messi";
+
+        if (choice === winner) {
+            showPage("page2");
+        } else {
+            showPage("page3");
+        }
+
+    }, 2000);
 }
 
-// tiap 3 detik
-setInterval(showNotif, 3000);
+function showPage(id) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
 
-// pertama kali
-setTimeout(showNotif, 1000);
 </script>
 
 </body>
