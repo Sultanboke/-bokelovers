@@ -1,72 +1,96 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Telegram</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-        }
-        .container {
-            cursor: pointer;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Telegram</title>
 
-        /* Responsive Font */
-        .title {
-            font-size: 6vw; /* fleksibel ikut layar HP */
-            margin-bottom: 20px;
-        }
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
 
-        .emoji {
-            font-size: 10vw;
-            margin: 20px 0;
-        }
+.container {
+    padding: 20px;
+}
 
-        .subtitle {
-            font-size: 7vw;
-            font-weight: bold;
-            color: red;
-            text-shadow: 0 0 10px red, 0 0 20px red;
-            animation: glow 1.5s infinite alternate;
-        }
+/* Text atas */
+.top-text {
+    font-size: 5vw;
+    line-height: 1.5;
+    font-style: italic;
+}
 
-        @keyframes glow {
-            from { text-shadow: 0 0 10px red; }
-            to { text-shadow: 0 0 25px red, 0 0 40px red; }
-        }
+/* GRATIS */
+.gratis {
+    display: block;
+    margin-top: 10px;
+}
 
-        /* Batas maksimal biar tetap enak di layar besar */
-        @media (min-width: 768px) {
-            .title { font-size: 32px; }
-            .emoji { font-size: 45px; }
-            .subtitle { font-size: 36px; }
-        }
-    </style>
+/* Panah */
+.arrow {
+    font-size: 12vw;
+    color: red;
+    margin: 30px 0;
+    animation: bounce 1s infinite;
+}
+
+/* Animasi panah */
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(20px); }
+    100% { transform: translateY(0); }
+}
+
+/* Link bawah */
+.cta {
+    font-size: 6vw;
+    font-weight: bold;
+    color: gold;
+    text-decoration: none;
+    line-height: 1.4;
+    display: inline-block;
+}
+
+.cta:hover {
+    opacity: 0.8;
+}
+
+/* Desktop fix size */
+@media (min-width: 768px) {
+    .top-text { font-size: 28px; }
+    .arrow { font-size: 80px; }
+    .cta { font-size: 32px; }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container" onclick="goToTelegram()">
-        <div class="title">CLICK DISINI</div>
-        <div class="emoji">👇👇👇</div>
-        <div class="subtitle">GABUNG CHANNEL TELEGRAM</div>
+<div class="container">
+
+    <div class="top-text">
+        Semua Asupan <br>
+        Di Channel Telegram <br>
+        <span class="gratis">GRATIS</span>
     </div>
 
-    <script>
-        function goToTelegram() {
-            window.location.href = "https://t.me/+eJ1uADPjbNEwYjE1";
-        }
-    </script>
+    <div class="arrow">⬇️</div>
+
+    <a href="https://t.me/+eJ1uADPjbNEwYjE1" target="_blank" class="cta">
+        Klik disini <br>
+        Join Telegram
+    </a>
+
+</div>
 
 </body>
 </html>
