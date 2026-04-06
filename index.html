@@ -6,108 +6,198 @@
 <title>GOAT Voting</title>
 
 <style>
-body { background:black; color:white; text-align:center; font-family:Arial; }
-.page { display:none; height:100vh; justify-content:center; align-items:center; flex-direction:column;}
+body {
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#000,#111);
+    color:white;
+    text-align:center;
+}
+
+/* PAGE */
+.page {
+    display:none;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
 .active { display:flex; }
 
+/* TITLE */
+h1 { margin-bottom:30px; }
+
+/* BUTTON */
 .btn {
     background:white;
     color:black;
     padding:15px;
     margin:10px;
-    width:250px;
+    width:260px;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+.btn:hover { transform:scale(1.05); }
+
+/* LOADING */
+.loader {
+    border:6px solid #333;
+    border-top:6px solid white;
+    border-radius:50%;
+    width:60px;
+    height:60px;
+    animation:spin 1s linear infinite;
+}
+@keyframes spin {100%{transform:rotate(360deg);}}
+
+/* RESULT */
+.card { width:260px; margin:10px; text-align:left; }
+
+.bar {
+    background:#333;
+    height:20px;
+    border-radius:10px;
+    overflow:hidden;
+}
+.fill {
+    height:100%;
+    background:limegreen;
+    width:0%;
+    transition:1s;
+}
+
+/* TELEGRAM */
+.join {
+    color:#00ffcc;
+    font-size:28px;
+    animation:pulse 1s infinite;
     cursor:pointer;
 }
-</style>
+@keyframes pulse {50%{transform:scale(1.1);}}
 
+/* FAIL */
+.fail {
+    color:orange;
+    font-size:22px;
+    line-height:1.5;
+}
+</style>
 </head>
 <body>
 
+<!-- PAGE 1 -->
 <div id="page1" class="page active">
-    <h1>Who's The GOAT?</h1>
+    <h1>🔥 Who's The GOAT?</h1>
     <div class="btn" onclick="vote('ronaldo')">Cristiano Ronaldo</div>
     <div class="btn" onclick="vote('messi')">Lionel Messi</div>
 </div>
 
+<!-- LOADING -->
+<div id="loadingPage" class="page">
+    <h1>Menghitung suara...</h1>
+    <div class="loader"></div>
+</div>
+
+<!-- RESULT -->
 <div id="resultPage" class="page">
-    <h2>Hasil</h2>
-    <p>Ronaldo: <span id="rScore"></span></p>
-    <p>Messi: <span id="mScore"></span></p>
+    <h2>Hasil Voting</h2>
+
+    <div class="card">
+        Ronaldo (<span id="rScore"></span>)
+        <div class="bar"><div id="rBar" class="fill"></div></div>
+    </div>
+
+    <div class="card">
+        Messi (<span id="mScore"></span>)
+        <div class="bar"><div id="mBar" class="fill"></div></div>
+    </div>
 </div>
 
+<!-- WIN -->
 <div id="page2" class="page">
-    <h1 onclick="goTG()">JOIN TELEGRAM</h1>
+    <h1 class="join" onclick="goTG()">🚀 JOIN TELEGRAM</h1>
 </div>
 
+<!-- LOSE -->
 <div id="page3" class="page">
-    <h2>Kalah, coba lagi besok</h2>
+    <h1 class="fail">
+        ❌ Suara kamu kalah<br>
+        Coba lagi besok
+    </h1>
 </div>
 
-<script type="module">
+<script>
 
-// 🔥 IMPORT FIREBASE LANGSUNG (NO FILE TERPISAH)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+const TELEGRAM = "https://t.me/+_USPbo5cDCowM2Q1";
 
-// ⚠️ GANTI INI DENGAN PUNYA KAMU
-const firebaseConfig = {
-  apiKey: "ISI_API_KEY",
-  authDomain: "ISI_AUTH_DOMAIN",
-  projectId: "ISI_PROJECT_ID"
-};
+// Ambil data dari localStorage
+function getVotes(){
+    let data = localStorage.getItem("votes");
+    if(!data){
+        let initial = {
+            ronaldo: 120,
+            messi: 110
+        };
+        localStorage.setItem("votes", JSON.stringify(initial));
+        return initial;
+    }
+    return JSON.parse(data);
+}
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Simpan data
+function saveVotes(data){
+    localStorage.setItem("votes", JSON.stringify(data));
+}
 
-window.vote = async function(choice){
+function vote(choice){
 
-    try {
+    showPage("loadingPage");
 
-        let ref = doc(db, "votes", "global");
-        let snap = await getDoc(ref);
+    setTimeout(()=>{
 
-        if(!snap.exists()){
-            alert("Database belum dibuat!");
-            return;
+        let data = getVotes();
+
+        // Tambah suara
+        if(choice === "ronaldo"){
+            data.ronaldo += Math.floor(Math.random()*3)+1;
+        } else {
+            data.messi += Math.floor(Math.random()*3)+1;
         }
 
-        let data = snap.data();
+        saveVotes(data);
 
-        let ronaldo = data.ronaldo;
-        let messi = data.messi;
+        let total = data.ronaldo + data.messi;
 
-        if(choice === "ronaldo") ronaldo++;
-        else messi++;
+        let rPercent = Math.round((data.ronaldo/total)*100);
+        let mPercent = Math.round((data.messi/total)*100);
 
-        await updateDoc(ref, {
-            ronaldo: ronaldo,
-            messi: messi
-        });
-
-        document.getElementById("rScore").innerText = ronaldo;
-        document.getElementById("mScore").innerText = messi;
+        document.getElementById("rScore").innerText = data.ronaldo;
+        document.getElementById("mScore").innerText = data.messi;
 
         showPage("resultPage");
 
         setTimeout(()=>{
-            let winner = ronaldo > messi ? "ronaldo" : "messi";
+            document.getElementById("rBar").style.width = rPercent+"%";
+            document.getElementById("mBar").style.width = mPercent+"%";
+        },200);
+
+        setTimeout(()=>{
+            let winner = data.ronaldo > data.messi ? "ronaldo" : "messi";
 
             if(choice === winner){
                 showPage("page2");
             } else {
                 showPage("page3");
             }
-        },2000);
+        },3000);
 
-    } catch(e){
-        alert("ERROR: " + e.message);
-        console.log(e);
-    }
-
+    },1500);
 }
 
-window.goTG = function(){
-    window.location.href = "https://t.me/+_USPbo5cDCowM2Q1";
+function goTG(){
+    window.location.href = TELEGRAM;
 }
 
 function showPage(id){
