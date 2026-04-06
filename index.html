@@ -3,124 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOAT Survey</title>
+<title>GOAT Survey Viral</title>
 
 <style>
-body {
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: black;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #000000, #1a1a1a);
     color: white;
     text-align: center;
 }
 
+/* PAGE */
 .page {
     display: none;
-    padding: 50px 20px;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .active {
-    display: block;
+    display: flex;
 }
 
+/* TITLE */
 h1 {
-    font-size: 40px;
+    font-size: 36px;
+    margin-bottom: 30px;
 }
 
+/* BUTTON */
 .btn {
-    background: white;
+    width: 280px;
+    padding: 18px;
+    margin: 15px;
+    background: linear-gradient(45deg, #ffffff, #dddddd);
     color: black;
-    padding: 15px;
-    margin: 20px auto;
-    width: 300px;
-    font-size: 20px;
     font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* LOADING */
+.loader {
+    border: 6px solid #333;
+    border-top: 6px solid white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin-top: 20px;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* RESULT */
+.card {
+    width: 300px;
+    margin: 15px;
+    text-align: left;
+}
+
+.name {
+    margin-bottom: 5px;
+}
+
+.bar {
+    height: 25px;
+    background: #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    background: limegreen;
+    width: 0%;
+    transition: 1s;
+}
+
+/* TELEGRAM */
+.join {
+    color: #ff3b3b;
+    font-size: 32px;
+    animation: blink 1s infinite;
     cursor: pointer;
 }
 
-.result {
-    display: flex;
-    justify-content: space-between;
-    background: white;
-    color: black;
-    padding: 15px;
-    margin: 20px auto;
-    width: 300px;
-    font-size: 20px;
-    font-weight: bold;
+@keyframes blink {
+    50% { opacity: 0.5; }
 }
 
-.red {
-    color: red;
-    font-size: 28px;
+/* FAIL */
+.fail {
+    color: orange;
+    font-size: 24px;
+    line-height: 1.6;
 }
+
 </style>
-
 </head>
 <body>
 
-<!-- HALAMAN 1 -->
+<!-- PAGE 1 -->
 <div id="page1" class="page active">
-    <h1>Who's the GOAT?</h1>
+    <h1>Who's The GOAT? 🐐</h1>
 
     <div class="btn" onclick="vote('ronaldo')">Cristiano Ronaldo</div>
     <div class="btn" onclick="vote('messi')">Lionel Messi</div>
 </div>
 
-<!-- HALAMAN HASIL -->
+<!-- LOADING -->
+<div id="loadingPage" class="page">
+    <h1>Menghitung suara...</h1>
+    <div class="loader"></div>
+</div>
+
+<!-- RESULT -->
 <div id="resultPage" class="page">
     <h1>Hasil Voting</h1>
 
-    <div class="result">
-        <span>Cristiano Ronaldo</span>
-        <span id="ronaldoScore">100</span>
+    <div class="card">
+        <div class="name">Cristiano Ronaldo (<span id="rScore"></span>)</div>
+        <div class="bar">
+            <div id="rBar" class="fill"></div>
+        </div>
     </div>
 
-    <div class="result">
-        <span>Lionel Messi</span>
-        <span id="messiScore">50</span>
+    <div class="card">
+        <div class="name">Lionel Messi (<span id="mScore"></span>)</div>
+        <div class="bar">
+            <div id="mBar" class="fill"></div>
+        </div>
     </div>
 </div>
 
-<!-- HALAMAN 2 -->
+<!-- WIN -->
 <div id="page2" class="page">
-    <h1 class="red">KLIK DISINI</h1>
-    <h1 class="red">JOIN CHANNEL TELEGRAM</h1>
+    <h1 class="join" onclick="goTelegram()">KLIK DISINI</h1>
+    <h1 class="join" onclick="goTelegram()">JOIN TELEGRAM</h1>
 </div>
 
-<!-- HALAMAN 3 -->
+<!-- LOSE -->
 <div id="page3" class="page">
-    <h1 style="color: orange;">
-        Maaf suara anda tidak cukup <br>
-        Untuk Goat yg anda pilih <br>
+    <h1 class="fail">
+        Maaf suara anda tidak cukup 😢<br>
+        Untuk GOAT yang anda pilih<br>
         Coba lagi besok
     </h1>
 </div>
 
 <script>
 
+const TELEGRAM_LINK = "https://t.me/+_USPbo5cDCowM2Q1";
+
 function vote(choice) {
 
-    // random biar terlihat real
-    let ronaldo = Math.floor(Math.random() * 200) + 50;
-    let messi = Math.floor(Math.random() * 200) + 50;
-
-    document.getElementById("ronaldoScore").innerText = ronaldo;
-    document.getElementById("messiScore").innerText = messi;
-
-    showPage("resultPage");
+    showPage("loadingPage");
 
     setTimeout(() => {
 
-        let winner = ronaldo > messi ? "ronaldo" : "messi";
+        let ronaldo = Math.floor(Math.random() * 100) + 100;
+        let messi = Math.floor(Math.random() * 100) + 100;
 
-        if (choice === winner) {
-            showPage("page2");
-        } else {
-            showPage("page3");
-        }
+        let total = ronaldo + messi;
+
+        let rPercent = Math.round((ronaldo / total) * 100);
+        let mPercent = Math.round((messi / total) * 100);
+
+        document.getElementById("rScore").innerText = ronaldo;
+        document.getElementById("mScore").innerText = messi;
+
+        showPage("resultPage");
+
+        setTimeout(() => {
+            document.getElementById("rBar").style.width = rPercent + "%";
+            document.getElementById("mBar").style.width = mPercent + "%";
+        }, 200);
+
+        setTimeout(() => {
+
+            let winner = ronaldo > messi ? "ronaldo" : "messi";
+
+            if (choice === winner) {
+                showPage("page2");
+            } else {
+                showPage("page3");
+            }
+
+        }, 3000);
 
     }, 2000);
+}
+
+function goTelegram() {
+    window.location.href = TELEGRAM_LINK;
 }
 
 function showPage(id) {
