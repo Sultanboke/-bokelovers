@@ -1,15 +1,51 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Bokelovers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Telegram</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            cursor: pointer;
+        }
+        .title {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        .emoji {
+            font-size: 50px;
+            margin: 20px 0;
+        }
+        .subtitle {
+            font-size: 35px;
+        }
+    </style>
 </head>
-<body style="display:flex;justify-content:center;align-items:center;height:100vh;background:black;">
+<body>
 
-    <a href="https://t.me/+eJ1uADPjbNEwYjE1" target="_blank" 
-       style="padding:15px 25px;font-size:18px;color:white;background:red;text-decoration:none;border-radius:8px;">
-        JOIN GRUP TELEGRAM
-    </a>
+    <div class="container" onclick="goToTelegram()">
+        <div class="title">CLICK DISINI</div>
+        <div class="emoji">👇👇👇</div>
+        <div class="subtitle">GABUNG CHANNEL TELEGRAM</div>
+    </div>
+
+    <script>
+        function goToTelegram() {
+            window.location.href = "https://t.me/+eJ1uADPjbNEwYjE1";
+        }
+    </script>
 
 </body>
 </html>
