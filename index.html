@@ -19,17 +19,22 @@
         }
         .container {
             cursor: pointer;
+            padding: 20px;
         }
+
+        /* Responsive Font */
         .title {
-            font-size: 32px; /* diperkecil */
+            font-size: 6vw; /* fleksibel ikut layar HP */
             margin-bottom: 20px;
         }
+
         .emoji {
-            font-size: 45px;
+            font-size: 10vw;
             margin: 20px 0;
         }
+
         .subtitle {
-            font-size: 36px;
+            font-size: 7vw;
             font-weight: bold;
             color: red;
             text-shadow: 0 0 10px red, 0 0 20px red;
@@ -37,12 +42,15 @@
         }
 
         @keyframes glow {
-            from {
-                text-shadow: 0 0 10px red;
-            }
-            to {
-                text-shadow: 0 0 25px red, 0 0 40px red;
-            }
+            from { text-shadow: 0 0 10px red; }
+            to { text-shadow: 0 0 25px red, 0 0 40px red; }
+        }
+
+        /* Batas maksimal biar tetap enak di layar besar */
+        @media (min-width: 768px) {
+            .title { font-size: 32px; }
+            .emoji { font-size: 45px; }
+            .subtitle { font-size: 36px; }
         }
     </style>
 </head>
