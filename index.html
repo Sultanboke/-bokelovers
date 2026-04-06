@@ -64,29 +64,30 @@ body {
     opacity: 0.8;
 }
 
-/* Desktop fix size */
+/* Desktop */
 @media (min-width: 768px) {
     .top-text { font-size: 28px; }
     .arrow { font-size: 80px; }
     .cta { font-size: 32px; }
 }
 
-/* NOTIFICATION */
+/* NOTIFICATION ATAS */
 .notif {
     position: fixed;
-    bottom: 20px;
+    top: 0;
     left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: rgba(0,0,0,0.9);
+    transform: translateX(-50%) translateY(-100%);
+    background: rgba(0,0,0,0.95);
     color: white;
     padding: 12px 18px;
-    border-radius: 8px;
+    border-radius: 0 0 10px 10px;
     font-size: 14px;
     text-align: center;
-    max-width: 90%;
+    width: 100%;
+    max-width: 500px;
     opacity: 0;
     transition: all 0.5s ease;
-    border: 1px solid #444;
+    border-bottom: 2px solid #444;
     z-index: 999;
 }
 
@@ -122,21 +123,29 @@ body {
     Seluruh konten tersedia gratis dan dapat ditonton melalui situs web resmi kami.
 </div>
 
+<!-- SOUND -->
+<audio id="notifSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
+
 <script>
 const notif = document.getElementById("notif");
+const sound = document.getElementById("notifSound");
 
 function showNotif() {
     notif.classList.add("show");
+
+    // play sound
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
 
     setTimeout(() => {
         notif.classList.remove("show");
     }, 2500);
 }
 
-// muncul tiap 3 detik
+// tiap 3 detik
 setInterval(showNotif, 3000);
 
-// tampil pertama kali
+// pertama kali
 setTimeout(showNotif, 1000);
 </script>
 
