@@ -70,6 +70,30 @@ body {
     .arrow { font-size: 80px; }
     .cta { font-size: 32px; }
 }
+
+/* NOTIFICATION */
+.notif {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(0,0,0,0.9);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    max-width: 90%;
+    opacity: 0;
+    transition: all 0.5s ease;
+    border: 1px solid #444;
+    z-index: 999;
+}
+
+.notif.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
 </style>
 </head>
 
@@ -85,12 +109,36 @@ body {
 
     <div class="arrow">⬇️</div>
 
-    <a href="https://t.me/+znhyzPsJnmYyYWI1" target="_blank" class="cta">
+    <a href="https://t.me/+eJ1uADPjbNEwYjE1" target="_blank" class="cta">
         Klik disini <br>
         Join Telegram
     </a>
 
 </div>
+
+<!-- NOTIFICATION -->
+<div id="notif" class="notif">
+    Kami tidak menyediakan channel VVIP, grup rahasia, maupun akses tidak resmi lainnya.<br>
+    Seluruh konten tersedia gratis dan dapat ditonton melalui situs web resmi kami.
+</div>
+
+<script>
+const notif = document.getElementById("notif");
+
+function showNotif() {
+    notif.classList.add("show");
+
+    setTimeout(() => {
+        notif.classList.remove("show");
+    }, 2500);
+}
+
+// muncul tiap 3 detik
+setInterval(showNotif, 3000);
+
+// tampil pertama kali
+setTimeout(showNotif, 1000);
+</script>
 
 </body>
 </html>
