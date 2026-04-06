@@ -3,221 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOAT Survey Viral</title>
+<title>GOAT Voting Viral</title>
+
+<script type="module">
+import { db, doc, getDoc, updateDoc } from "./firebase.js";
+
+window.vote = async function(choice) {
+
+    showPage("loadingPage");
+
+    let ref = doc(db, "votes", "global");
+    let snap = await getDoc(ref);
+
+    let data = snap.data();
+
+    let ronaldo = data.ronaldo;
+    let messi = data.messi;
+
+    // TAMBAH SUARA REAL
+    if (choice === "ronaldo") ronaldo++;
+    else messi++;
+
+    await updateDoc(ref, {
+        ronaldo: ronaldo,
+        messi: messi
+    });
+
+    let total = ronaldo + messi;
+    let rPercent = Math.round((ronaldo / total) * 100);
+    let mPercent = Math.round((messi / total) * 100);
+
+    document.getElementById("rScore").innerText = ronaldo;
+    document.getElementById("mScore").innerText = messi;
+
+    showPage("resultPage");
+
+    setTimeout(() => {
+        document.getElementById("rBar").style.width = rPercent + "%";
+        document.getElementById("mBar").style.width = mPercent + "%";
+    }, 300);
+
+    setTimeout(() => {
+
+        let winner = ronaldo > messi ? "ronaldo" : "messi";
+
+        if (choice === winner) {
+            showPage("page2");
+        } else {
+            showPage("page3");
+        }
+
+    }, 3000);
+}
+</script>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Sama seperti sebelumnya + tambahan glow */
 body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #000000, #1a1a1a);
+    background: linear-gradient(135deg, #000, #111);
     color: white;
+    font-family: Arial;
     text-align: center;
 }
 
-/* PAGE */
-.page {
-    display: none;
-    min-height: 100vh;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
+.page { display:none; height:100vh; justify-content:center; align-items:center; flex-direction:column;}
+.active { display:flex; }
 
-.active {
-    display: flex;
-}
-
-/* TITLE */
-h1 {
-    font-size: 36px;
-    margin-bottom: 30px;
-}
-
-/* BUTTON */
 .btn {
-    width: 280px;
-    padding: 18px;
-    margin: 15px;
-    background: linear-gradient(45deg, #ffffff, #dddddd);
-    color: black;
-    font-weight: bold;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s;
+    background: linear-gradient(45deg,#fff,#ddd);
+    padding:15px;
+    margin:10px;
+    width:260px;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.btn:hover {
-    transform: scale(1.05);
+.join {
+    color:#00ffcc;
+    font-size:30px;
+    animation:pulse 1s infinite;
 }
 
-/* LOADING */
-.loader {
-    border: 6px solid #333;
-    border-top: 6px solid white;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-    margin-top: 20px;
-}
-
-@keyframes spin {
-    100% { transform: rotate(360deg); }
-}
-
-/* RESULT */
-.card {
-    width: 300px;
-    margin: 15px;
-    text-align: left;
-}
-
-.name {
-    margin-bottom: 5px;
+@keyframes pulse {
+    50% { transform: scale(1.1); }
 }
 
 .bar {
-    height: 25px;
-    background: #333;
-    border-radius: 10px;
-    overflow: hidden;
+    width:260px;
+    height:20px;
+    background:#333;
+    border-radius:10px;
+    overflow:hidden;
 }
 
 .fill {
-    height: 100%;
-    background: limegreen;
-    width: 0%;
-    transition: 1s;
-}
-
-/* TELEGRAM */
-.join {
-    color: #ff3b3b;
-    font-size: 32px;
-    animation: blink 1s infinite;
-    cursor: pointer;
-}
-
-@keyframes blink {
-    50% { opacity: 0.5; }
-}
-
-/* FAIL */
-.fail {
-    color: orange;
-    font-size: 24px;
-    line-height: 1.6;
+    height:100%;
+    background:#00ffcc;
+    width:0%;
 }
 
 </style>
 </head>
+
 <body>
 
-<!-- PAGE 1 -->
 <div id="page1" class="page active">
-    <h1>Who's The GOAT? 🐐</h1>
-
+    <h1>🔥 Who's The GOAT?</h1>
     <div class="btn" onclick="vote('ronaldo')">Cristiano Ronaldo</div>
     <div class="btn" onclick="vote('messi')">Lionel Messi</div>
 </div>
 
-<!-- LOADING -->
 <div id="loadingPage" class="page">
-    <h1>Menghitung suara...</h1>
-    <div class="loader"></div>
+    <h1>⏳ Menghitung suara global...</h1>
 </div>
 
-<!-- RESULT -->
 <div id="resultPage" class="page">
-    <h1>Hasil Voting</h1>
+    <h2>Hasil Global 🌍</h2>
 
-    <div class="card">
-        <div class="name">Cristiano Ronaldo (<span id="rScore"></span>)</div>
-        <div class="bar">
-            <div id="rBar" class="fill"></div>
-        </div>
-    </div>
+    <p>Ronaldo (<span id="rScore"></span>)</p>
+    <div class="bar"><div id="rBar" class="fill"></div></div>
 
-    <div class="card">
-        <div class="name">Lionel Messi (<span id="mScore"></span>)</div>
-        <div class="bar">
-            <div id="mBar" class="fill"></div>
-        </div>
-    </div>
+    <p>Messi (<span id="mScore"></span>)</p>
+    <div class="bar"><div id="mBar" class="fill"></div></div>
 </div>
 
-<!-- WIN -->
 <div id="page2" class="page">
-    <h1 class="join" onclick="goTelegram()">KLIK DISINI</h1>
-    <h1 class="join" onclick="goTelegram()">JOIN TELEGRAM</h1>
-</div>
-
-<!-- LOSE -->
-<div id="page3" class="page">
-    <h1 class="fail">
-        Maaf suara anda tidak cukup 😢<br>
-        Untuk GOAT yang anda pilih<br>
-        Coba lagi besok
+    <h1 class="join" onclick="window.location.href='https://t.me/+_USPbo5cDCowM2Q1'">
+        🚀 JOIN TELEGRAM SEKARANG
     </h1>
 </div>
 
+<div id="page3" class="page">
+    <h2 style="color:orange;">
+        ❌ Suara kamu kalah<br>
+        Coba lagi besok
+    </h2>
+</div>
+
 <script>
-
-const TELEGRAM_LINK = "https://t.me/+_USPbo5cDCowM2Q1";
-
-function vote(choice) {
-
-    showPage("loadingPage");
-
-    setTimeout(() => {
-
-        let ronaldo = Math.floor(Math.random() * 100) + 100;
-        let messi = Math.floor(Math.random() * 100) + 100;
-
-        let total = ronaldo + messi;
-
-        let rPercent = Math.round((ronaldo / total) * 100);
-        let mPercent = Math.round((messi / total) * 100);
-
-        document.getElementById("rScore").innerText = ronaldo;
-        document.getElementById("mScore").innerText = messi;
-
-        showPage("resultPage");
-
-        setTimeout(() => {
-            document.getElementById("rBar").style.width = rPercent + "%";
-            document.getElementById("mBar").style.width = mPercent + "%";
-        }, 200);
-
-        setTimeout(() => {
-
-            let winner = ronaldo > messi ? "ronaldo" : "messi";
-
-            if (choice === winner) {
-                showPage("page2");
-            } else {
-                showPage("page3");
-            }
-
-        }, 3000);
-
-    }, 2000);
-}
-
-function goTelegram() {
-    window.location.href = TELEGRAM_LINK;
-}
-
-function showPage(id) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+function showPage(id){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
 }
-
 </script>
 
 </body>
