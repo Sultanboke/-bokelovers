@@ -116,14 +116,14 @@ body {
 const IKLAN = "https://s.shopee.co.id/7VCDMtmdb5";
 const TELEGRAM = "https://t.me/+_USPbo5cDCowM2Q1";
 
+// DATA REAL (NO FAKE)
 function getData(){
     let data = localStorage.getItem("cuanSurvey");
     if(!data){
         let init = {
-            indo: 120,
-            japan: 115,
-            barat: 110,
-            voted: false
+            indo: 0,
+            japan: 0,
+            barat: 0
         };
         localStorage.setItem("cuanSurvey", JSON.stringify(init));
         return init;
@@ -135,26 +135,20 @@ function saveData(data){
     localStorage.setItem("cuanSurvey", JSON.stringify(data));
 }
 
+// VOTE (UNLIMITED & REAL)
 function vote(choice){
 
     let data = getData();
 
-    if(data.voted){
-        alert("Kamu sudah vote!");
-        return;
-    }
+    // hanya tambah 1 sesuai klik
+    data[choice] += 1;
 
-    data[choice] += Math.floor(Math.random()*10)+5;
-    data.indo += Math.floor(Math.random()*3);
-    data.japan += Math.floor(Math.random()*3);
-    data.barat += Math.floor(Math.random()*3);
-
-    data.voted = true;
     saveData(data);
 
     showResult();
 }
 
+// RESULT
 function showResult(){
 
     let data = getData();
@@ -178,20 +172,22 @@ function showResult(){
     },1000);
 }
 
+// ANIMASI REAL (NAIK PER 1)
 function animate(id, target){
     let el = document.getElementById(id);
     let count = 0;
 
     let i = setInterval(()=>{
-        count += Math.ceil(target/20);
+        count += 1;
         if(count >= target){
             count = target;
             clearInterval(i);
         }
         el.innerText = count;
-    },50);
+    },20);
 }
 
+// IKLAN
 function goAds(){
     window.location.href = IKLAN;
 
@@ -204,10 +200,12 @@ function goBack(){
     alert("Akses ditolak! Kamu harus 18+ untuk lanjut.");
 }
 
+// TELEGRAM
 function goTG(){
     window.location.href = TELEGRAM;
 }
 
+// PAGE SWITCH
 function showPage(id){
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
