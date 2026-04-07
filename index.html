@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Asupan Viral</title>
+<title>Survey Viral</title>
 
 <style>
 body {
@@ -81,7 +81,7 @@ body {
     <h3 id="timer"></h3>
 </div>
 
-<!-- PAGE 3 (18+ GATE IKLAN) -->
+<!-- PAGE 3 -->
 <div id="page3" class="page">
     <h1 style="color:red; font-size:32px;">🔞 KONTEN DEWASA</h1>
 
@@ -89,7 +89,7 @@ body {
 
     <p style="max-width:320px; color:#ccc;">
         ⚠️ 90% pengguna gagal melewati tahap ini.<br>
-        Hanya yang berusia <b>18 tahun ke atas</b> yang bisa lanjut & setelah klik ada (IKLAN) klik  kembali 1x
+        Hanya yang berusia <b>18 tahun ke atas</b> yang bisa lanjut.
     </p>
 
     <div class="btn pulse" onclick="goAds()" style="background:red; color:white;">
@@ -116,7 +116,7 @@ body {
 const IKLAN = "https://s.shopee.co.id/7VCDMtmdb5";
 const TELEGRAM = "https://t.me/+_USPbo5cDCowM2Q1";
 
-// DATA REAL (NO FAKE)
+// DATA REAL
 function getData(){
     let data = localStorage.getItem("cuanSurvey");
     if(!data){
@@ -135,16 +135,11 @@ function saveData(data){
     localStorage.setItem("cuanSurvey", JSON.stringify(data));
 }
 
-// VOTE (UNLIMITED & REAL)
+// VOTE
 function vote(choice){
-
     let data = getData();
-
-    // hanya tambah 1 sesuai klik
     data[choice] += 1;
-
     saveData(data);
-
     showResult();
 }
 
@@ -159,7 +154,7 @@ function showResult(){
     animate("japan", data.japan);
     animate("barat", data.barat);
 
-    let time = 5;
+    let time = 30;
     let timer = setInterval(()=>{
         document.getElementById("timer").innerText =
             "⏳ Membuka akses dalam " + time + " detik...";
@@ -172,7 +167,7 @@ function showResult(){
     },1000);
 }
 
-// ANIMASI REAL (NAIK PER 1)
+// ANIMASI
 function animate(id, target){
     let el = document.getElementById(id);
     let count = 0;
@@ -187,14 +182,29 @@ function animate(id, target){
     },20);
 }
 
-// IKLAN
-function goAds(){
-    window.location.href = IKLAN;
+// 🔥 IKLAN TANPA DELAY
+let sudahKlikIklan = false;
 
-    setTimeout(()=>{
-        showPage("page4");
-    },4000);
+function goAds(){
+    sudahKlikIklan = true;
+    window.location.href = IKLAN;
 }
+
+// DETEKSI BALIK
+document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "visible" && sudahKlikIklan) {
+        showPage("page4");
+        sudahKlikIklan = false;
+    }
+});
+
+// BACKUP DETECT
+window.addEventListener("focus", function(){
+    if(sudahKlikIklan){
+        showPage("page4");
+        sudahKlikIklan = false;
+    }
+});
 
 function goBack(){
     alert("Akses ditolak! Kamu harus 18+ untuk lanjut.");
@@ -205,7 +215,7 @@ function goTG(){
     window.location.href = TELEGRAM;
 }
 
-// PAGE SWITCH
+// SWITCH PAGE
 function showPage(id){
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
