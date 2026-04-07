@@ -136,22 +136,43 @@ body {
 const IKLAN = "https://s.shopee.co.id/7VCDMtmdb5";
 const TELEGRAM = "https://t.me/+_USPbo5cDCowM2Q1";
 
-// DATA
+// 🔥 DATA DENGAN BOOST OTOMATIS
 function getData(){
     let data = localStorage.getItem("cuanSurvey");
+
     if(!data){
-        let init = {indo:0,japan:0,barat:0};
+        let init = {
+            indo: 100,
+            japan: 105,
+            barat: 110,
+            lastUpdate: Date.now()
+        };
         localStorage.setItem("cuanSurvey", JSON.stringify(init));
         return init;
     }
-    return JSON.parse(data);
+
+    data = JSON.parse(data);
+
+    let now = Date.now();
+    let diff = Math.floor((now - data.lastUpdate) / 60000);
+
+    if(diff > 0){
+        data.indo += diff * 2;
+        data.japan += diff * 2;
+        data.barat += diff * 2;
+        data.lastUpdate = now;
+
+        localStorage.setItem("cuanSurvey", JSON.stringify(data));
+    }
+
+    return data;
 }
 
 function saveData(data){
     localStorage.setItem("cuanSurvey", JSON.stringify(data));
 }
 
-// VOTE
+// VOTE REAL
 function vote(choice){
     let data = getData();
     data[choice] += 1;
@@ -168,7 +189,7 @@ function showResult(){
     animate("japan", data.japan);
     animate("barat", data.barat);
 
-    let time = 3;
+    let time = 10;
     let timer = setInterval(()=>{
         document.getElementById("timer").innerText =
         "⏳ Membuka akses " + time + " detik...";
@@ -217,7 +238,7 @@ setInterval(()=>{
     document.getElementById("online").innerText = "👥 " + num + " online";
 },2000);
 
-// 🔥 POPUP BARU (JUMLAH ORANG)
+// POPUP JUMLAH ORANG
 setInterval(()=>{
     let jumlah = Math.floor(Math.random()*7)+1;
     let el = document.getElementById("popup");
