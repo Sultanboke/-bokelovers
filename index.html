@@ -3,17 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Asupan Viral</title>
+
+<!-- FONT KEREN -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<title>Survey Viral</title>
 
 <style>
 body {
     margin:0;
     background:black;
     color:white;
-    font-family:Arial;
+    font-family:'Poppins', sans-serif;
     text-align:center;
 }
 
+/* PAGE */
 .page {
     display:none;
     min-height:100vh;
@@ -24,18 +29,25 @@ body {
 }
 .active { display:flex; }
 
+/* TEXT */
+h1 { font-size:28px; }
+h2 { font-size:20px; }
+h3 { font-size:16px; }
+
+/* BUTTON */
 .btn {
     background:white;
     color:black;
     padding:15px;
     margin:10px;
     width:280px;
-    font-size:20px;
-    font-weight:bold;
+    font-size:18px;
+    font-weight:600;
     cursor:pointer;
-    border-radius:10px;
+    border-radius:12px;
 }
 
+/* RESULT */
 .row {
     background:#eee;
     color:black;
@@ -44,7 +56,9 @@ body {
     padding:15px;
     display:flex;
     justify-content:space-between;
-    font-weight:bold;
+    font-weight:600;
+    font-size:18px;
+    border-radius:10px;
 }
 
 .red { color:red; }
@@ -56,6 +70,24 @@ body {
 @keyframes pulse {
     50% { transform:scale(1.1); }
 }
+
+/* 📱 MOBILE */
+@media (max-width: 600px){
+    h1 { font-size:24px; }
+    h2 { font-size:18px; }
+    .btn { font-size:16px; width:240px; }
+    .row { font-size:16px; width:260px; }
+}
+
+/* 💻 DESKTOP */
+@media (min-width: 768px){
+    h1 { font-size:36px; }
+    h2 { font-size:26px; }
+    h3 { font-size:20px; }
+    .btn { font-size:20px; width:320px; }
+    .row { font-size:20px; width:350px; }
+}
+
 </style>
 </head>
 <body>
@@ -83,13 +115,13 @@ body {
 
 <!-- PAGE 3 -->
 <div id="page3" class="page">
-    <h1 style="color:red; font-size:32px;">🔞 KONTEN DEWASA</h1>
+    <h1 style="color:red;">🔞 KONTEN DEWASA</h1>
 
     <h2>Verifikasi umur kamu</h2>
 
     <p style="max-width:320px; color:#ccc;">
         ⚠️ 90% pengguna gagal melewati tahap ini.<br>
-        Hanya yang berusia <b>18 tahun ke atas</b> yang bisa lanjut & Jika ada (IKLAN) klik kembali 1x.
+        Hanya yang berusia <b>18 tahun ke atas</b> yang bisa lanjut.
     </p>
 
     <div class="btn pulse" onclick="goAds()" style="background:red; color:white;">
@@ -99,10 +131,6 @@ body {
     <div class="btn" onclick="goBack()" style="background:#333; color:white;">
         SAYA DI BAWAH 18
     </div>
-
-    <p style="font-size:12px; color:gray; margin-top:10px;">
-        (Klik lanjut untuk membuka akses penuh)
-    </p>
 </div>
 
 <!-- PAGE 4 -->
@@ -116,7 +144,7 @@ body {
 const IKLAN = "https://s.shopee.co.id/7VCDMtmdb5";
 const TELEGRAM = "https://t.me/+_USPbo5cDCowM2Q1";
 
-// DATA REAL
+// DATA (START DARI 0)
 function getData(){
     let data = localStorage.getItem("cuanSurvey");
     if(!data){
@@ -145,7 +173,6 @@ function vote(choice){
 
 // RESULT
 function showResult(){
-
     let data = getData();
 
     showPage("page2");
@@ -154,7 +181,7 @@ function showResult(){
     animate("japan", data.japan);
     animate("barat", data.barat);
 
-    let time = 3;
+    let time = 30;
     let timer = setInterval(()=>{
         document.getElementById("timer").innerText =
             "⏳ Membuka akses dalam " + time + " detik...";
@@ -182,7 +209,7 @@ function animate(id, target){
     },20);
 }
 
-// 🔥 IKLAN TANPA DELAY
+// IKLAN
 let sudahKlikIklan = false;
 
 function goAds(){
@@ -190,7 +217,6 @@ function goAds(){
     window.location.href = IKLAN;
 }
 
-// DETEKSI BALIK
 document.addEventListener("visibilitychange", function() {
     if (document.visibilityState === "visible" && sudahKlikIklan) {
         showPage("page4");
@@ -198,7 +224,6 @@ document.addEventListener("visibilitychange", function() {
     }
 });
 
-// BACKUP DETECT
 window.addEventListener("focus", function(){
     if(sudahKlikIklan){
         showPage("page4");
@@ -210,12 +235,10 @@ function goBack(){
     alert("Akses ditolak! Kamu harus 18+ untuk lanjut.");
 }
 
-// TELEGRAM
 function goTG(){
     window.location.href = TELEGRAM;
 }
 
-// SWITCH PAGE
 function showPage(id){
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
