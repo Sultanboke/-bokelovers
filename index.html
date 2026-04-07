@@ -3,203 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOAT Voting</title>
+<title>Survey Viral</title>
 
 <style>
 body {
     margin:0;
-    font-family:Arial;
-    background:linear-gradient(135deg,#000,#111);
+    background:black;
     color:white;
+    font-family:Arial;
     text-align:center;
 }
 
-/* PAGE */
 .page {
     display:none;
-    height:100vh;
+    min-height:100vh;
     justify-content:center;
     align-items:center;
     flex-direction:column;
+    padding:20px;
 }
 .active { display:flex; }
 
-/* TITLE */
-h1 { margin-bottom:30px; }
+h1 { margin-bottom:20px; }
 
-/* BUTTON */
 .btn {
-    background:white;
+    background:#eee;
     color:black;
     padding:15px;
     margin:10px;
-    width:260px;
-    border-radius:12px;
+    width:280px;
+    font-size:20px;
     font-weight:bold;
     cursor:pointer;
-    transition:.2s;
 }
-.btn:hover { transform:scale(1.05); }
-
-/* LOADING */
-.loader {
-    border:6px solid #333;
-    border-top:6px solid white;
-    border-radius:50%;
-    width:60px;
-    height:60px;
-    animation:spin 1s linear infinite;
-}
-@keyframes spin {100%{transform:rotate(360deg);}}
 
 /* RESULT */
-.card { width:260px; margin:10px; text-align:left; }
-
-.bar {
-    background:#333;
-    height:20px;
-    border-radius:10px;
-    overflow:hidden;
-}
-.fill {
-    height:100%;
-    background:limegreen;
-    width:0%;
-    transition:1s;
+.row {
+    background:#eee;
+    color:black;
+    width:300px;
+    margin:10px;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    font-weight:bold;
 }
 
-/* TELEGRAM */
-.join {
-    color:#00ffcc;
-    font-size:28px;
-    animation:pulse 1s infinite;
-    cursor:pointer;
-}
-@keyframes pulse {50%{transform:scale(1.1);}}
-
-/* FAIL */
-.fail {
-    color:orange;
-    font-size:22px;
-    line-height:1.5;
-}
+/* TEXT */
+.red { color:red; font-size:30px; }
+.orange { color:orange; }
 </style>
 </head>
 <body>
 
 <!-- PAGE 1 -->
 <div id="page1" class="page active">
-    <h1>🔥 Who's The GOAT?</h1>
-    <div class="btn" onclick="vote('ronaldo')">Cristiano Ronaldo</div>
-    <div class="btn" onclick="vote('messi')">Lionel Messi</div>
+    <h2>🔞 Bokelovers</h2>
+    <h1>Lebih suka Collector Apa?</h1>
+
+    <div class="btn" onclick="vote('indo')">Asupan Indo</div>
+    <div class="btn" onclick="vote('japan')">Asupan Japan</div>
+    <div class="btn" onclick="vote('barat')">Asupan Barat</div>
 </div>
 
-<!-- LOADING -->
-<div id="loadingPage" class="page">
-    <h1>Menghitung suara...</h1>
-    <div class="loader"></div>
-</div>
-
-<!-- RESULT -->
-<div id="resultPage" class="page">
-    <h2>Hasil Voting</h2>
-
-    <div class="card">
-        Ronaldo (<span id="rScore"></span>)
-        <div class="bar"><div id="rBar" class="fill"></div></div>
-    </div>
-
-    <div class="card">
-        Messi (<span id="mScore"></span>)
-        <div class="bar"><div id="mBar" class="fill"></div></div>
-    </div>
-</div>
-
-<!-- WIN -->
+<!-- PAGE 2 (HASIL) -->
 <div id="page2" class="page">
-    <h1 class="join" onclick="goTG()">🚀 JOIN TELEGRAM</h1>
+    <h1 class="red">Hasil Voting</h1>
+
+    <div class="row">Asupan Indo <span id="indo"></span></div>
+    <div class="row">Asupan Japan <span id="japan"></span></div>
+    <div class="row">Asupan Barat <span id="barat"></span></div>
+
+    <h2 id="timer"></h2>
 </div>
 
-<!-- LOSE -->
+<!-- PAGE 3 -->
 <div id="page3" class="page">
-    <h1 class="fail">
-        ❌ Suara kamu kalah<br>
-        Coba lagi besok
-    </h1>
+    <h2 class="orange">Iklan sedang dibuka...</h2>
+    <h3>Silahkan kembali ke halaman ini</h3>
+</div>
+
+<!-- PAGE 4 -->
+<div id="page4" class="page">
+    <h1 class="red">⬇ klik disini ⬇</h1>
+    <h1 class="red" onclick="goTG()">Join Channel Telegram</h1>
 </div>
 
 <script>
 
+const IKLAN = "https://s.shopee.co.id/7VCDMtmdb5";
 const TELEGRAM = "https://t.me/+_USPbo5cDCowM2Q1";
 
-// Ambil data dari localStorage
-function getVotes(){
-    let data = localStorage.getItem("votes");
+// ambil data
+function getData(){
+    let data = localStorage.getItem("survey");
     if(!data){
-        let initial = {
-            ronaldo: 120,
-            messi: 110
+        let init = {
+            indo: 100,
+            japan: 100,
+            barat: 100,
+            voted: false
         };
-        localStorage.setItem("votes", JSON.stringify(initial));
-        return initial;
+        localStorage.setItem("survey", JSON.stringify(init));
+        return init;
     }
     return JSON.parse(data);
 }
 
-// Simpan data
-function saveVotes(data){
-    localStorage.setItem("votes", JSON.stringify(data));
+// simpan
+function saveData(data){
+    localStorage.setItem("survey", JSON.stringify(data));
 }
 
+// vote
 function vote(choice){
 
-    showPage("loadingPage");
+    let data = getData();
 
-    setTimeout(()=>{
+    if(data.voted){
+        alert("Kamu sudah vote!");
+        return;
+    }
 
-        let data = getVotes();
+    data[choice] += Math.floor(Math.random()*5)+1;
+    data.voted = true;
 
-        // Tambah suara
-        if(choice === "ronaldo"){
-            data.ronaldo += Math.floor(Math.random()*3)+1;
-        } else {
-            data.messi += Math.floor(Math.random()*3)+1;
-        }
+    saveData(data);
 
-        saveVotes(data);
-
-        let total = data.ronaldo + data.messi;
-
-        let rPercent = Math.round((data.ronaldo/total)*100);
-        let mPercent = Math.round((data.messi/total)*100);
-
-        document.getElementById("rScore").innerText = data.ronaldo;
-        document.getElementById("mScore").innerText = data.messi;
-
-        showPage("resultPage");
-
-        setTimeout(()=>{
-            document.getElementById("rBar").style.width = rPercent+"%";
-            document.getElementById("mBar").style.width = mPercent+"%";
-        },200);
-
-        setTimeout(()=>{
-            let winner = data.ronaldo > data.messi ? "ronaldo" : "messi";
-
-            if(choice === winner){
-                showPage("page2");
-            } else {
-                showPage("page3");
-            }
-        },3000);
-
-    },1500);
+    showResult();
 }
 
+// tampil hasil
+function showResult(){
+
+    let data = getData();
+
+    showPage("page2");
+
+    animate("indo", data.indo);
+    animate("japan", data.japan);
+    animate("barat", data.barat);
+
+    // countdown 7 detik
+    let time = 7;
+    let timer = setInterval(()=>{
+        document.getElementById("timer").innerText = "Tunggu " + time + " detik...";
+        time--;
+
+        if(time < 0){
+            clearInterval(timer);
+            openAds();
+        }
+    },1000);
+}
+
+// animasi angka naik
+function animate(id, target){
+    let el = document.getElementById(id);
+    let count = 0;
+
+    let i = setInterval(()=>{
+        count += Math.ceil(target/20);
+        if(count >= target){
+            count = target;
+            clearInterval(i);
+        }
+        el.innerText = count;
+    },50);
+}
+
+// buka iklan
+function openAds(){
+    window.open(IKLAN, "_blank");
+    showPage("page3");
+
+    // tunggu user balik
+    setTimeout(()=>{
+        showPage("page4");
+    },4000);
+}
+
+// telegram
 function goTG(){
     window.location.href = TELEGRAM;
 }
 
+// page switch
 function showPage(id){
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
