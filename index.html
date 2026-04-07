@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- FONT KEREN -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <title>Survey Viral</title>
@@ -25,14 +24,20 @@ body {
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    padding:20px;
 }
 .active { display:flex; }
 
-/* TEXT */
-h1 { font-size:28px; }
-h2 { font-size:20px; }
-h3 { font-size:16px; }
+/* ONLINE COUNTER */
+.online {
+    position:fixed;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+    background:red;
+    padding:8px 15px;
+    border-radius:20px;
+    font-size:14px;
+}
 
 /* BUTTON */
 .btn {
@@ -41,10 +46,9 @@ h3 { font-size:16px; }
     padding:15px;
     margin:10px;
     width:280px;
-    font-size:18px;
+    border-radius:12px;
     font-weight:600;
     cursor:pointer;
-    border-radius:12px;
 }
 
 /* RESULT */
@@ -56,41 +60,39 @@ h3 { font-size:16px; }
     padding:15px;
     display:flex;
     justify-content:space-between;
-    font-weight:600;
-    font-size:18px;
     border-radius:10px;
 }
 
-.red { color:red; }
-.orange { color:orange; }
-
-.pulse {
-    animation:pulse 1s infinite;
-}
-@keyframes pulse {
-    50% { transform:scale(1.1); }
-}
-
-/* 📱 MOBILE */
-@media (max-width: 600px){
-    h1 { font-size:24px; }
-    h2 { font-size:18px; }
-    .btn { font-size:16px; width:240px; }
-    .row { font-size:16px; width:260px; }
+/* POPUP */
+.popup {
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    background:#111;
+    padding:10px 15px;
+    border-radius:10px;
+    font-size:14px;
+    opacity:0;
+    transition:.5s;
 }
 
-/* 💻 DESKTOP */
-@media (min-width: 768px){
-    h1 { font-size:36px; }
-    h2 { font-size:26px; }
-    h3 { font-size:20px; }
-    .btn { font-size:20px; width:320px; }
-    .row { font-size:20px; width:350px; }
-}
+.show { opacity:1; }
 
+.pulse { animation:pulse 1s infinite; }
+@keyframes pulse {50%{transform:scale(1.1);}}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+    .btn{width:240px;}
+    .row{width:260px;}
+}
 </style>
 </head>
 <body>
+
+<div class="online" id="online">👥 1,234 online</div>
+
+<div id="popup" class="popup"></div>
 
 <!-- PAGE 1 -->
 <div id="page1" class="page active">
@@ -104,7 +106,7 @@ h3 { font-size:16px; }
 
 <!-- PAGE 2 -->
 <div id="page2" class="page">
-    <h1 class="red">🔥 Hasil Voting</h1>
+    <h1>🔥 Hasil Voting</h1>
 
     <div class="row">Indo <span id="indo"></span></div>
     <div class="row">Japan <span id="japan"></span></div>
@@ -115,28 +117,21 @@ h3 { font-size:16px; }
 
 <!-- PAGE 3 -->
 <div id="page3" class="page">
-    <h1 style="color:red;">🔞 KONTEN DEWASA</h1>
+    <h1>🔞 Verifikasi 18+</h1>
 
-    <h2>Verifikasi umur kamu</h2>
-
-    <p style="max-width:320px; color:#ccc;">
-        ⚠️ 90% pengguna gagal melewati tahap ini.<br>
-        Hanya yang berusia <b>18 tahun ke atas</b> yang bisa lanjut.
-    </p>
-
-    <div class="btn pulse" onclick="goAds()" style="background:red; color:white;">
-        SAYA SUDAH 18+ 🔓
+    <div class="btn pulse" onclick="goAds()" style="background:red;color:white;">
+        SAYA 18+
     </div>
 
-    <div class="btn" onclick="goBack()" style="background:#333; color:white;">
-        SAYA DI BAWAH 18
+    <div class="btn" onclick="goBack()" style="background:#333;color:white;">
+        DI BAWAH 18
     </div>
 </div>
 
 <!-- PAGE 4 -->
 <div id="page4" class="page">
-    <h1 class="red pulse">⬇ Klik Disini ⬇</h1>
-    <h1 class="red" onclick="goTG()">Join Channel Telegram</h1>
+    <h1 class="pulse">⬇ Join Telegram ⬇</h1>
+    <div class="btn" onclick="goTG()">MASUK SEKARANG</div>
 </div>
 
 <script>
@@ -144,15 +139,11 @@ h3 { font-size:16px; }
 const IKLAN = "https://s.shopee.co.id/7VCDMtmdb5";
 const TELEGRAM = "https://t.me/+_USPbo5cDCowM2Q1";
 
-// DATA (START DARI 0)
+// DATA
 function getData(){
     let data = localStorage.getItem("cuanSurvey");
     if(!data){
-        let init = {
-            indo: 0,
-            japan: 0,
-            barat: 0
-        };
+        let init = {indo:0,japan:0,barat:0};
         localStorage.setItem("cuanSurvey", JSON.stringify(init));
         return init;
     }
@@ -174,17 +165,16 @@ function vote(choice){
 // RESULT
 function showResult(){
     let data = getData();
-
     showPage("page2");
 
     animate("indo", data.indo);
     animate("japan", data.japan);
     animate("barat", data.barat);
 
-    let time = 30;
+    let time = 10;
     let timer = setInterval(()=>{
         document.getElementById("timer").innerText =
-            "⏳ Membuka akses dalam " + time + " detik...";
+        "⏳ Membuka akses " + time + " detik...";
         time--;
 
         if(time < 0){
@@ -194,50 +184,58 @@ function showResult(){
     },1000);
 }
 
-// ANIMASI
+// ANIMASI HALUS
 function animate(id, target){
     let el = document.getElementById(id);
     let count = 0;
 
     let i = setInterval(()=>{
-        count += 1;
+        count += Math.ceil(target/30);
         if(count >= target){
             count = target;
             clearInterval(i);
         }
         el.innerText = count;
-    },20);
+    },30);
 }
 
 // IKLAN
-let sudahKlikIklan = false;
+let klik = false;
 
 function goAds(){
-    sudahKlikIklan = true;
+    klik = true;
     window.location.href = IKLAN;
 }
 
-document.addEventListener("visibilitychange", function() {
-    if (document.visibilityState === "visible" && sudahKlikIklan) {
+document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible" && klik){
         showPage("page4");
-        sudahKlikIklan = false;
+        klik=false;
     }
 });
 
-window.addEventListener("focus", function(){
-    if(sudahKlikIklan){
-        showPage("page4");
-        sudahKlikIklan = false;
-    }
-});
+// ONLINE COUNTER
+setInterval(()=>{
+    let num = 1000 + Math.floor(Math.random()*500);
+    document.getElementById("online").innerText = "👥 " + num + " online";
+},2000);
 
-function goBack(){
-    alert("Akses ditolak! Kamu harus 18+ untuk lanjut.");
-}
+// POPUP FAKE
+const names = ["Andi","Budi","Rina","Dewi","Agus","Riko","Sari"];
 
-function goTG(){
-    window.location.href = TELEGRAM;
-}
+setInterval(()=>{
+    let name = names[Math.floor(Math.random()*names.length)];
+    let el = document.getElementById("popup");
+
+    el.innerText = name + " baru saja vote";
+    el.classList.add("show");
+
+    setTimeout(()=>el.classList.remove("show"),2000);
+},3000);
+
+// NAV
+function goBack(){ alert("Akses ditolak"); }
+function goTG(){ window.location.href = TELEGRAM; }
 
 function showPage(id){
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
