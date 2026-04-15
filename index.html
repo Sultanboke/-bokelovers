@@ -19,7 +19,7 @@ body {
   overflow: hidden;
 }
 
-/* PARTICLE BACKGROUND */
+/* PARTICLE */
 canvas {
   position: fixed;
   top: 0;
@@ -37,18 +37,10 @@ canvas {
   animation: fadeIn 1.5s ease-in-out;
 }
 
-.logo {
-  font-size: 32px;
-  margin-bottom: 40px;
-  letter-spacing: 2px;
-  opacity: 0.8;
-}
-
 /* BUTTON */
 .btn {
   display: block;
   text-decoration: none;
-  color: white;
   padding: 18px;
   margin: 15px 0;
   border-radius: 50px;
@@ -58,13 +50,12 @@ canvas {
   border: 2px solid rgba(255,255,255,0.2);
 }
 
-/* NEON EFFECT */
 .btn:hover {
-  transform: scale(1.07);
+  transform: scale(1.08);
   box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
 }
 
-/* COLOR VARIANTS */
+/* COLORS */
 .japanese { color: #ff4d4d; }
 .indo { color: #ff0000; }
 .western { color: #4da6ff; }
@@ -81,7 +72,7 @@ canvas {
   to { opacity: 1; transform: translate(-50%, -50%); }
 }
 
-/* WARNING MODAL */
+/* MODAL */
 .modal {
   position: fixed;
   top: 0;
@@ -101,11 +92,6 @@ canvas {
   border: 2px solid red;
   border-radius: 15px;
   box-shadow: 0 0 20px red;
-  animation: fadeIn 1s;
-}
-
-.modal h2 {
-  margin-bottom: 15px;
 }
 
 .modal button {
@@ -118,6 +104,25 @@ canvas {
   font-weight: bold;
   cursor: pointer;
 }
+
+/* NOTIFICATION */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.8);
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 14px;
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
 </style>
 </head>
 
@@ -129,14 +134,13 @@ canvas {
 <div class="modal" id="warning">
   <div class="modal-content">
     <h2>⚠️ 21+ ONLY</h2>
-    <p>Konten hanya untuk usia 21 tahun ke atas.</p>
+    <p>Konten hanya untuk usia 21 tahun ke atas</p>
     <button onclick="enterSite()">Saya 21+</button>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="container">
-  <div class="logo">(LOGO)</div>
 
   <a href="https://t.me/+ydd_4nMmWM4xMzA1" class="btn japanese">
     TB JAPANESE 🇯🇵
@@ -161,7 +165,7 @@ function enterSite() {
   document.getElementById('warning').style.display = 'none';
 }
 
-/* PARTICLE EFFECT */
+/* PARTICLE */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
@@ -203,6 +207,29 @@ function update() {
 }
 
 setInterval(draw, 33);
+
+/* FAKE NOTIFICATION */
+const messages = [
+  "1 orang baru join TB JAPANESE 🇯🇵",
+  "2 orang baru join TB INDO 🇮🇩",
+  "1 orang baru join TB WESTERN 🇬🇧",
+  "3 orang baru join TB JAPANESE 🇯🇵",
+  "2 orang baru join TB WESTERN 🇬🇧"
+];
+
+function showToast() {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.innerText = messages[Math.floor(Math.random() * messages.length)];
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+setInterval(showToast, 4000);
 </script>
 
 </body>
