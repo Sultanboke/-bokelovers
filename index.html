@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Exclusive Access</title>
 
-<!-- PREMIUM FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -17,7 +17,7 @@
 }
 
 body {
-  background: radial-gradient(circle at top, #0a0a0a, #050505);
+  background: #000;
   color: white;
   overflow: hidden;
 }
@@ -28,6 +28,15 @@ canvas {
   top: 0;
   left: 0;
   z-index: -1;
+}
+
+/* LIVE */
+.live {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  font-size: 12px;
+  opacity: 0.7;
 }
 
 /* MAIN */
@@ -42,15 +51,14 @@ canvas {
   max-width: 420px;
 }
 
-/* HEADLINE */
+/* TEXT */
 .title {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: 8px;
 }
 
 .subtitle {
-  font-size: 14px;
+  font-size: 13px;
   opacity: 0.6;
   margin-bottom: 25px;
 }
@@ -59,52 +67,24 @@ canvas {
 .btn {
   display: block;
   padding: 18px;
-  margin: 12px 0;
+  margin: 10px 0;
   border-radius: 50px;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 15px;
   text-decoration: none;
   border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
   transition: 0.3s;
-  backdrop-filter: blur(10px);
 }
 
-/* HOVER */
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 20px currentColor;
+  box-shadow: 0 0 25px currentColor;
 }
 
 /* COLORS */
 .japanese { color: #ff4d4d; }
 .indo { color: #ff0000; }
 .western { color: #4da6ff; }
-
-/* LIVE VIEW */
-.live {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  font-size: 12px;
-  opacity: 0.7;
-}
-
-/* TOAST */
-.toast {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: rgba(0,0,0,0.85);
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-size: 13px;
-  animation: slideUp 0.4s ease;
-}
-
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
 
 /* MODAL */
 .modal {
@@ -119,22 +99,50 @@ canvas {
 }
 
 .modal-content {
-  text-align: center;
   padding: 30px;
   border-radius: 14px;
   background: #111;
-  box-shadow: 0 0 40px rgba(255,0,0,0.3);
+  text-align: center;
+  box-shadow: 0 0 40px rgba(255,0,0,0.4);
 }
 
 .modal button {
   margin-top: 20px;
   padding: 12px 25px;
-  border: none;
   border-radius: 30px;
+  border: none;
   background: #ff4d4d;
   color: white;
-  font-weight: 500;
-  cursor: pointer;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.85);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  animation: slideUp 0.4s;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* CHAT */
+.chat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  max-width: 200px;
+  background: #111;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  opacity: 0.9;
 }
 
 /* ANIMATION */
@@ -149,13 +157,13 @@ canvas {
 
 <canvas id="bg"></canvas>
 
-<div class="live" id="live">● 128 online</div>
+<div class="live" id="live">● 132 online</div>
 
 <!-- 21+ -->
 <div class="modal" id="warning">
   <div class="modal-content">
     <h2>21+ Only</h2>
-    <p style="opacity:0.6;">Restricted content. Continue if eligible.</p>
+    <p style="opacity:0.6;">Restricted content</p>
     <button onclick="enterSite()">Enter</button>
   </div>
 </div>
@@ -163,24 +171,27 @@ canvas {
 <div class="container">
 
   <div class="title">Private Channel Access</div>
-  <div class="subtitle">Limited access available</div>
+  <div class="subtitle">Limited availability</div>
 
-  <a href="https://t.me/+ydd_4nMmWM4xMzA1" class="btn japanese">
+  <a href="https://t.me/+ydd_4nMmWM4xMzA1" class="btn japanese" onclick="track('japanese')">
     TB JAPANESE 🇯🇵
   </a>
 
-  <a href="https://t.me/+Oq5_fbkVFLI1NzY1" class="btn indo">
+  <a href="https://t.me/+Oq5_fbkVFLI1NzY1" class="btn indo" onclick="track('indo')">
     TB INDO 🇮🇩
   </a>
 
-  <a href="https://t.me/+lVSZPNj8WLNiNDNl" class="btn western">
+  <a href="https://t.me/+lVSZPNj8WLNiNDNl" class="btn western" onclick="track('western')">
     TB WESTERN 🇬🇧
   </a>
 
 </div>
 
+<div class="chat" id="chat">
+  💬 User dari Jakarta baru saja join
+</div>
+
 <script>
-/* ENTER */
 function enterSite() {
   document.getElementById('warning').style.display = 'none';
 }
@@ -192,63 +203,67 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let particles = [];
+let p = [];
 
 for (let i = 0; i < 80; i++) {
-  particles.push({
+  p.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     r: Math.random() * 2,
-    d: Math.random() * 1
+    d: Math.random()
   });
 }
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "white";
-
-  particles.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  particles.forEach(p => {
-    p.y += p.d;
-    if (p.y > canvas.height) {
-      p.y = 0;
-      p.x = Math.random() * canvas.width;
-    }
-  });
-}
-
-setInterval(draw, 30);
-
-/* LIVE VIEW */
-let viewers = 120;
 setInterval(() => {
-  viewers += Math.floor(Math.random() * 4 - 1);
-  document.getElementById("live").innerText = "● " + viewers + " online";
-}, 3000);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  p.forEach(a=>{
+    ctx.beginPath();
+    ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+    ctx.fill();
+    a.y+=a.d;
+    if(a.y>canvas.height){a.y=0;}
+  });
+},30);
 
-/* SIMPLE JOIN NOTIF */
-const msgs = [
-  "1 orang baru join TB JAPANESE 🇯🇵",
-  "3 orang baru join TB INDO 🇮🇩",
-  "1 orang baru join TB WESTERN 🇬🇧",
-  "3 orang baru join TB JAPANESE 🇯🇵"
+/* VIEWERS */
+let v=120;
+setInterval(()=>{
+  v+=Math.floor(Math.random()*4-1);
+  document.getElementById("live").innerText="● "+v+" online";
+},3000);
+
+/* SIMPLE JOIN */
+const msgs=[
+"1 orang baru join TB JAPANESE 🇯🇵",
+"3 orang baru join TB INDO 🇮🇩",
+"1 orang baru join TB WESTERN 🇬🇧"
 ];
 
-function showToast() {
-  const t = document.createElement("div");
-  t.className = "toast";
-  t.innerText = msgs[Math.floor(Math.random() * msgs.length)];
-
+setInterval(()=>{
+  let t=document.createElement("div");
+  t.className="toast";
+  t.innerText=msgs[Math.floor(Math.random()*msgs.length)];
   document.body.appendChild(t);
-  setTimeout(() => t.remove(), 2500);
+  setTimeout(()=>t.remove(),2500);
+},4000);
+
+/* DEVICE LOCATION STYLE */
+const cities=["Jakarta","Surabaya","Bandung","Makassar","Bali"];
+setInterval(()=>{
+  document.getElementById("chat").innerText=
+  "💬 User dari "+cities[Math.floor(Math.random()*cities.length)]+" join sekarang";
+},5000);
+
+/* TRACKING */
+function track(type){
+  console.log("Klik:",type);
 }
 
-setInterval(showToast, 4000);
+/* REDIRECT FUNNEL */
+setTimeout(()=>{
+  console.log("Trigger funnel...");
+},10000);
 </script>
 
 </body>
