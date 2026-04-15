@@ -17,7 +17,7 @@
 }
 
 body {
-  background: #000;
+  background: radial-gradient(circle at 20% 20%, #0a0a0a, #000);
   color: white;
   overflow: hidden;
 }
@@ -30,13 +30,17 @@ canvas {
   z-index: -1;
 }
 
-/* LIVE */
+/* LIVE VIEW */
 .live {
   position: fixed;
   top: 15px;
   right: 20px;
   font-size: 12px;
-  opacity: 0.7;
+  opacity: 0.85;
+  background: rgba(255,255,255,0.05);
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
 }
 
 /* MAIN */
@@ -72,19 +76,48 @@ canvas {
   font-size: 15px;
   text-decoration: none;
   border: 1px solid rgba(255,255,255,0.15);
-  backdrop-filter: blur(8px);
-  transition: 0.3s;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 25px currentColor;
+  backdrop-filter: blur(12px);
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 /* COLORS */
-.japanese { color: #ff4d4d; }
-.indo { color: #ff0000; }
-.western { color: #4da6ff; }
+.japanese {
+  color: #ff4d4d;
+  background: linear-gradient(120deg, rgba(255,77,77,0.15), transparent);
+}
+.indo {
+  color: #ff0000;
+  background: linear-gradient(120deg, rgba(255,0,0,0.15), transparent);
+}
+.western {
+  color: #4da6ff;
+  background: linear-gradient(120deg, rgba(77,166,255,0.15), transparent);
+}
+
+/* HOVER */
+.btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 30px currentColor;
+}
+
+/* SHINE */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: skewX(-20deg);
+}
+
+.btn:hover::before {
+  left: 120%;
+  transition: 0.6s;
+}
 
 /* MODAL */
 .modal {
@@ -137,18 +170,24 @@ canvas {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  max-width: 200px;
-  background: #111;
-  padding: 10px;
-  border-radius: 12px;
+  max-width: 220px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 12px;
+  border-radius: 14px;
   font-size: 12px;
-  opacity: 0.9;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 /* ANIMATION */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translate(-50%, -55%); }
-  to { opacity: 1; transform: translate(-50%, -50%); }
+  from { opacity: 0; transform: translate(-50%, -60%) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* PULSE */
+.pulse {
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
 }
 </style>
 </head>
@@ -233,7 +272,7 @@ setInterval(()=>{
   document.getElementById("live").innerText="● "+v+" online";
 },3000);
 
-/* SIMPLE JOIN */
+/* TOAST */
 const msgs=[
 "1 orang baru join TB JAPANESE 🇯🇵",
 "3 orang baru join TB INDO 🇮🇩",
@@ -248,22 +287,35 @@ setInterval(()=>{
   setTimeout(()=>t.remove(),2500);
 },4000);
 
-/* DEVICE LOCATION STYLE */
+/* LOCATION STYLE */
 const cities=["Jakarta","Surabaya","Bandung","Makassar","Bali"];
 setInterval(()=>{
   document.getElementById("chat").innerText=
   "💬 User dari "+cities[Math.floor(Math.random()*cities.length)]+" join sekarang";
 },5000);
 
-/* TRACKING */
+/* TRACK */
 function track(type){
   console.log("Klik:",type);
 }
 
-/* REDIRECT FUNNEL */
-setTimeout(()=>{
-  console.log("Trigger funnel...");
-},10000);
+/* MICRO EFFECT */
+document.querySelectorAll(".btn").forEach(btn => {
+  btn.addEventListener("mousemove", e => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    btn.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15), transparent)`;
+  });
+  btn.addEventListener("mouseleave", () => {
+    btn.style.background = "";
+  });
+});
+
+/* PULSE */
+setInterval(()=>{
+  document.querySelector(".btn").classList.toggle("pulse");
+},2000);
 </script>
 
 </body>
