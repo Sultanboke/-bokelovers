@@ -1,101 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join Telegram Channel</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Telegram</title>
 
-    body {
-      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-    .container {
-      text-align: center;
-      width: 90%;
-      max-width: 400px;
-    }
+body {
+  background: #0a0a0a;
+  color: white;
+  overflow: hidden;
+}
 
-    .logo {
-      font-size: 28px;
-      margin-bottom: 40px;
-      opacity: 0.8;
-    }
+/* PARTICLE BACKGROUND */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 
-    .btn {
-      display: block;
-      text-decoration: none;
-      color: black;
-      background: white;
-      padding: 16px;
-      margin: 15px 0;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 18px;
-      transition: 0.3s;
-      box-shadow: 0 0 10px rgba(255,255,255,0.2);
-    }
+/* MAIN */
+.container {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: fadeIn 1.5s ease-in-out;
+}
 
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255,255,255,0.6);
-    }
+.logo {
+  font-size: 32px;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
 
-    .japanese:hover {
-      background: #ff4d4d;
-      color: white;
-    }
+/* BUTTON */
+.btn {
+  display: block;
+  text-decoration: none;
+  color: white;
+  padding: 18px;
+  margin: 15px 0;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.3s;
+  border: 2px solid rgba(255,255,255,0.2);
+}
 
-    .indo:hover {
-      background: #ff0000;
-      color: white;
-    }
+/* NEON EFFECT */
+.btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+}
 
-    .western:hover {
-      background: #4da6ff;
-      color: white;
-    }
+/* COLOR VARIANTS */
+.japanese { color: #ff4d4d; }
+.indo { color: #ff0000; }
+.western { color: #4da6ff; }
 
-    .footer {
-      margin-top: 30px;
-      font-size: 14px;
-      opacity: 0.7;
-    }
+.footer {
+  margin-top: 30px;
+  font-size: 14px;
+  opacity: 0.6;
+}
 
-  </style>
+/* FADE */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* WARNING MODAL */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-content {
+  text-align: center;
+  padding: 30px;
+  border: 2px solid red;
+  border-radius: 15px;
+  box-shadow: 0 0 20px red;
+  animation: fadeIn 1s;
+}
+
+.modal h2 {
+  margin-bottom: 15px;
+}
+
+.modal button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  background: red;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="container">
-    <div class="logo">(LOGO)</div>
+<canvas id="bg"></canvas>
 
-    <a href="https://t.me/+ydd_4nMmWM4xMzA1" class="btn japanese">
-      TB JAPANESE 🇯🇵
-    </a>
-
-    <a href="https://t.me/+Oq5_fbkVFLI1NzY1" class="btn indo">
-      TB INDO 🇮🇩
-    </a>
-
-    <a href="https://t.me/+lVSZPNj8WLNiNDNl" class="btn western">
-      TB WESTERN 🇬🇧
-    </a>
-
-    <div class="footer">
-      Limited Free Access — Join Now 🚀
-    </div>
+<!-- WARNING -->
+<div class="modal" id="warning">
+  <div class="modal-content">
+    <h2>⚠️ 21+ ONLY</h2>
+    <p>Konten hanya untuk usia 21 tahun ke atas.</p>
+    <button onclick="enterSite()">Saya 21+</button>
   </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+  <div class="logo">(LOGO)</div>
+
+  <a href="https://t.me/+ydd_4nMmWM4xMzA1" class="btn japanese">
+    TB JAPANESE 🇯🇵
+  </a>
+
+  <a href="https://t.me/+Oq5_fbkVFLI1NzY1" class="btn indo">
+    TB INDO 🇮🇩
+  </a>
+
+  <a href="https://t.me/+lVSZPNj8WLNiNDNl" class="btn western">
+    TB WESTERN 🇬🇧
+  </a>
+
+  <div class="footer">
+    Limited Access — Join Now 🚀
+  </div>
+</div>
+
+<script>
+/* REMOVE WARNING */
+function enterSite() {
+  document.getElementById('warning').style.display = 'none';
+}
+
+/* PARTICLE EFFECT */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2,
+    d: Math.random() * 1
+  });
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+    ctx.fill();
+  });
+
+  update();
+}
+
+function update() {
+  particles.forEach(p => {
+    p.y += p.d;
+    if (p.y > canvas.height) {
+      p.y = 0;
+      p.x = Math.random() * canvas.width;
+    }
+  });
+}
+
+setInterval(draw, 33);
+</script>
 
 </body>
 </html>
