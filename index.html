@@ -55,7 +55,7 @@ background:linear-gradient(90deg,#ff416c,#ff4b2b);
 .page-btn{padding:8px 12px;background:#222;border-radius:6px;cursor:pointer;}
 .page-btn.active{background:#ff416c;}
 
-/* POPUP PREMIUM */
+/* POPUP */
 .popup{
 position:fixed;top:0;left:0;width:100%;height:100%;
 background:rgba(0,0,0,0.8);
@@ -86,6 +86,16 @@ background:#1a1a1a;padding:10px 15px;
 border-radius:8px;font-size:13px;
 display:none;
 }
+
+/* FOOTER */
+.footer{
+text-align:center;
+padding:20px;
+font-size:12px;
+opacity:0.6;
+border-top:1px solid #222;
+margin-top:20px;
+}
 </style>
 </head>
 
@@ -109,6 +119,12 @@ display:none;
 
 <div id="list" class="container"></div>
 <div id="pagination" class="pagination"></div>
+
+<!-- FOOTER -->
+<div class="footer">
+🔥 Update setiap hari | Join Telegram untuk konten terbaru  
+<br>© 2026 Telebokep Gallery
+</div>
 
 <!-- POPUP -->
 <div id="popup" class="popup">
@@ -197,12 +213,11 @@ document.getElementById("popup").style.display="flex";
 },2000);
 }
 
-/* TOAST */
-const names=["Rian","Dewi","Budi","Andi","Sari","Agus","Putri"];
+/* TOAST ANGKA */
 function showToast(){
 const toast=document.getElementById("toast");
-const name=names[Math.floor(Math.random()*names.length)];
-toast.innerText=`${name} joined Telegram`;
+const jumlah=Math.floor(Math.random()*6)+1;
+toast.innerText=`${jumlah} user baru join Telegram`;
 toast.style.display="block";
 setTimeout(()=>toast.style.display="none",3000);
 }
