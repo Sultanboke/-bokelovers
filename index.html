@@ -34,6 +34,15 @@ box-shadow:0 0 40px rgba(0,0,0,0.8);
 animation:fadeIn 0.4s ease;
 }
 
+.force-box h2{font-size:18px;margin-bottom:8px;}
+
+.force-box p{
+font-size:13px;
+opacity:0.85;
+margin-bottom:15px;
+line-height:1.5;
+}
+
 .join-btn{
 display:block;
 padding:12px;
@@ -42,6 +51,12 @@ text-decoration:none;
 color:white;
 font-weight:600;
 background:linear-gradient(90deg,#0088cc,#229ED9);
+transition:0.2s;
+}
+
+.join-btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px rgba(0,136,204,0.7);
 }
 
 .note{
@@ -68,12 +83,14 @@ background:linear-gradient(90deg,#ff416c,#ff4b2b);
 @media (min-width:600px){.container{grid-template-columns:repeat(4,1fr);}}
 @media (min-width:900px){.container{grid-template-columns:repeat(5,1fr);}}
 
-/* CARD */
 .card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;}
 .card img{width:100%;height:130px;object-fit:cover;}
+
 .card-info{text-align:center;font-size:11px;padding:6px;opacity:0.8;}
 
-/* PREVIEW */
+.pagination{display:flex;justify-content:center;gap:8px;padding:20px;}
+.page-btn{padding:8px 12px;background:#222;border-radius:6px;cursor:pointer;}
+
 .preview{
 position:fixed;top:0;left:0;width:100%;height:100%;
 background:rgba(0,0,0,0.9);
@@ -91,14 +108,7 @@ width:90%;max-width:360px;
 .preview-btn{flex:1;padding:10px;border-radius:10px;text-decoration:none;color:white;}
 .watch{background:#22c55e;}
 .download{background:#3b82f6;}
-.close-btn{
-margin-top:10px;
-font-size:12px;
-opacity:0.6;
-cursor:pointer;
-}
 
-/* TOAST */
 .toast{position:fixed;bottom:20px;left:20px;background:#1a1a1a;padding:10px;border-radius:8px;display:none;}
 
 .footer{text-align:center;padding:20px;font-size:12px;opacity:0.6;}
@@ -116,12 +126,12 @@ to{transform:scale(1);opacity:1;}
 <div class="force-popup">
   <div class="force-box">
     <h2>🔒 Akses Terbatas</h2>
-    <p style="font-size:13px;opacity:0.8;">
+    <p>
       Untuk membuka semua konten, silakan join Telegram terlebih dahulu 🔥
     </p>
 
-    <a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank" class="join-btn" onclick="joinDone()">
-      🚀 Join Indo Viral
+    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">
+      🚀 Join telebokep
     </a>
 
     <div class="note">
@@ -132,7 +142,7 @@ to{transform:scale(1);opacity:1;}
 
 <div class="sticky-banner">
 🚀 Join Telegram:
-<a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank">Indo Viral</a>
+<a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank">Indo Viral</a>
 </div>
 
 <div class="header">🔥 TELEBOKEP GALLERY 🔥</div>
@@ -147,7 +157,6 @@ to{transform:scale(1);opacity:1;}
 
 <div class="footer">© 2026 Telebokep Gallery</div>
 
-<!-- PREVIEW -->
 <div id="preview" class="preview">
   <div class="preview-box">
     <img id="previewImg">
@@ -157,10 +166,6 @@ to{transform:scale(1);opacity:1;}
         <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
         <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
       </div>
-
-      <!-- TOMBOL TUTUP -->
-      <div class="close-btn" onclick="closePreview()">Tutup</div>
-
     </div>
   </div>
 </div>
@@ -171,7 +176,7 @@ to{transform:scale(1);opacity:1;}
 const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5,4.7];
 function getRating(i){return ratings[i%ratings.length];}
 
-/* LOAD */
+/* LOAD DATA */
 fetch('data.json')
 .then(res=>res.json())
 .then(data=>{
@@ -194,17 +199,6 @@ document.getElementById("watchBtn").href=link;
 document.getElementById("downloadBtn").href=link;
 }
 
-function closePreview(){
-document.getElementById("preview").style.display="none";
-}
-
-/* KLIK BACKGROUND = TUTUP */
-document.getElementById("preview").addEventListener("click", function(e){
-if(e.target.id==="preview"){
-closePreview();
-}
-});
-
 /* ONLINE */
 let online=100;
 setInterval(()=>{
@@ -212,14 +206,17 @@ online+=Math.floor(Math.random()*10)-5;
 document.getElementById("onlineCount").innerText=online;
 },2000);
 
-/* POPUP DELAY */
+/* POPUP DELAY + STORAGE */
 function joinDone(){
 localStorage.setItem("joined","true");
 }
+
 if(!localStorage.getItem("joined")){
 setTimeout(()=>{
 document.querySelector(".force-popup").style.display="flex";
 },5000);
+}else{
+document.querySelector(".force-popup").style.display="none";
 }
 
 /* TOAST */
