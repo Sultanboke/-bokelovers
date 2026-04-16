@@ -57,14 +57,6 @@ opacity:0.8;
 margin-bottom:10px;
 }
 
-/* RATING */
-.rating{
-text-align:center;
-font-size:12px;
-opacity:0.8;
-margin-bottom:10px;
-}
-
 /* GRID */
 .container{
 display:grid;
@@ -86,6 +78,14 @@ cursor:pointer;
 width:100%;
 height:130px;
 object-fit:cover;
+}
+
+/* RATING PER CARD */
+.card-info{
+text-align:center;
+font-size:11px;
+padding:6px;
+opacity:0.8;
 }
 
 /* PAGINATION */
@@ -143,7 +143,6 @@ font-size:16px;
 margin-bottom:6px;
 }
 
-/* DESKRIPSI DIKECILKAN */
 .desc{
 font-size:12px;
 opacity:0.75;
@@ -220,7 +219,6 @@ border-top:1px solid #222;
 </div>
 
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
-<div class="rating">⭐ <span id="rating">4.8</span> rating</div>
 
 <div id="list" class="container"></div>
 <div id="pagination" class="pagination"></div>
@@ -234,7 +232,6 @@ border-top:1px solid #222;
 <div id="preview" class="preview">
   <div class="preview-box">
     <img id="previewImg">
-
     <div class="preview-content">
       <h3>🎬 Ready to Watch</h3>
       <p class="desc">Tonton video kualitas terbaik, bisa disimpan & ditonton kapan saja.</p>
@@ -256,6 +253,12 @@ border-top:1px solid #222;
 const perPage=15;
 let allData=[];
 
+/* RATING FIXED */
+const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5,4.7];
+function getRating(index){
+  return ratings[index % ratings.length];
+}
+
 /* LOAD */
 fetch('data.json?v='+Date.now())
 .then(res=>res.json())
@@ -272,10 +275,13 @@ container.innerHTML="";
 const start=(page-1)*perPage;
 const items=allData.slice(start,start+perPage);
 
-items.forEach(item=>{
+items.forEach((item,index)=>{
 container.innerHTML+=`
 <div class="card" onclick="openPreview('${item.img}','${item.link}')">
 <img src="${item.img}" loading="lazy">
+<div class="card-info">
+⭐ ${getRating(index)}
+</div>
 </div>`;
 });
 }
@@ -308,10 +314,6 @@ online+=Math.floor(Math.random()*10)-5;
 if(online<30) online=30;
 document.getElementById("onlineCount").innerText=online;
 },2000);
-
-/* RATING */
-let rating=(Math.random()*(4.9-4.6)+4.6).toFixed(1);
-document.getElementById("rating").innerText=rating;
 
 /* TOAST */
 function showToast(){
