@@ -13,19 +13,98 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#0d0d0d;color:white;padding-top:40px;}
 
-.force-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10000;}
-.force-box{background:#111;padding:25px;border-radius:15px;text-align:center;width:85%;max-width:340px;}
-.join-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;color:white;font-weight:600;background:#0088cc;}
-.note{font-size:11px;opacity:0.6;margin-top:10px;}
+/* MARQUEE BAR */
+.sticky-banner{
+position:fixed;
+top:0;
+width:100%;
+background:linear-gradient(90deg,#0088cc,#229ED9);
+color:white;
+font-size:13px;
+padding:8px;
+z-index:9999;
+overflow:hidden;
+white-space:nowrap;
+}
 
-.sticky-banner{position:fixed;top:0;width:100%;background:#0088cc;color:white;text-align:center;padding:8px;font-size:13px;z-index:9999;}
+.marquee{
+display:inline-block;
+padding-left:100%;
+animation:scroll 12s linear infinite;
+}
 
-.header{text-align:center;padding:20px;font-size:28px;font-family:'Bebas Neue';letter-spacing:2px;
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
+}
+
+/* POPUP */
+.force-popup{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:#000;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:10000;
+}
+
+.force-box{
+background:#111;
+padding:25px;
+border-radius:15px;
+text-align:center;
+width:85%;
+max-width:340px;
+}
+
+.join-btn{
+display:block;
+padding:12px;
+border-radius:12px;
+text-decoration:none;
+color:white;
+font-weight:600;
+background:#0088cc;
+}
+
+/* TEXT POPUP DIKECILKAN + MERAH */
+.force-box p{
+font-size:12px;
+color:#ff4d4d;
+margin-bottom:12px;
+}
+
+.note{
+font-size:11px;
+opacity:0.6;
+margin-top:10px;
+}
+
+.header{
+text-align:center;
+padding:20px;
+font-size:28px;
+font-family:'Bebas Neue';
+letter-spacing:2px;
 background:linear-gradient(90deg,#ff416c,#ff4b2b);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
 
 .topbar{display:flex;justify-content:center;padding:10px;}
-.tg-btn{padding:8px 16px;border-radius:10px;text-decoration:none;color:white;font-size:13px;background:#0088cc;display:flex;align-items:center;gap:6px;}
+.tg-btn{
+padding:8px 16px;
+border-radius:10px;
+text-decoration:none;
+color:white;
+font-size:13px;
+background:#0088cc;
+display:flex;
+align-items:center;
+gap:6px;
+}
 
 .bookmark{text-align:center;font-size:11px;opacity:0.7;margin-top:-5px;margin-bottom:10px;}
 
@@ -59,11 +138,18 @@ background:linear-gradient(90deg,#ff416c,#ff4b2b);
 
 <body>
 
+<!-- MARQUEE -->
+<div class="sticky-banner">
+  <div class="marquee">
+    🚀 Tambahkan website ini ke layar utama HP kamu untuk akses cepat & update konten setiap hari tanpa terlewat 🔥
+  </div>
+</div>
+
 <!-- POPUP -->
 <div class="force-popup">
   <div class="force-box">
     <h2>Join Telegram</h2>
-    <p>Gabung dulu untuk membuka semua konten 🔥</p>
+    <p>Gabung terlebih dahulu untuk membuka semua konten terbaru</p>
 
     <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">
       🚀 Join Telegram
@@ -72,8 +158,6 @@ background:linear-gradient(90deg,#ff416c,#ff4b2b);
     <div class="note">Setelah join, kembali ke halaman ini</div>
   </div>
 </div>
-
-<div class="sticky-banner">Join Telegram Telebokep</div>
 
 <div class="header">TELEBOKEP</div>
 
@@ -151,11 +235,6 @@ toast.innerText=Math.floor(Math.random()*6+1)+" user join";
 toast.style.display="block";
 setTimeout(()=>toast.style.display="none",3000);
 },7000);
-
-/* PWA */
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('service-worker.js');
-}
 </script>
 
 </body>
