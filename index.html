@@ -39,72 +39,105 @@ background:linear-gradient(90deg,#ff416c,#ff4b2b);
 .card{background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer;}
 .card img{width:100%;height:130px;object-fit:cover;}
 
-/* BUTTON */
-.actions{display:flex;gap:6px;padding:6px;}
-.btn{flex:1;display:flex;align-items:center;justify-content:center;padding:8px;border-radius:8px;background:#2a2a2a;}
-.play svg{fill:#22c55e;width:20px;}
-.download svg{stroke:#3b82f6;stroke-width:2;fill:none;width:20px;}
-
 /* PAGINATION */
 .pagination{display:flex;justify-content:center;gap:8px;padding:20px;}
 .page-btn{padding:8px 12px;background:#222;border-radius:6px;cursor:pointer;}
 .page-btn.active{background:#ff416c;}
 
-/* PREVIEW POPUP */
+/* PREVIEW PREMIUM */
 .preview{
-position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.85);
-display:none;align-items:center;justify-content:center;
-z-index:9999;backdrop-filter:blur(8px);
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+backdrop-filter:blur(10px);
 }
 
 .preview-box{
-background:#111;
-border-radius:15px;
+background:linear-gradient(145deg,#111,#1a1a1a);
+border-radius:18px;
 overflow:hidden;
 width:90%;
-max-width:350px;
+max-width:360px;
 animation:fadeIn 0.3s ease;
+box-shadow:0 0 30px rgba(0,0,0,0.8);
 }
 
 .preview-box img{
 width:100%;
+height:180px;
+object-fit:cover;
+}
+
+.preview-content{
+padding:15px;
+text-align:center;
+}
+
+.preview-content h3{
+font-size:16px;
+margin-bottom:5px;
+}
+
+.desc{
+font-size:13px;
+opacity:0.8;
+margin-bottom:12px;
 }
 
 .preview-actions{
-padding:10px;
 display:flex;
 gap:10px;
+margin-bottom:10px;
 }
 
 .preview-btn{
 flex:1;
 padding:10px;
-text-align:center;
-border-radius:8px;
+border-radius:10px;
 text-decoration:none;
 color:white;
-font-weight:500;
+font-weight:600;
+transition:0.2s;
 }
 
 .watch{background:#22c55e;}
 .download{background:#3b82f6;}
 
-.close{
-text-align:center;
-padding:8px;
-font-size:13px;
-cursor:pointer;
+.preview-btn:hover{transform:scale(1.05);}
+
+.info{
+font-size:11px;
 opacity:0.6;
+margin-top:5px;
 }
+
+.close{
+margin-top:10px;
+font-size:12px;
+opacity:0.6;
+cursor:pointer;
+}
+
+/* TOAST */
+.toast{
+position:fixed;bottom:20px;left:20px;
+background:#1a1a1a;padding:10px 15px;
+border-radius:8px;font-size:13px;
+display:none;
+}
+
+/* FOOTER */
+.footer{text-align:center;padding:20px;font-size:12px;opacity:0.6;border-top:1px solid #222;}
 
 @keyframes fadeIn{
 from{transform:scale(0.8);opacity:0;}
 to{transform:scale(1);opacity:1;}
 }
-
-/* FOOTER */
-.footer{text-align:center;padding:20px;font-size:12px;opacity:0.6;border-top:1px solid #222;}
 </style>
 </head>
 
@@ -137,19 +170,32 @@ to{transform:scale(1);opacity:1;}
 <div id="preview" class="preview">
   <div class="preview-box">
     <img id="previewImg">
-    <div class="preview-actions">
-      <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
-      <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
+
+    <div class="preview-content">
+      <h3>🎬 Ready to Watch</h3>
+      <p class="desc">Tonton video dengan kualitas terbaik. Bisa disimpan & ditonton kapan saja.</p>
+
+      <div class="preview-actions">
+        <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
+        <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
+      </div>
+
+      <p class="info">💡 Mendukung berbagai platform, cepat & gratis digunakan</p>
+
+      <div class="close" onclick="closePreview()">Tutup</div>
     </div>
-    <div class="close" onclick="closePreview()">Tutup</div>
+
   </div>
 </div>
 
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
 <script>
 const perPage=15;
-let currentPage=1;
 let allData=[];
 
+/* LOAD */
 fetch('data.json?v='+Date.now())
 .then(res=>res.json())
 .then(data=>{
@@ -158,6 +204,7 @@ renderPage(1);
 renderPagination();
 });
 
+/* RENDER */
 function renderPage(page){
 const container=document.getElementById("list");
 container.innerHTML="";
@@ -172,6 +219,7 @@ container.innerHTML+=`
 });
 }
 
+/* PAGINATION */
 function renderPagination(){
 const totalPages=Math.ceil(allData.length/perPage);
 const pagination=document.getElementById("pagination");
@@ -199,6 +247,16 @@ online+=Math.floor(Math.random()*10)-5;
 if(online<30) online=30;
 document.getElementById("onlineCount").innerText=online;
 },2000);
+
+/* TOAST ANGKA */
+function showToast(){
+const toast=document.getElementById("toast");
+const jumlah=Math.floor(Math.random()*6)+1;
+toast.innerText=`${jumlah} user baru join Telegram`;
+toast.style.display="block";
+setTimeout(()=>toast.style.display="none",3000);
+}
+setInterval(showToast,7000);
 </script>
 
 </body>
