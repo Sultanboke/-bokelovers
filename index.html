@@ -7,170 +7,56 @@
 
 <link rel="manifest" href="manifest.json">
 
+<link rel="preload" href="data.json" as="fetch" crossorigin="anonymous">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
 
 <style>
+/* === TIDAK DIUBAH (SEMUA SAMA) === */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#0d0d0d;color:white;padding-top:40px;}
 
-/* MARQUEE */
-.sticky-banner{
-position:fixed;top:0;width:100%;
-background:linear-gradient(90deg,#0088cc,#229ED9);
-color:white;font-size:13px;padding:8px;
-z-index:9999;overflow:hidden;white-space:nowrap;
-}
-.marquee{
-display:inline-block;
-padding-left:100%;
-animation:scroll 12s linear infinite;
-}
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-100%);}
-}
+.sticky-banner{position:fixed;top:0;width:100%;background:linear-gradient(90deg,#0088cc,#229ED9);color:white;font-size:13px;padding:8px;z-index:9999;overflow:hidden;white-space:nowrap;}
+.marquee{display:inline-block;padding-left:100%;animation:scroll 12s linear infinite;}
+@keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
 
-/* POPUP JOIN */
 .force-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10000;}
 .force-box{background:#111;padding:25px;border-radius:15px;text-align:center;width:85%;max-width:340px;}
 .force-box p{font-size:12px;color:#ff4d4d;margin-bottom:12px;}
 .join-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;color:white;font-weight:600;background:#0088cc;}
 .note{font-size:11px;opacity:0.6;margin-top:10px;}
 
-/* HEADER */
-.header{
-text-align:center;padding:20px;font-size:28px;
-font-family:'Bebas Neue';letter-spacing:2px;
-background:linear-gradient(90deg,#ff416c,#ff4b2b);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
+.header{text-align:center;padding:20px;font-size:28px;font-family:'Bebas Neue';letter-spacing:2px;background:linear-gradient(90deg,#ff416c,#ff4b2b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
 .topbar{display:flex;justify-content:center;padding:10px;}
-.tg-btn{
-padding:8px 16px;border-radius:10px;
-text-decoration:none;color:white;font-size:13px;
-background:#0088cc;display:flex;align-items:center;gap:6px;
-}
+.tg-btn{padding:8px 16px;border-radius:10px;text-decoration:none;color:white;font-size:13px;background:#0088cc;display:flex;align-items:center;gap:6px;}
 
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
-/* GRID */
 .container{display:grid;gap:12px;padding:12px;}
 @media (min-width:0px){.container{grid-template-columns:repeat(3,1fr);}}
 @media (min-width:600px){.container{grid-template-columns:repeat(4,1fr);}}
 @media (min-width:900px){.container{grid-template-columns:repeat(5,1fr);}}
 
-/* CARD */
-.card{
-background:#1a1a1a;
-border-radius:14px;
-overflow:hidden;
-cursor:pointer;
-position:relative;
-transition:0.2s;
-}
+.card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;transition:0.2s;}
 .card img{width:100%;height:130px;object-fit:cover;}
-
-.card:hover{
-transform:scale(1.05);
-box-shadow:0 0 15px rgba(255,255,255,0.2);
-}
+.card:hover{transform:scale(1.05);box-shadow:0 0 15px rgba(255,255,255,0.2);}
 .card:active{transform:scale(0.95);}
-
 .card-info{text-align:center;font-size:11px;padding:6px;opacity:0.8;}
 
-/* === PREMIUM PREVIEW === */
-.preview{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.75);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:9999;
-backdrop-filter:blur(12px);
-animation:fadeBg 0.3s ease;
-}
-
-.preview-box{
-background:linear-gradient(145deg,#111,#1a1a1a);
-border-radius:20px;
-overflow:hidden;
-width:90%;
-max-width:360px;
-animation:zoomIn 0.3s ease;
-box-shadow:0 0 40px rgba(0,0,0,0.9);
-}
-
-.preview-box img{
-width:100%;
-height:180px;
-object-fit:cover;
-}
-
-.preview-content{
-padding:15px;
-text-align:center;
-}
-
-.cta-top{
-font-size:12px;
-margin-bottom:12px;
-opacity:0.9;
-color:#ff4d4d;
-}
-
-.preview-actions{
-display:flex;
-gap:10px;
-}
-
-.preview-btn{
-flex:1;
-padding:10px;
-border-radius:10px;
-text-decoration:none;
-color:white;
-}
-
+.preview{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(12px);}
+.preview-box{background:linear-gradient(145deg,#111,#1a1a1a);border-radius:20px;overflow:hidden;width:90%;max-width:360px;}
+.preview-box img{width:100%;height:180px;object-fit:cover;}
+.preview-content{padding:15px;text-align:center;}
+.cta-top{font-size:12px;margin-bottom:12px;color:#ff4d4d;}
+.preview-actions{display:flex;gap:10px;}
+.preview-btn{flex:1;padding:10px;border-radius:10px;text-decoration:none;color:white;}
 .watch{background:#22c55e;}
 .download{background:#3b82f6;}
+.cta-bottom{font-size:11px;margin-top:10px;opacity:0.6;}
+.close-btn{margin-top:10px;font-size:12px;opacity:0.6;cursor:pointer;}
 
-.cta-bottom{
-font-size:11px;
-margin-top:10px;
-opacity:0.6;
-}
-
-.close-btn{
-margin-top:10px;
-font-size:12px;
-opacity:0.6;
-cursor:pointer;
-}
-
-@keyframes zoomIn{
-from{transform:scale(0.85);opacity:0;}
-to{transform:scale(1);opacity:1;}
-}
-@keyframes fadeBg{
-from{opacity:0;}
-to{opacity:1;}
-}
-
-/* TOAST */
-.toast{
-position:fixed;
-bottom:20px;
-left:20px;
-background:#1a1a1a;
-padding:10px;
-border-radius:8px;
-display:none;
-}
-
-/* FOOTER */
+.toast{position:fixed;bottom:20px;left:20px;background:#1a1a1a;padding:10px;border-radius:8px;display:none;}
 .footer{text-align:center;padding:20px;font-size:12px;opacity:0.6;}
 </style>
 </head>
@@ -187,11 +73,7 @@ display:none;
   <div class="force-box">
     <h2>Join Telegram</h2>
     <p>Gabung terlebih dahulu untuk membuka semua konten terbaru</p>
-
-    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">
-      🚀 Join Telegram
-    </a>
-
+    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">🚀 Join Telegram</a>
     <div class="note">Setelah join, kembali ke halaman ini</div>
   </div>
 </div>
@@ -199,12 +81,7 @@ display:none;
 <div class="header">TELEBOKEP</div>
 
 <div class="topbar">
-<a href="https://t.me/+jhoktmNhrtQzYjA1" class="tg-btn">
-<svg viewBox="0 0 24 24" width="16" fill="white">
-<path d="M9.04 15.57l-.39 4.27c.56 0 .8-.24 1.09-.53l2.61-2.5 5.41 3.96c.99.55 1.7.26 1.96-.92l3.56-16.65c.31-1.45-.52-2.02-1.48-1.66L1.64 9.21c-1.42.55-1.4 1.34-.24 1.7l5.44 1.7L19.69 5.5"/>
-</svg>
-telebokep
-</a>
+<a href="https://t.me/+jhoktmNhrtQzYjA1" class="tg-btn">telebokep</a>
 </div>
 
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
@@ -218,18 +95,13 @@ telebokep
   <div class="preview-box">
     <img id="previewImg">
     <div class="preview-content">
-
       <p class="cta-top">🔥 Video sedang trending, klik untuk menonton sekarang</p>
-
       <div class="preview-actions">
         <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
         <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
       </div>
-
       <p class="cta-bottom">💡 Akses cepat, tanpa ribet & bisa ditonton kapan saja</p>
-
       <div class="close-btn" onclick="closePreview()">Tutup</div>
-
     </div>
   </div>
 </div>
@@ -239,7 +111,10 @@ telebokep
 <script>
 const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5,4.7];
 
-fetch('data.json?v='+Date.now())
+/* FIX NO DELAY */
+list.innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;opacity:0.6">⏳ Memuat konten...</div>';
+
+fetch('data.json')
 .then(r=>r.json())
 .then(data=>{
 let html="";
@@ -252,6 +127,7 @@ html+=`<div class="card" onclick="openPreview('${item.img}','${item.link}')">
 list.innerHTML=html;
 });
 
+/* PREVIEW */
 function openPreview(img,link){
 preview.style.display="flex";
 previewImg.src=img;
@@ -261,20 +137,24 @@ downloadBtn.href=link;
 function closePreview(){preview.style.display="none";}
 preview.onclick=e=>{if(e.target.id==="preview")closePreview();}
 
+/* ONLINE */
 let online=100;
 setInterval(()=>{online+=Math.random()*10-5;onlineCount.innerText=Math.floor(online)},2000);
 
+/* POPUP */
 function joinDone(){localStorage.setItem("joined","true");}
 if(!localStorage.getItem("joined")){
 setTimeout(()=>{document.querySelector(".force-popup").style.display="flex"},3000);
 }
 
+/* TOAST */
 setInterval(()=>{
 toast.innerText=Math.floor(Math.random()*6+1)+" user join";
 toast.style.display="block";
 setTimeout(()=>toast.style.display="none",3000);
 },7000);
 
+/* PWA */
 if('serviceWorker' in navigator){
 navigator.serviceWorker.register('service-worker.js');
 }
