@@ -7,7 +7,6 @@
 
 <link rel="manifest" href="manifest.json">
 
-<!-- FONT UPGRADE -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -21,51 +20,29 @@ background:linear-gradient(90deg,#0088cc,#229ED9);
 color:white;font-size:13px;padding:8px;
 z-index:9999;overflow:hidden;white-space:nowrap;
 }
-.marquee{
-display:inline-block;
-padding-left:100%;
-animation:scroll 12s linear infinite;
-}
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-100%);}
-}
+.marquee{display:inline-block;padding-left:100%;animation:scroll 12s linear infinite;}
+@keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
 
-/* POPUP */
+/* POPUP JOIN */
 .force-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10000;}
 .force-box{background:#111;padding:25px;border-radius:15px;text-align:center;width:85%;max-width:340px;}
 .force-box p{font-size:12px;color:#ff4d4d;margin-bottom:12px;}
 .join-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;color:white;font-weight:600;background:#0088cc;}
 .note{font-size:11px;opacity:0.6;margin-top:10px;}
 
-/* HEADER PREMIUM */
+/* HEADER */
 .header{
-text-align:center;
-padding:20px;
-font-size:30px;
-font-family:'Orbitron',sans-serif;
-letter-spacing:3px;
+text-align:center;padding:20px;font-size:30px;
+font-family:'Orbitron';letter-spacing:3px;
 background:linear-gradient(90deg,#00c6ff,#0072ff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
 text-shadow:0 0 20px rgba(0,114,255,0.4);
 }
 
 /* BUTTON */
 .topbar{display:flex;justify-content:center;padding:10px;}
-.tg-btn{
-padding:8px 16px;
-border-radius:10px;
-text-decoration:none;
-color:white;
-font-size:13px;
-background:#0088cc;
-display:flex;
-align-items:center;
-gap:6px;
-}
+.tg-btn{padding:8px 16px;border-radius:10px;text-decoration:none;color:white;font-size:13px;background:#0088cc;display:flex;align-items:center;gap:6px;}
 
-/* ONLINE */
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
 /* GRID */
@@ -75,29 +52,82 @@ gap:6px;
 @media (min-width:900px){.container{grid-template-columns:repeat(5,1fr);}}
 
 /* CARD */
-.card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;transition:0.2s;}
+.card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;transition:0.2s;position:relative;}
 .card img{width:100%;height:130px;object-fit:cover;}
 .card:hover{transform:scale(1.05);box-shadow:0 0 15px rgba(255,255,255,0.2);}
 .card:active{transform:scale(0.95);}
+
+/* PLAY ICON */
+.play-icon{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:24px;
+background:rgba(0,0,0,0.6);
+border-radius:50%;
+padding:6px 10px;
+}
+
 .card-info{text-align:center;font-size:11px;padding:6px;opacity:0.8;}
 
-/* PREVIEW */
+/* === PREMIUM PREVIEW FULL === */
 .preview{
-position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.75);
-display:none;align-items:center;justify-content:center;
-backdrop-filter:blur(12px);
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+overflow:hidden;
 }
-.preview-box{background:#111;border-radius:18px;width:90%;max-width:360px;}
-.preview-box img{width:100%;height:180px;object-fit:cover;}
+
+.preview-bg{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+filter:blur(20px);
+transform:scale(1.2);
+opacity:0.4;
+}
+
+.preview-box{
+position:relative;
+z-index:2;
+width:90%;
+max-width:420px;
+border-radius:20px;
+overflow:hidden;
+background:#111;
+animation:zoomIn 0.3s ease;
+}
+
+.preview-box img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
 .preview-content{padding:15px;text-align:center;}
+
 .cta-top{font-size:12px;margin-bottom:12px;color:#ff4d4d;}
+
 .preview-actions{display:flex;gap:10px;}
 .preview-btn{flex:1;padding:10px;border-radius:10px;text-decoration:none;color:white;}
 .watch{background:#22c55e;}
 .download{background:#3b82f6;}
+
 .cta-bottom{font-size:11px;margin-top:10px;opacity:0.6;}
+
 .close-btn{margin-top:10px;font-size:12px;opacity:0.6;cursor:pointer;}
+
+@keyframes zoomIn{
+from{transform:scale(0.85);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
 
 .toast{position:fixed;bottom:20px;left:20px;background:#1a1a1a;padding:10px;border-radius:8px;display:none;}
 .footer{text-align:center;padding:20px;font-size:12px;opacity:0.6;}
@@ -125,12 +155,9 @@ backdrop-filter:blur(12px);
 
 <div class="topbar">
 <a href="https://t.me/+jhoktmNhrtQzYjA1" class="tg-btn">
-
-<!-- ICON TELEGRAM -->
 <svg viewBox="0 0 24 24" width="16" fill="white">
 <path d="M9.04 15.57l-.39 4.27c.56 0 .8-.24 1.09-.53l2.61-2.5 5.41 3.96c.99.55 1.7.26 1.96-.92l3.56-16.65c.31-1.45-.52-2.02-1.48-1.66L1.64 9.21c-1.42.55-1.4 1.34-.24 1.7l5.44 1.7L19.69 5.5"/>
 </svg>
-
 telebokep
 </a>
 </div>
@@ -143,15 +170,21 @@ telebokep
 
 <!-- PREVIEW -->
 <div id="preview" class="preview">
+  <div id="previewBg" class="preview-bg"></div>
+
   <div class="preview-box">
     <img id="previewImg">
+
     <div class="preview-content">
-      <p class="cta-top">🔥 klik untuk menonton sekarang</p>
+      <p class="cta-top">🔥 Video eksklusif, klik untuk menonton sekarang</p>
+
       <div class="preview-actions">
         <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
         <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
       </div>
-      <p class="cta-bottom">💡 Akses cepat, tanpa ribet & bisa ditonton kapan saja</p>
+
+      <p class="cta-bottom">💡 Kualitas HD, akses cepat tanpa buffering</p>
+
       <div class="close-btn" onclick="closePreview()">Tutup</div>
     </div>
   </div>
@@ -171,6 +204,7 @@ let html="";
 data.reverse().forEach((item,i)=>{
 html+=`<div class="card" onclick="openPreview('${item.img}','${item.link}')">
 <img src="${item.img}">
+<div class="play-icon">▶</div>
 <div class="card-info">⭐ ${ratings[i%ratings.length]}</div>
 </div>`;
 });
@@ -180,9 +214,11 @@ list.innerHTML=html;
 function openPreview(img,link){
 preview.style.display="flex";
 previewImg.src=img;
+previewBg.style.backgroundImage=`url(${img})`;
 watchBtn.href=link;
 downloadBtn.href=link;
 }
+
 function closePreview(){preview.style.display="none";}
 preview.onclick=e=>{if(e.target.id==="preview")closePreview();}
 
