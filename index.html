@@ -11,12 +11,12 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#0d0d0d;color:white;padding-top:40px;}
 
-/* WAJIB JOIN POPUP */
+/* FORCE PREMIUM POPUP */
 .force-popup{
 position:fixed;
 top:0;left:0;
 width:100%;height:100%;
-background:rgba(0,0,0,0.95);
+background:linear-gradient(180deg,#000,#0d0d0d);
 display:flex;
 align-items:center;
 justify-content:center;
@@ -24,38 +24,46 @@ z-index:10000;
 }
 
 .force-box{
-background:#111;
-padding:25px;
-border-radius:15px;
+background:linear-gradient(145deg,#111,#1a1a1a);
+padding:30px 20px;
+border-radius:18px;
 text-align:center;
 width:85%;
-max-width:320px;
+max-width:340px;
+box-shadow:0 0 40px rgba(0,0,0,0.8);
 animation:fadeIn 0.4s ease;
 }
 
 .force-box h2{
-margin-bottom:10px;
+font-size:18px;
+margin-bottom:8px;
 }
 
-.force-btn{
+.force-box p{
+font-size:13px;
+opacity:0.8;
+margin-bottom:20px;
+line-height:1.5;
+}
+
+.join-btn{
 display:block;
-margin:10px 0;
-padding:10px;
-border-radius:10px;
+padding:12px;
+border-radius:12px;
 text-decoration:none;
 color:white;
-font-weight:500;
+font-weight:600;
+background:linear-gradient(90deg,#0088cc,#229ED9);
+transition:0.2s;
 }
 
-.jap{background:#229ED9;}
-.indo{background:#0088cc;}
-
-.continue{
-background:#22c55e;
+.join-btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px rgba(0,136,204,0.7);
 }
 
 @keyframes fadeIn{
-from{transform:scale(0.8);opacity:0;}
+from{transform:scale(0.85);opacity:0;}
 to{transform:scale(1);opacity:1;}
 }
 
@@ -69,8 +77,8 @@ background:linear-gradient(90deg,#ff416c,#ff4b2b);
 -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
 /* TELEGRAM */
-.topbar{display:flex;gap:10px;justify-content:center;padding:10px;}
-.tg-btn{padding:8px 14px;border-radius:10px;text-decoration:none;color:white;font-size:13px;font-weight:500;}
+.topbar{display:flex;justify-content:center;padding:10px;}
+.tg-btn{padding:8px 14px;border-radius:10px;text-decoration:none;color:white;font-size:13px;font-weight:500;background:#0088cc;}
 
 /* ONLINE */
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
@@ -127,30 +135,30 @@ animation:fadeIn 0.3s ease;
 
 <body>
 
-<!-- WAJIB JOIN -->
-<div id="forcePopup" class="force-popup">
+<!-- FORCE JOIN PREMIUM -->
+<div class="force-popup">
   <div class="force-box">
-    <h2>🚀 Join Telegram</h2>
-    <p style="font-size:13px;opacity:0.8;">Gabung untuk akses konten terbaru 🔥</p>
+    <h2>🔒 Akses Terbatas</h2>
+    <p>
+      Untuk membuka semua konten, kamu harus join Telegram terlebih dahulu.<br>
+      Dapatkan update terbaru setiap hari 🔥
+    </p>
 
-    <a href="https://t.me/+3_7no00jKVg0MThl" target="_blank" class="force-btn jap">🇯🇵 Japanese</a>
-    <a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank" class="force-btn indo">🇮🇩 Indo Viral</a>
-
-    <button class="force-btn continue" onclick="continueSite()">Saya sudah join</button>
+    <a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank" class="join-btn">
+      🚀 Join Indo Viral Sekarang
+    </a>
   </div>
 </div>
 
 <div class="sticky-banner">
 🚀 Join Telegram:
-<a href="https://t.me/+3_7no00jKVg0MThl" target="_blank">Japanese</a> |
 <a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank">Indo Viral</a>
 </div>
 
 <div class="header">🔥 TELEBOKEP GALLERY 🔥</div>
 
 <div class="topbar">
-<a href="#" class="tg-btn jap">Japanese</a>
-<a href="#" class="tg-btn indo">Indo Viral</a>
+<a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank" class="tg-btn">Indo Viral</a>
 </div>
 
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
@@ -183,11 +191,6 @@ animation:fadeIn 0.3s ease;
 <script>
 const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5,4.7];
 function getRating(i){return ratings[i%ratings.length];}
-
-/* WAJIB JOIN */
-function continueSite(){
-document.getElementById("forcePopup").style.display="none";
-}
 
 /* LOAD */
 fetch('data.json?v='+Date.now())
