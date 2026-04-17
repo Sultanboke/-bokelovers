@@ -18,7 +18,7 @@ color:white;
 padding-top:40px;
 }
 
-/* 🔥 STICKY BANNER (BARU) */
+/* 🔥 BANNER */
 .sticky-banner{
 position:fixed;
 top:0;
@@ -30,6 +30,7 @@ padding:6px;
 z-index:9999;
 overflow:hidden;
 white-space:nowrap;
+cursor:pointer;
 }
 
 .marquee{
@@ -43,7 +44,7 @@ animation:scroll 12s linear infinite;
 100%{transform:translateX(-100%);}
 }
 
-/* 🔥 NEON SOFT */
+/* BG */
 body::before{
 content:"";
 position:fixed;
@@ -109,7 +110,7 @@ background:#0ea5e9;
 font-weight:600;
 }
 
-/* JOIN POPUP */
+/* JOIN */
 .force-popup{
 position:fixed;
 top:0;left:0;
@@ -192,16 +193,27 @@ font-size:13px;
 opacity:0.7;
 cursor:pointer;
 }
+
+/* 🔥 TOAST NOTIF */
+.toast{
+position:fixed;
+bottom:20px;
+left:20px;
+background:#111;
+padding:10px 14px;
+border-radius:10px;
+font-size:12px;
+display:none;
+box-shadow:0 0 10px rgba(0,0,0,0.5);
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 BANNER ATAS (BARU) -->
-<div class="sticky-banner">
-  <div class="marquee">
-    ✨ Konten terbaru diperbarui setiap hari • Simpan halaman ini untuk akses lebih cepat 🔥
-  </div>
+<!-- 🔥 CLICKABLE BANNER -->
+<div class="sticky-banner" onclick="window.open('https://t.me/+jhoktmNhrtQzYjA1')">
+  <div class="marquee" id="bannerText"></div>
 </div>
 
 <div class="header">TELEBOKEP</div>
@@ -219,7 +231,6 @@ cursor:pointer;
       Bergabung untuk membuka akses konten.
     </p>
 
-    <!-- 🔥 TEXT TAMBAHAN (BARU) -->
     <div style="font-size:11px;opacity:0.6;margin-top:10px;">
       Akses akan terbuka setelah bergabung. Kembali ke halaman ini untuk melanjutkan.
     </div>
@@ -247,7 +258,20 @@ cursor:pointer;
   </div>
 </div>
 
+<div id="toast" class="toast"></div>
+
 <script>
+
+/* 🔥 RANDOM BANNER TEXT */
+const texts=[
+"🔥 Update konten setiap hari • Klik untuk akses cepat",
+"🚀 Akses lebih cepat melalui Telegram sekarang",
+"✨ Simpan halaman ini untuk update terbaru",
+"💎 Konten eksklusif tersedia setiap hari"
+];
+bannerText.innerText=texts[Math.floor(Math.random()*texts.length)];
+
+/* LOAD DATA */
 fetch('data.json')
 .then(r=>r.json())
 .then(data=>{
@@ -262,9 +286,10 @@ html+=`
 list.innerHTML=html;
 });
 
+/* FLOW */
 function openPreview(link){
 if(!localStorage.getItem("joined")){
-document.getElementById("joinPopup").style.display="flex";
+joinPopup.style.display="flex";
 return;
 }
 preview.style.display="flex";
@@ -273,24 +298,34 @@ watchBtn.href=link;
 
 function joinDone(){
 localStorage.setItem("joined","true");
-document.getElementById("joinPopup").style.display="none";
+joinPopup.style.display="none";
 }
 
 if(!localStorage.getItem("joined")){
-setTimeout(()=>{
-document.getElementById("joinPopup").style.display="flex";
-},2000);
+setTimeout(()=>{joinPopup.style.display="flex"},2000);
 }
 
 function closePreview(){
 preview.style.display="none";
 }
 
+/* ONLINE */
 let online=120;
 setInterval(()=>{
 online+=Math.random()*10-5;
 onlineCount.innerText=Math.floor(online);
 },2000);
+
+/* 🔥 NOTIF JOIN COUNTER */
+let count=1;
+setInterval(()=>{
+toast.innerText=count+" orang Join Telegram";
+toast.style.display="block";
+setTimeout(()=>toast.style.display="none",2500);
+count++;
+if(count>5) count=1;
+},5000);
+
 </script>
 
 </body>
