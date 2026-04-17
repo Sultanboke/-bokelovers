@@ -18,24 +18,17 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 
 .force-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10000;}
 .force-box{background:#111;padding:25px;border-radius:15px;text-align:center;width:85%;max-width:340px;}
-.force-box p{font-size:12px;color:#ff4d4d;margin-bottom:12px;}
 .join-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;color:white;font-weight:600;background:#0088cc;}
-.note{font-size:11px;opacity:0.6;margin-top:10px;}
 
-.header{text-align:center;padding:20px;font-size:30px;font-family:'Orbitron';letter-spacing:3px;background:linear-gradient(90deg,#00c6ff,#0072ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 20px rgba(0,114,255,0.4);}
-
-.topbar{display:flex;justify-content:center;padding:10px;}
-.tg-btn{padding:8px 16px;border-radius:10px;text-decoration:none;color:white;font-size:13px;background:#0088cc;}
+.header{text-align:center;padding:20px;font-size:30px;font-family:'Orbitron';letter-spacing:3px;background:linear-gradient(90deg,#00c6ff,#0072ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
 .container{display:grid;gap:12px;padding:12px;}
 @media (min-width:0px){.container{grid-template-columns:repeat(3,1fr);}}
 
-.card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;transition:0.2s;}
+.card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;}
 .card img{width:100%;height:130px;object-fit:cover;}
-.card:hover{transform:scale(1.05);}
-.card-info{text-align:center;font-size:11px;padding:6px;}
 
 .preview{
 position:fixed;
@@ -50,41 +43,42 @@ backdrop-filter:blur(10px);
 }
 
 .preview-box{
-width:95%;
-height:45vh;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#000;
+width:90%;
+max-width:400px;
+padding:20px;
+background:#111;
 border-radius:14px;
-}
-
-.preview-box img{
-max-width:100%;
-max-height:100%;
-object-fit:contain;
-}
-
-.preview-content{
-position:absolute;
-bottom:0;
-width:100%;
-padding:12px;
 text-align:center;
+box-shadow:0 0 20px rgba(0,0,0,0.8);
+}
+
+.preview-text{
+font-size:13px;
+line-height:1.6;
+margin-bottom:20px;
 }
 
 .preview-actions{display:flex;gap:10px;}
+
 .preview-btn{
 flex:1;
-padding:10px;
+padding:12px;
 border-radius:10px;
-color:white;
 text-decoration:none;
+color:white;
+font-weight:600;
 box-shadow:0 4px 15px rgba(0,0,0,0.6);
 }
 
 .watch{background:#22c55e;}
 .download{background:#3b82f6;}
+
+.close-btn{
+margin-top:12px;
+font-size:13px;
+opacity:0.7;
+cursor:pointer;
+}
 
 .footer{text-align:center;padding:20px;font-size:12px;opacity:0.6;}
 </style>
@@ -99,8 +93,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.6);
 <div class="force-popup">
   <div class="force-box">
     <h2>Join Telegram</h2>
-    <p>Gabung dulu untuk membuka konten</p>
-    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">🚀 Join</a>
+    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn">🚀 Join</a>
   </div>
 </div>
 
@@ -119,45 +112,43 @@ box-shadow:0 4px 15px rgba(0,0,0,0.6);
   </a>
 </div>
 
+<!-- POPUP BARU -->
 <div id="preview" class="preview">
   <div class="preview-box">
-    <img id="previewImg">
-    <div class="preview-content">
-      <div class="preview-actions">
-        <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
-        <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
-      </div>
+
+    <div class="preview-text">
+      SEMUA MEDIA YANG ADA DI WEBSITE INI DIDAPATKAN FREE DARI INTERNET SECARA LEGAL,<br><br>
+      TIDAK ADA PAKSAAN, JIKA ANDA TIDAK BERKENAN SILAHKAN HUBUNGI ADMIN VIA TELEGRAM.
     </div>
+
+    <div class="preview-actions">
+      <a id="watchBtn" target="_blank" class="preview-btn watch">▶ WATCH</a>
+      <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="preview-btn download">🚀 TELEGRAM</a>
+    </div>
+
+    <div class="close-btn" onclick="closePreview()">Tutup</div>
+
   </div>
 </div>
 
-<div id="toast" class="toast"></div>
-
 <script>
-const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5,4.7];
-
 fetch('data.json')
 .then(r=>r.json())
 .then(data=>{
 let html="";
-
-data.reverse().forEach((item,i)=>{
+data.reverse().forEach((item)=>{
 html+=`
-<div class="card" onclick="openPreview('${item.img}','${item.link}')">
+<div class="card" onclick="openPreview('${item.link}')">
 <img src="${item.img}">
-<div class="card-info">⭐ ${ratings[i%ratings.length]}</div>
 </div>`;
 });
-
 list.innerHTML=html;
 });
 
-function openPreview(img,link){
+function openPreview(link){
 preview.style.display="flex";
 document.body.style.overflow="hidden";
-previewImg.src=img;
 watchBtn.href=link;
-downloadBtn.href=link;
 }
 
 function closePreview(){
@@ -169,17 +160,6 @@ preview.onclick=e=>{if(e.target.id==="preview")closePreview();}
 
 let online=100;
 setInterval(()=>{online+=Math.random()*10-5;onlineCount.innerText=Math.floor(online)},2000);
-
-function joinDone(){localStorage.setItem("joined","true");}
-if(!localStorage.getItem("joined")){
-setTimeout(()=>{document.querySelector(".force-popup").style.display="flex"},3000);
-}
-
-setInterval(()=>{
-toast.innerText=Math.floor(Math.random()*6+1)+" user join";
-toast.style.display="block";
-setTimeout(()=>toast.style.display="none",3000);
-},7000);
 </script>
 
 </body>
