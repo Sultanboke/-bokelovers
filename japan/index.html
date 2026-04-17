@@ -1,1 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telebokep Japan</title>
 
+<link rel="manifest" href="/manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0d0d0d;color:white;padding-top:40px;}
+
+.sticky-banner{position:fixed;top:0;width:100%;background:linear-gradient(90deg,#0088cc,#229ED9);color:white;font-size:13px;padding:8px;z-index:9999;overflow:hidden;white-space:nowrap;}
+.marquee{display:inline-block;padding-left:100%;animation:scroll 12s linear infinite;}
+@keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+
+.force-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10000;}
+.force-box{background:#111;padding:25px;border-radius:15px;text-align:center;width:85%;max-width:340px;}
+.force-box p{font-size:12px;color:#ff4d4d;margin-bottom:12px;}
+.join-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;color:white;font-weight:600;background:#0088cc;}
+.note{font-size:11px;opacity:0.6;margin-top:10px;}
+
+.header{text-align:center;padding:20px;font-size:30px;font-family:'Orbitron';letter-spacing:3px;background:linear-gradient(90deg,#00c6ff,#0072ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.topbar{display:flex;justify-content:center;padding:10px;}
+.tg-btn{padding:8px 16px;border-radius:10px;text-decoration:none;color:white;font-size:13px;background:#0088cc;}
+
+.online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
+
+.container{display:grid;gap:12px;padding:12px;transition:0.3s;}
+@media (min-width:0px){.container{grid-template-columns:repeat(3,1fr);}}
+
+.card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;}
+.card img{width:100%;height:130px;object-fit:cover;}
+.card-info{text-align:center;font-size:11px;padding:6px;}
+
+.preview{position:fixed;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;z-index:99999;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);}
+.preview-box{width:95%;height:45vh;display:flex;align-items:center;justify-content:center;background:#000;border-radius:14px;}
+.preview-box img{max-width:100%;max-height:100%;object-fit:contain;}
+
+.preview-content{position:absolute;bottom:0;width:100%;padding:12px;text-align:center;}
+.preview-actions{display:flex;gap:10px;}
+.preview-btn{flex:1;padding:10px;border-radius:10px;color:white;text-decoration:none;}
+.watch{background:#22c55e;}
+.download{background:#3b82f6;}
+
+.footer{text-align:center;padding:20px;font-size:12px;opacity:0.6;}
+</style>
+</head>
+
+<body>
+
+<div class="sticky-banner">
+  <div class="marquee">🚀 Tambahkan ke layar utama untuk update setiap hari 🔥</div>
+</div>
+
+<div class="force-popup">
+  <div class="force-box">
+    <h2>Join Telegram</h2>
+    <p>Gabung dulu untuk membuka konten</p>
+    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn">🚀 Join</a>
+  </div>
+</div>
+
+<div class="header">TELEBOKEP</div>
+
+<!-- 🔥 LINK KE INDO -->
+<div class="topbar">
+  <a href="/indo/" class="tg-btn">🇮🇩 Indonesia</a>
+</div>
+
+<div class="online">🟢 <span id="onlineCount">0</span> online</div>
+
+<div id="list" class="container"></div>
+<div id="pagination"></div>
+
+<div class="footer">© 2026 Telebokep</div>
+
+<!-- POPUP -->
+<div id="preview" class="preview">
+  <div class="preview-box">
+    <img id="previewImg">
+    <div class="preview-content">
+      <div class="preview-actions">
+        <a id="watchBtn" class="preview-btn watch">▶ Watch</a>
+        <a id="downloadBtn" class="preview-btn download">⬇ Download</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let allData=[],currentPage=1,perPage=12;
+const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5];
+
+fetch('/japan.json').then(r=>r.json()).then(d=>{allData=d.reverse();renderPage(1);});
+
+function renderPage(p){
+currentPage=p;
+let html="";
+allData.slice((p-1)*perPage,p*perPage).forEach((x,i)=>{
+html+=`<div class="card" onclick="openPreview('${x.img}','${x.link}')">
+<img src="${x.img}">
+<div class="card-info">⭐ ${ratings[i%ratings.length]}</div></div>`;
+});
+list.innerHTML=html;
+renderPagination();
+scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderPagination(){
+let total=Math.ceil(allData.length/perPage);
+let html=`<div style="text-align:center;padding:15px;">`;
+if(currentPage>1) html+=`<button onclick="renderPage(${currentPage-1})">⬅</button>`;
+for(let i=1;i<=total;i++){
+html+=`<button onclick="renderPage(${i})" style="background:${i==currentPage?'#0088cc':'#222'};color:white;margin:2px;">${i}</button>`;
+}
+if(currentPage<total) html+=`<button onclick="renderPage(${currentPage+1})">➡</button>`;
+html+=`</div>`;
+pagination.innerHTML=html;
+}
+
+function openPreview(img,link){
+preview.style.display="flex";
+previewImg.src=img;
+watchBtn.href=link;
+downloadBtn.href=link;
+}
+
+preview.onclick=e=>{if(e.target.id==="preview")preview.style.display="none";}
+</script>
+
+</body>
+</html>
