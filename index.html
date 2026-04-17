@@ -95,7 +95,8 @@ transform:translateY(-5px);
 box-shadow:0 10px 20px rgba(0,0,0,0.6);
 }
 
-.card img{
+/* 🔥 CANVAS IMAGE */
+.img-box canvas{
 width:100%;
 height:130px;
 object-fit:cover;
@@ -194,7 +195,7 @@ opacity:0.7;
 cursor:pointer;
 }
 
-/* 🔥 TOAST (UPGRADE ANIMASI) */
+/* TOAST */
 .toast{
 position:fixed;
 bottom:20px;
@@ -206,16 +207,12 @@ font-size:12px;
 box-shadow:0 0 15px rgba(0,0,0,0.6);
 transition:all 0.5s ease;
 }
-
-.toast.show{
-right:20px;
-}
+.toast.show{right:20px;}
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 CLICKABLE BANNER -->
 <div class="sticky-banner" onclick="window.open('https://t.me/+jhoktmNhrtQzYjA1')">
   <div class="marquee" id="bannerText"></div>
 </div>
@@ -230,35 +227,26 @@ right:20px;
 <div class="force-popup" id="joinPopup">
   <div class="force-box">
     <h3>Join Telegram</h3>
-
-    <p style="font-size:12px;margin-top:10px;">
-      Bergabung untuk membuka akses konten.
-    </p>
-
+    <p style="font-size:12px;margin-top:10px;">Bergabung untuk membuka akses konten.</p>
     <div style="font-size:11px;opacity:0.6;margin-top:10px;">
       Akses akan terbuka setelah bergabung. Kembali ke halaman ini untuk melanjutkan.
     </div>
-
     <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">🚀 Join Telegram</a>
   </div>
 </div>
 
-<!-- POPUP VIDEO -->
+<!-- POPUP -->
 <div id="preview" class="preview">
   <div class="preview-box">
-
     <div class="preview-text">
       Konten berasal dari sumber publik.<br><br>
       Lanjutkan untuk akses penuh melalui Telegram.
     </div>
-
     <div class="preview-actions">
       <a id="watchBtn" target="_blank" class="preview-btn watch">▶ WATCH</a>
       <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="preview-btn download">🚀 TELEGRAM</a>
     </div>
-
     <div class="close-btn" onclick="closePreview()">Tutup</div>
-
   </div>
 </div>
 
@@ -266,28 +254,53 @@ right:20px;
 
 <script>
 
-/* 🔥 RANDOM BANNER TEXT */
+/* 🔥 ANTI BASIC */
+document.addEventListener("contextmenu", e=>e.preventDefault());
+document.addEventListener("dragstart", e=>e.preventDefault());
+document.addEventListener("selectstart", e=>e.preventDefault());
+
+/* 🔥 RANDOM BANNER */
 const texts=[
-"🔥 Update konten setiap hari • Klik untuk akses cepat",
-"🚀 Akses lebih cepat melalui Telegram sekarang",
-"✨ Simpan halaman ini untuk update terbaru",
-"💎 Konten eksklusif tersedia setiap hari"
+"🔥 Update konten setiap hari",
+"🚀 Akses lebih cepat via Telegram",
+"✨ Simpan halaman ini",
+"💎 Konten eksklusif setiap hari"
 ];
 bannerText.innerText=texts[Math.floor(Math.random()*texts.length)];
 
-/* LOAD DATA */
+/* LOAD DATA + ENCRYPT + CANVAS */
 fetch('data.json')
 .then(r=>r.json())
 .then(data=>{
 let html="";
 data.reverse().forEach(item=>{
+let encoded = btoa(item.img);
+
 html+=`
 <div class="card" onclick="openPreview('${item.link}')">
-<img src="${item.img}">
+<div class="img-box" data-img="${encoded}"></div>
 <div class="card-info">▶ WATCH</div>
 </div>`;
 });
 list.innerHTML=html;
+
+/* RENDER CANVAS */
+document.querySelectorAll('.img-box').forEach(el=>{
+let img = new Image();
+img.src = atob(el.dataset.img);
+
+img.onload = ()=>{
+let canvas=document.createElement("canvas");
+let ctx=canvas.getContext("2d");
+
+canvas.width=img.width;
+canvas.height=img.height;
+
+ctx.drawImage(img,0,0);
+el.appendChild(canvas);
+};
+});
+
 });
 
 /* FLOW */
@@ -320,7 +333,7 @@ online+=Math.random()*10-5;
 onlineCount.innerText=Math.floor(online);
 },2000);
 
-/* 🔥 NOTIF REAL + SLIDE */
+/* 🔥 TOAST REAL */
 function showToast(){
 let random = Math.floor(Math.random()*5)+1;
 
@@ -334,9 +347,12 @@ toast.classList.remove("show");
 let nextDelay = Math.floor(Math.random()*4000)+3000;
 setTimeout(showToast, nextDelay);
 }
-
-/* START */
 setTimeout(showToast, 3000);
+
+/* 🔥 ANTI BOT */
+if(navigator.webdriver){
+document.body.innerHTML="Blocked";
+}
 
 </script>
 
