@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Telebokep Japan</title>
+<title>Telebokep Indonesia</title>
 
 <link rel="manifest" href="/manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -20,7 +20,6 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 .force-box{background:#111;padding:25px;border-radius:15px;text-align:center;width:85%;max-width:340px;}
 .force-box p{font-size:12px;color:#ff4d4d;margin-bottom:12px;}
 .join-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;color:white;font-weight:600;background:#0088cc;}
-.note{font-size:11px;opacity:0.6;margin-top:10px;}
 
 .header{text-align:center;padding:20px;font-size:30px;font-family:'Orbitron';letter-spacing:3px;background:linear-gradient(90deg,#00c6ff,#0072ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
@@ -29,7 +28,7 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
-.container{display:grid;gap:12px;padding:12px;transition:0.3s;}
+.container{display:grid;gap:12px;padding:12px;}
 @media (min-width:0px){.container{grid-template-columns:repeat(3,1fr);}}
 
 .card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;}
@@ -42,7 +41,14 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 
 .preview-content{position:absolute;bottom:0;width:100%;padding:12px;text-align:center;}
 .preview-actions{display:flex;gap:10px;}
-.preview-btn{flex:1;padding:10px;border-radius:10px;color:white;text-decoration:none;}
+.preview-btn{
+flex:1;
+padding:10px;
+border-radius:10px;
+color:white;
+text-decoration:none;
+box-shadow:0 4px 15px rgba(0,0,0,0.6);
+}
 .watch{background:#22c55e;}
 .download{background:#3b82f6;}
 
@@ -66,9 +72,9 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 
 <div class="header">TELEBOKEP</div>
 
-<!-- 🔥 LINK KE INDO -->
+<!-- 🔥 LINK KE JAPAN -->
 <div class="topbar">
-  <a href="/japan/" class="tg-btn">🇮🇩 japan</a>
+  <a href="/japan/" class="tg-btn">🇯🇵 Japan</a>
 </div>
 
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
@@ -78,14 +84,22 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 
 <div class="footer">© 2026 Telebokep</div>
 
+<!-- 🔻 JOIN TELEGRAM BAWAH -->
+<div style="text-align:center;padding:20px;">
+  <a href="https://t.me/+jhoktmNhrtQzYjA1" 
+     style="background:#0088cc;padding:10px 20px;border-radius:12px;color:white;text-decoration:none;font-size:13px;">
+     🚀 Join Telegram Telebokep
+  </a>
+</div>
+
 <!-- POPUP -->
 <div id="preview" class="preview">
   <div class="preview-box">
     <img id="previewImg">
     <div class="preview-content">
       <div class="preview-actions">
-        <a id="watchBtn" class="preview-btn watch">▶ Watch</a>
-        <a id="downloadBtn" class="preview-btn download">⬇ Download</a>
+        <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
+        <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
       </div>
     </div>
   </div>
@@ -95,7 +109,12 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 let allData=[],currentPage=1,perPage=12;
 const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5];
 
-fetch('/indo.json').then(r=>r.json()).then(d=>{allData=d.reverse();renderPage(1);});
+fetch('/indo.json')
+.then(r=>r.json())
+.then(d=>{
+allData=d.reverse();
+renderPage(1);
+});
 
 function renderPage(p){
 currentPage=p;
@@ -107,29 +126,50 @@ html+=`<div class="card" onclick="openPreview('${x.img}','${x.link}')">
 });
 list.innerHTML=html;
 renderPagination();
-scrollTo({top:0,behavior:"smooth"});
+window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function renderPagination(){
 let total=Math.ceil(allData.length/perPage);
 let html=`<div style="text-align:center;padding:15px;">`;
-if(currentPage>1) html+=`<button onclick="renderPage(${currentPage-1})">⬅</button>`;
+
+if(currentPage>1)
+html+=`<button onclick="renderPage(${currentPage-1})">⬅</button>`;
+
 for(let i=1;i<=total;i++){
-html+=`<button onclick="renderPage(${i})" style="background:${i==currentPage?'#0088cc':'#222'};color:white;margin:2px;">${i}</button>`;
+html+=`<button onclick="renderPage(${i})"
+style="background:${i==currentPage?'#0088cc':'#222'};
+color:white;margin:2px;padding:6px 10px;border:none;border-radius:6px;">
+${i}</button>`;
 }
-if(currentPage<total) html+=`<button onclick="renderPage(${currentPage+1})">➡</button>`;
+
+if(currentPage<total)
+html+=`<button onclick="renderPage(${currentPage+1})">➡</button>`;
+
 html+=`</div>`;
 pagination.innerHTML=html;
 }
 
 function openPreview(img,link){
 preview.style.display="flex";
+document.body.style.overflow="hidden";
 previewImg.src=img;
 watchBtn.href=link;
 downloadBtn.href=link;
 }
 
-preview.onclick=e=>{if(e.target.id==="preview")preview.style.display="none";}
+preview.onclick=e=>{
+if(e.target.id==="preview"){
+preview.style.display="none";
+document.body.style.overflow="auto";
+}
+};
+
+let online=90;
+setInterval(()=>{
+online+=Math.random()*10-5;
+onlineCount.innerText=Math.floor(online);
+},2000);
 </script>
 
 </body>
