@@ -7,7 +7,6 @@
 
 <link rel="manifest" href="manifest.json">
 
-<!-- 🔥 FONT PREMIUM -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <style>
@@ -19,7 +18,32 @@ color:white;
 padding-top:40px;
 }
 
-/* 🔥 NEON SOFT BACKGROUND */
+/* 🔥 STICKY BANNER (BARU) */
+.sticky-banner{
+position:fixed;
+top:0;
+width:100%;
+background:linear-gradient(90deg,#0ea5e9,#2563eb);
+color:white;
+font-size:12px;
+padding:6px;
+z-index:9999;
+overflow:hidden;
+white-space:nowrap;
+}
+
+.marquee{
+display:inline-block;
+padding-left:100%;
+animation:scroll 12s linear infinite;
+}
+
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
+}
+
+/* 🔥 NEON SOFT */
 body::before{
 content:"";
 position:fixed;
@@ -40,7 +64,7 @@ color:#00c6ff;
 text-shadow:0 0 12px rgba(0,198,255,0.6);
 }
 
-/* 🔥 ONLINE PREMIUM */
+/* ONLINE */
 .online{
 text-align:center;
 font-size:13px;
@@ -76,7 +100,7 @@ height:130px;
 object-fit:cover;
 }
 
-/* 🔥 WATCH CLEAN */
+/* WATCH */
 .card-info{
 text-align:center;
 font-size:12px;
@@ -85,7 +109,7 @@ background:#0ea5e9;
 font-weight:600;
 }
 
-/* 🔥 JOIN POPUP NORMAL (BALIK SEPERTI AWAL) */
+/* JOIN POPUP */
 .force-popup{
 position:fixed;
 top:0;left:0;
@@ -117,7 +141,7 @@ text-decoration:none;
 font-weight:600;
 }
 
-/* 🔥 POPUP VIDEO RAPI */
+/* POPUP VIDEO */
 .preview{
 position:fixed;
 top:0;left:0;
@@ -168,11 +192,17 @@ font-size:13px;
 opacity:0.7;
 cursor:pointer;
 }
-
 </style>
 </head>
 
 <body>
+
+<!-- 🔥 BANNER ATAS (BARU) -->
+<div class="sticky-banner">
+  <div class="marquee">
+    ✨ Konten terbaru diperbarui setiap hari • Simpan halaman ini untuk akses lebih cepat 🔥
+  </div>
+</div>
 
 <div class="header">TELEBOKEP</div>
 
@@ -180,18 +210,25 @@ cursor:pointer;
 
 <div id="list" class="container"></div>
 
-<!-- 🔥 JOIN TELEGRAM -->
+<!-- JOIN -->
 <div class="force-popup" id="joinPopup">
   <div class="force-box">
     <h3>Join Telegram</h3>
+
     <p style="font-size:12px;margin-top:10px;">
       Bergabung untuk membuka akses konten.
     </p>
+
+    <!-- 🔥 TEXT TAMBAHAN (BARU) -->
+    <div style="font-size:11px;opacity:0.6;margin-top:10px;">
+      Akses akan terbuka setelah bergabung. Kembali ke halaman ini untuk melanjutkan.
+    </div>
+
     <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">🚀 Join Telegram</a>
   </div>
 </div>
 
-<!-- 🔥 POPUP VIDEO -->
+<!-- POPUP VIDEO -->
 <div id="preview" class="preview">
   <div class="preview-box">
 
@@ -225,7 +262,6 @@ html+=`
 list.innerHTML=html;
 });
 
-/* 🔥 FLOW NORMAL */
 function openPreview(link){
 if(!localStorage.getItem("joined")){
 document.getElementById("joinPopup").style.display="flex";
@@ -235,25 +271,21 @@ preview.style.display="flex";
 watchBtn.href=link;
 }
 
-/* JOIN */
 function joinDone(){
 localStorage.setItem("joined","true");
 document.getElementById("joinPopup").style.display="none";
 }
 
-/* AUTO JOIN POPUP */
 if(!localStorage.getItem("joined")){
 setTimeout(()=>{
 document.getElementById("joinPopup").style.display="flex";
 },2000);
 }
 
-/* CLOSE */
 function closePreview(){
 preview.style.display="none";
 }
 
-/* ONLINE */
 let online=120;
 setInterval(()=>{
 online+=Math.random()*10-5;
