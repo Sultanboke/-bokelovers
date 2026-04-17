@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Telebokep Gallery</title>
+<title>Telebokep Gallery - Indo</title>
 
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -27,7 +27,8 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 /* HEADER */
 .header{text-align:center;padding:20px;font-size:30px;font-family:'Orbitron';letter-spacing:3px;background:linear-gradient(90deg,#00c6ff,#0072ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 20px rgba(0,114,255,0.4);}
 
-.topbar{display:flex;justify-content:center;padding:10px;}
+/* 🔥 TOPBAR NAV */
+.topbar{display:flex;justify-content:center;gap:10px;padding:10px;}
 .tg-btn{padding:8px 16px;border-radius:10px;text-decoration:none;color:white;font-size:13px;background:#0088cc;display:flex;align-items:center;gap:6px;}
 
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
@@ -44,7 +45,7 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 .card:active{transform:scale(0.95);}
 .card-info{text-align:center;font-size:11px;padding:6px;opacity:0.8;}
 
-/* ===== POPUP UPDATED ===== */
+/* ===== POPUP ===== */
 .preview{
 position:fixed;
 top:0;left:0;
@@ -53,8 +54,6 @@ display:none;
 align-items:center;
 justify-content:center;
 z-index:99999;
-
-/* 🔥 BLUR BACKGROUND */
 background:rgba(0,0,0,0.6);
 backdrop-filter:blur(10px);
 }
@@ -88,8 +87,6 @@ text-align:center;
 
 .cta-top{font-size:12px;margin-bottom:10px;color:#ff4d4d;}
 .preview-actions{display:flex;gap:10px;}
-
-/* 🔥 BUTTON SHADOW */
 .preview-btn{
 flex:1;
 padding:10px;
@@ -100,11 +97,7 @@ font-weight:500;
 box-shadow:0 4px 15px rgba(0,0,0,0.6);
 transition:0.2s;
 }
-
-.preview-btn:active{
-transform:scale(0.95);
-box-shadow:0 2px 8px rgba(0,0,0,0.5);
-}
+.preview-btn:active{transform:scale(0.95);}
 
 .watch{background:#22c55e;}
 .download{background:#3b82f6;}
@@ -136,13 +129,10 @@ box-shadow:0 2px 8px rgba(0,0,0,0.5);
 
 <div class="header">TELEBOKEP</div>
 
+<!-- 🔥 NAVIGATION -->
 <div class="topbar">
-<a href="https://t.me/+jhoktmNhrtQzYjA1" class="tg-btn">
-<svg viewBox="0 0 24 24" width="16" fill="white">
-<path d="M9.04 15.57l-.39 4.27c.56 0 .8-.24 1.09-.53l2.61-2.5 5.41 3.96c.99.55 1.7.26 1.96-.92l3.56-16.65c.31-1.45-.52-2.02-1.48-1.66L1.64 9.21c-1.42.55-1.4 1.34-.24 1.7l5.44 1.7L19.69 5.5"/>
-</svg>
-telebokep
-</a>
+  <a href="index.html" class="tg-btn">🇯🇵 Japan</a>
+  <a href="indo.html" class="tg-btn">🇮🇩 Indonesia</a>
 </div>
 
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
@@ -154,22 +144,16 @@ telebokep
 <!-- POPUP -->
 <div id="preview" class="preview">
   <div class="preview-box">
-
     <img id="previewImg">
-
     <div class="preview-content">
       <p class="cta-top">🔥 Klik untuk menonton sekarang</p>
-
       <div class="preview-actions">
         <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
         <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
       </div>
-
       <p class="cta-bottom">💡 Kualitas terbaik tanpa ribet</p>
-
       <div class="close-btn" onclick="closePreview()">Tutup</div>
     </div>
-
   </div>
 </div>
 
@@ -178,7 +162,7 @@ telebokep
 <script>
 const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5,4.7];
 
-fetch('data.json')
+fetch('indo.json') /* 🔥 INDO DATA */
 .then(r=>r.json())
 .then(data=>{
 let html="";
