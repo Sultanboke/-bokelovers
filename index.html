@@ -16,9 +16,36 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 .marquee{display:inline-block;padding-left:100%;animation:scroll 12s linear infinite;}
 @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
 
-.force-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10000;}
-.force-box{background:#111;padding:25px;border-radius:15px;text-align:center;width:85%;max-width:340px;}
-.join-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;color:white;font-weight:600;background:#0088cc;}
+/* JOIN POPUP (BALIK LAGI 🔥) */
+.force-popup{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:#000;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:10000;
+}
+
+.force-box{
+background:#111;
+padding:25px;
+border-radius:15px;
+text-align:center;
+width:85%;
+max-width:340px;
+}
+
+.join-btn{
+display:block;
+padding:12px;
+border-radius:12px;
+text-decoration:none;
+color:white;
+font-weight:600;
+background:#0088cc;
+}
 
 .header{text-align:center;padding:20px;font-size:30px;font-family:'Orbitron';letter-spacing:3px;background:linear-gradient(90deg,#00c6ff,#0072ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
@@ -27,9 +54,20 @@ body{background:#0d0d0d;color:white;padding-top:40px;}
 .container{display:grid;gap:12px;padding:12px;}
 @media (min-width:0px){.container{grid-template-columns:repeat(3,1fr);}}
 
+/* CARD */
 .card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;}
 .card img{width:100%;height:130px;object-fit:cover;}
 
+/* 🔥 WATCH TEXT */
+.card-info{
+text-align:center;
+font-size:12px;
+padding:6px;
+background:#0088cc;
+font-weight:600;
+}
+
+/* POPUP VIDEO */
 .preview{
 position:fixed;
 top:0;left:0;
@@ -49,7 +87,6 @@ padding:20px;
 background:#111;
 border-radius:14px;
 text-align:center;
-box-shadow:0 0 20px rgba(0,0,0,0.8);
 }
 
 .preview-text{
@@ -67,7 +104,6 @@ border-radius:10px;
 text-decoration:none;
 color:white;
 font-weight:600;
-box-shadow:0 4px 15px rgba(0,0,0,0.6);
 }
 
 .watch{background:#22c55e;}
@@ -90,10 +126,12 @@ cursor:pointer;
   <div class="marquee">🚀 Tambahkan ke layar utama untuk update setiap hari 🔥</div>
 </div>
 
+<!-- 🔥 JOIN WAJIB -->
 <div class="force-popup">
   <div class="force-box">
     <h2>Join Telegram</h2>
-    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn">🚀 Join</a>
+    <p style="font-size:12px;margin:10px 0;">Gabung dulu sebelum membuka konten</p>
+    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">🚀 Join Telegram</a>
   </div>
 </div>
 
@@ -105,14 +143,7 @@ cursor:pointer;
 
 <div class="footer">© 2026 Telebokep</div>
 
-<div style="text-align:center;padding:20px;">
-  <a href="https://t.me/+jhoktmNhrtQzYjA1" 
-     style="background:#0088cc;padding:10px 20px;border-radius:12px;color:white;text-decoration:none;font-size:13px;">
-     🚀 Join Telegram Telebokep
-  </a>
-</div>
-
-<!-- POPUP BARU -->
+<!-- POPUP VIDEO -->
 <div id="preview" class="preview">
   <div class="preview-box">
 
@@ -140,12 +171,18 @@ data.reverse().forEach((item)=>{
 html+=`
 <div class="card" onclick="openPreview('${item.link}')">
 <img src="${item.img}">
+<div class="card-info">▶ WATCH</div>
 </div>`;
 });
 list.innerHTML=html;
 });
 
+/* POPUP */
 function openPreview(link){
+if(!localStorage.getItem("joined")){
+document.querySelector(".force-popup").style.display="flex";
+return;
+}
 preview.style.display="flex";
 document.body.style.overflow="hidden";
 watchBtn.href=link;
@@ -157,6 +194,19 @@ document.body.style.overflow="auto";
 }
 
 preview.onclick=e=>{if(e.target.id==="preview")closePreview();}
+
+/* JOIN SYSTEM 🔥 */
+function joinDone(){
+localStorage.setItem("joined","true");
+document.querySelector(".force-popup").style.display="none";
+}
+
+/* AUTO POPUP kalau belum join */
+if(!localStorage.getItem("joined")){
+setTimeout(()=>{
+document.querySelector(".force-popup").style.display="flex"
+},3000);
+}
 
 let online=100;
 setInterval(()=>{online+=Math.random()*10-5;onlineCount.innerText=Math.floor(online)},2000);
