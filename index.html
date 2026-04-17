@@ -12,40 +12,31 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#0d0d0d;color:white;padding-top:40px;}
 
-/* MARQUEE */
 .sticky-banner{position:fixed;top:0;width:100%;background:linear-gradient(90deg,#0088cc,#229ED9);color:white;font-size:13px;padding:8px;z-index:9999;overflow:hidden;white-space:nowrap;}
 .marquee{display:inline-block;padding-left:100%;animation:scroll 12s linear infinite;}
 @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
 
-/* POPUP JOIN */
 .force-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10000;}
 .force-box{background:#111;padding:25px;border-radius:15px;text-align:center;width:85%;max-width:340px;}
 .force-box p{font-size:12px;color:#ff4d4d;margin-bottom:12px;}
 .join-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;color:white;font-weight:600;background:#0088cc;}
 .note{font-size:11px;opacity:0.6;margin-top:10px;}
 
-/* HEADER */
 .header{text-align:center;padding:20px;font-size:30px;font-family:'Orbitron';letter-spacing:3px;background:linear-gradient(90deg,#00c6ff,#0072ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 20px rgba(0,114,255,0.4);}
 
-/* TOPBAR */
 .topbar{display:flex;justify-content:center;padding:10px;}
-.tg-btn{padding:8px 16px;border-radius:10px;text-decoration:none;color:white;font-size:13px;background:#0088cc;display:flex;align-items:center;gap:6px;}
+.tg-btn{padding:8px 16px;border-radius:10px;text-decoration:none;color:white;font-size:13px;background:#0088cc;}
 
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
-.container{display:grid;gap:12px;padding:12px;transition:0.3s;}
+.container{display:grid;gap:12px;padding:12px;}
 @media (min-width:0px){.container{grid-template-columns:repeat(3,1fr);}}
-@media (min-width:600px){.container{grid-template-columns:repeat(4,1fr);}}
-@media (min-width:900px){.container{grid-template-columns:repeat(5,1fr);}}
 
-/* CARD */
 .card{background:#1a1a1a;border-radius:14px;overflow:hidden;cursor:pointer;transition:0.2s;}
 .card img{width:100%;height:130px;object-fit:cover;}
-.card:hover{transform:scale(1.05);box-shadow:0 0 15px rgba(255,255,255,0.2);}
-.card:active{transform:scale(0.95);}
-.card-info{text-align:center;font-size:11px;padding:6px;opacity:0.8;}
+.card:hover{transform:scale(1.05);}
+.card-info{text-align:center;font-size:11px;padding:6px;}
 
-/* POPUP */
 .preview{
 position:fixed;
 top:0;left:0;
@@ -59,15 +50,13 @@ backdrop-filter:blur(10px);
 }
 
 .preview-box{
-position:relative;
 width:95%;
 height:45vh;
 display:flex;
 align-items:center;
 justify-content:center;
-border-radius:14px;
 background:#000;
-overflow:hidden;
+border-radius:14px;
 }
 
 .preview-box img{
@@ -81,28 +70,22 @@ position:absolute;
 bottom:0;
 width:100%;
 padding:12px;
-background:linear-gradient(to top, rgba(0,0,0,0.9), transparent);
 text-align:center;
 }
 
-.cta-top{font-size:12px;margin-bottom:10px;color:#ff4d4d;}
 .preview-actions{display:flex;gap:10px;}
 .preview-btn{
 flex:1;
 padding:10px;
 border-radius:10px;
-text-decoration:none;
 color:white;
-font-weight:500;
+text-decoration:none;
 box-shadow:0 4px 15px rgba(0,0,0,0.6);
 }
+
 .watch{background:#22c55e;}
 .download{background:#3b82f6;}
 
-.cta-bottom{font-size:11px;margin-top:8px;opacity:0.6;}
-.close-btn{margin-top:10px;font-size:12px;opacity:0.6;cursor:pointer;}
-
-.toast{position:fixed;bottom:20px;left:20px;background:#1a1a1a;padding:10px;border-radius:8px;display:none;}
 .footer{text-align:center;padding:20px;font-size:12px;opacity:0.6;}
 </style>
 </head>
@@ -110,32 +93,22 @@ box-shadow:0 4px 15px rgba(0,0,0,0.6);
 <body>
 
 <div class="sticky-banner">
-  <div class="marquee">
-    🚀 Tambahkan website ini ke layar utama HP kamu untuk update setiap hari 🔥
-  </div>
+  <div class="marquee">🚀 Tambahkan ke layar utama untuk update setiap hari 🔥</div>
 </div>
 
 <div class="force-popup">
   <div class="force-box">
     <h2>Join Telegram</h2>
-    <p>Gabung terlebih dahulu untuk membuka semua konten</p>
-    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">🚀 Join Telegram</a>
-    <div class="note">Setelah join, kembali ke halaman ini</div>
+    <p>Gabung dulu untuk membuka konten</p>
+    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">🚀 Join</a>
   </div>
 </div>
 
 <div class="header">TELEBOKEP</div>
 
-<div class="topbar">
-  <a href="indo.html" class="tg-btn">🇮🇩 Indonesia</a>
-</div>
-
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
 
 <div id="list" class="container"></div>
-
-<!-- PAGINATION -->
-<div id="pagination"></div>
 
 <div class="footer">© 2026 Telebokep</div>
 
@@ -146,18 +119,14 @@ box-shadow:0 4px 15px rgba(0,0,0,0.6);
   </a>
 </div>
 
-<!-- POPUP -->
 <div id="preview" class="preview">
   <div class="preview-box">
     <img id="previewImg">
     <div class="preview-content">
-      <p class="cta-top">🔥 Klik untuk menonton sekarang</p>
       <div class="preview-actions">
         <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
         <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
       </div>
-      <p class="cta-bottom">💡 Kualitas terbaik tanpa ribet</p>
-      <div class="close-btn" onclick="closePreview()">Tutup</div>
     </div>
   </div>
 </div>
@@ -167,64 +136,21 @@ box-shadow:0 4px 15px rgba(0,0,0,0.6);
 <script>
 const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5,4.7];
 
-let allData=[];
-let currentPage=1;
-const perPage=12;
-
-fetch('japan.json')
+fetch('data.json')
 .then(r=>r.json())
 .then(data=>{
-  allData = data.reverse();
-  renderPage(1);
+let html="";
+
+data.reverse().forEach((item,i)=>{
+html+=`
+<div class="card" onclick="openPreview('${item.img}','${item.link}')">
+<img src="${item.img}">
+<div class="card-info">⭐ ${ratings[i%ratings.length]}</div>
+</div>`;
 });
 
-function renderPage(page){
-  currentPage = page;
-
-  let start = (page-1)*perPage;
-  let end = start + perPage;
-
-  let html="";
-
-  allData.slice(start,end).forEach((item,i)=>{
-    html+=`
-    <div class="card" onclick="openPreview('${item.img}','${item.link}')">
-      <img src="${item.img}">
-      <div class="card-info">⭐ ${ratings[i%ratings.length]}</div>
-    </div>`;
-  });
-
-  list.style.opacity=0;
-  setTimeout(()=>{
-    list.innerHTML = html;
-    list.style.opacity=1;
-  },150);
-
-  renderPagination();
-
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function renderPagination(){
-  let totalPage = Math.ceil(allData.length / perPage);
-
-  let html = `<div style="text-align:center;padding:15px;">`;
-
-  if(currentPage>1){
-    html+=`<button onclick="renderPage(${currentPage-1})" style="margin:3px;padding:6px 10px;border:none;border-radius:8px;background:#1a1a1a;color:white;">⬅ Prev</button>`;
-  }
-
-  for(let i=1;i<=totalPage;i++){
-    html+=`<button onclick="renderPage(${i})" style="margin:3px;padding:6px 10px;border:none;border-radius:8px;background:${i===currentPage?'#0088cc':'#1a1a1a'};color:white;">${i}</button>`;
-  }
-
-  if(currentPage<totalPage){
-    html+=`<button onclick="renderPage(${currentPage+1})" style="margin:3px;padding:6px 10px;border:none;border-radius:8px;background:#1a1a1a;color:white;">Next ➡</button>`;
-  }
-
-  html+=`</div>`;
-  pagination.innerHTML=html;
-}
+list.innerHTML=html;
+});
 
 function openPreview(img,link){
 preview.style.display="flex";
