@@ -194,17 +194,21 @@ opacity:0.7;
 cursor:pointer;
 }
 
-/* 🔥 TOAST NOTIF */
+/* 🔥 TOAST (UPGRADE ANIMASI) */
 .toast{
 position:fixed;
 bottom:20px;
-left:20px;
+right:-300px;
 background:#111;
-padding:10px 14px;
-border-radius:10px;
+padding:12px 16px;
+border-radius:12px;
 font-size:12px;
-display:none;
-box-shadow:0 0 10px rgba(0,0,0,0.5);
+box-shadow:0 0 15px rgba(0,0,0,0.6);
+transition:all 0.5s ease;
+}
+
+.toast.show{
+right:20px;
 }
 </style>
 </head>
@@ -316,24 +320,23 @@ online+=Math.random()*10-5;
 onlineCount.innerText=Math.floor(online);
 },2000);
 
-/* 🔥 NOTIF JOIN COUNTER */
-let count=1;
-setInterval(()=>{
-toast.innerText=count+" orang Join Telegram";
-toast.style.display="block";
-setTimeout(()=>toast.style.display="none",2500);
-count++;
-setInterval(()=>{
-let random = Math.floor(Math.random()*5)+1; // angka 1 - 5 acak
+/* 🔥 NOTIF REAL + SLIDE */
+function showToast(){
+let random = Math.floor(Math.random()*5)+1;
 
 toast.innerText = random + " orang Join Telegram";
-toast.style.display="block";
+toast.classList.add("show");
 
 setTimeout(()=>{
-toast.style.display="none";
+toast.classList.remove("show");
 },2500);
 
-},5000);
+let nextDelay = Math.floor(Math.random()*4000)+3000;
+setTimeout(showToast, nextDelay);
+}
+
+/* START */
+setTimeout(showToast, 3000);
 
 </script>
 
