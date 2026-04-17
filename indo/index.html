@@ -127,7 +127,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.6);
 <div class="header">TELEBOKEP</div>
 
 <div class="topbar">
-  <a href="index.html" class="tg-btn">🇮🇩 japan</a>
+  <a href="/japan/" class="tg-btn">🇯🇵 Japan</a>
 </div>
 
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
@@ -171,7 +171,7 @@ let allData=[];
 let currentPage=1;
 const perPage=12;
 
-fetch('indo.json')
+fetch('/indo.json')
 .then(r=>r.json())
 .then(data=>{
   allData = data.reverse();
