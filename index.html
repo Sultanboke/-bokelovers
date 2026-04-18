@@ -1,394 +1,471 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Telebokep Gallery</title>
-
-<link rel="manifest" href="manifest.json">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-
-body{
-background:#0b0b0b;
-color:white;
-padding-top:40px;
-}
-
-/* 🔥 BANNER */
-.sticky-banner{
-position:fixed;
-top:0;
-width:100%;
-background:linear-gradient(90deg,#0ea5e9,#2563eb);
-color:white;
-font-size:12px;
-padding:6px;
-z-index:9999;
-overflow:hidden;
-white-space:nowrap;
-cursor:pointer;
-}
-
-.marquee{
-display:inline-block;
-padding-left:100%;
-animation:scroll 12s linear infinite;
-}
-
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-100%);}
-}
-
-/* BG */
-body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background:radial-gradient(circle at 50% 10%, rgba(0,150,255,0.12), transparent 70%);
-z-index:-1;
-}
-
-/* HEADER */
-.header{
-text-align:center;
-padding:20px;
-font-size:28px;
-font-family:'Orbitron';
-letter-spacing:2px;
-color:#00c6ff;
-text-shadow:0 0 12px rgba(0,198,255,0.6);
-}
-
-/* ONLINE */
-.online{
-text-align:center;
-font-size:13px;
-color:#00ffc6;
-margin-bottom:10px;
-}
-
-/* GRID */
-.container{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
-padding:12px;
-}
-
-/* CARD */
-.card{
-background:#111;
-border-radius:12px;
-overflow:hidden;
-cursor:pointer;
-transition:0.25s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-box-shadow:0 10px 20px rgba(0,0,0,0.6);
-}
-
-/* 🔥 CANVAS IMAGE */
-.img-box canvas{
-width:100%;
-height:130px;
-object-fit:cover;
-}
-
-/* WATCH */
-.card-info{
-text-align:center;
-font-size:12px;
-padding:6px;
-background:#0ea5e9;
-font-weight:600;
-}
-
-/* JOIN */
-.force-popup{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.95);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:10000;
-}
-
-.force-box{
-background:#121212;
-padding:25px;
-border-radius:16px;
-text-align:center;
-width:85%;
-max-width:320px;
-}
-
-.join-btn{
-display:block;
-margin-top:15px;
-padding:12px;
-border-radius:12px;
-background:#0088cc;
-color:white;
-text-decoration:none;
-font-weight:600;
-}
-
-/* POPUP VIDEO */
-.preview{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-display:none;
-align-items:center;
-justify-content:center;
-background:rgba(0,0,0,0.7);
-backdrop-filter:blur(8px);
-z-index:9999;
-}
-
-.preview-box{
-width:90%;
-max-width:380px;
-background:#111;
-padding:20px;
-border-radius:16px;
-text-align:center;
-}
-
-.preview-text{
-font-size:13px;
-line-height:1.6;
-margin-bottom:18px;
-}
-
-.preview-actions{
-display:flex;
-gap:10px;
-}
-
-.preview-btn{
-flex:1;
-padding:12px;
-border-radius:10px;
-color:white;
-text-decoration:none;
-font-weight:600;
-}
-
-.watch{background:#22c55e;}
-.download{background:#3b82f6;}
-
-.close-btn{
-margin-top:12px;
-font-size:13px;
-opacity:0.7;
-cursor:pointer;
-}
-
-/* TOAST */
-.toast{
-position:fixed;
-bottom:20px;
-right:-300px;
-background:#111;
-padding:12px 16px;
-border-radius:12px;
-font-size:12px;
-box-shadow:0 0 15px rgba(0,0,0,0.6);
-transition:all 0.5s ease;
-}
-.toast.show{right:20px;}
-</style>
-</head>
-
-<body>
-
-<div class="sticky-banner" onclick="window.open('https://t.me/+jhoktmNhrtQzYjA1')">
-  <div class="marquee" id="bannerText"></div>
-</div>
-
-<div class="header">TELEBOKEP</div>
-
-<div class="online">🟢 <span id="onlineCount">0</span> online</div>
-
-<div id="list" class="container"></div>
-
-<!-- JOIN -->
-<div class="force-popup" id="joinPopup">
-  <div class="force-box">
-    <h3>Join Telegram</h3>
-    <p style="font-size:12px;margin-top:10px;">Bergabung untuk membuka akses konten.</p>
-    <div style="font-size:11px;opacity:0.6;margin-top:10px;">
-      Akses akan terbuka setelah bergabung. Kembali ke halaman ini untuk melanjutkan.
-    </div>
-    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">🚀 Join Telegram</a>
-  </div>
-</div>
-
-<!-- POPUP -->
-<div id="preview" class="preview">
-  <div class="preview-box">
-    <div class="preview-text">
-      Nonton sekarang dan bisa di save juga, Update konten setiap hari Disini.<br><br>
-      Lanjutkan untuk akses konten lainnya melalui Telegram.
-    </div>
-    <div class="preview-actions">
-      <a id="watchBtn" target="_blank" class="preview-btn watch">▶ WATCH</a>
-      <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="preview-btn download">🚀 TELEGRAM</a>
-    </div>
-    <div class="close-btn" onclick="closePreview()">Tutup</div>
-  </div>
-</div>
-
-<div id="toast" class="toast"></div>
-
-<script>
-
-/* 🔥 ANTI BASIC */
-document.addEventListener("contextmenu", e=>e.preventDefault());
-document.addEventListener("dragstart", e=>e.preventDefault());
-document.addEventListener("selectstart", e=>e.preventDefault());
-
-/* 🔥 RANDOM BANNER */
-const texts=[
-"🔥 Update konten setiap hari",
-"🚀 Akses lebih cepat via Telegram",
-"✨ Simpan halaman ini",
-"💎 Konten eksklusif setiap hari"
-];
-bannerText.innerText=texts[Math.floor(Math.random()*texts.length)];
-
-/* LOAD DATA + ENCRYPT + CANVAS */
-fetch('data.json')
-.then(r=>r.json())
-.then(data=>{
-let html="";
-data.reverse().forEach(item=>{
-let encoded = btoa(item.img);
-
-html+=`
-<div class="card" onclick="openPreview('${item.link}')">
-<div class="img-box" data-img="${encoded}"></div>
-<div class="card-info">▶ WATCH</div>
-</div>`;
-});
-list.innerHTML=html;
-
-/* RENDER CANVAS */
-document.querySelectorAll('.img-box').forEach(el=>{
-let img = new Image();
-img.src = atob(el.dataset.img);
-
-img.onload = ()=>{
-let canvas=document.createElement("canvas");
-let ctx=canvas.getContext("2d");
-
-canvas.width=img.width;
-canvas.height=img.height;
-
-ctx.drawImage(img,0,0);
-el.appendChild(canvas);
-};
-});
-
-});
-
-/* FLOW */
-function openPreview(link){
-if(!localStorage.getItem("joined")){
-joinPopup.style.display="flex";
-return;
-}
-preview.style.display="flex";
-watchBtn.href=link;
-}
-
-function joinDone(){
-localStorage.setItem("joined","true");
-joinPopup.style.display="none";
-}
-
-if(!localStorage.getItem("joined")){
-setTimeout(()=>{joinPopup.style.display="flex"},2000);
-}
-
-function closePreview(){
-preview.style.display="none";
-}
-
-/* ONLINE */
-let online=120;
-setInterval(()=>{
-online+=Math.random()*10-5;
-onlineCount.innerText=Math.floor(online);
-},2000);
-
-/* 🔥 TOAST REAL */
-function showToast(){
-let random = Math.floor(Math.random()*5)+1;
-
-toast.innerText = random + " orang Join Telegram";
-toast.classList.add("show");
-
-setTimeout(()=>{
-toast.classList.remove("show");
-},2500);
-
-let nextDelay = Math.floor(Math.random()*4000)+3000;
-setTimeout(showToast, nextDelay);
-}
-setTimeout(showToast, 3000);
-
-/* 🔥 ANTI BOT */
-if(navigator.webdriver){
-document.body.innerHTML="Blocked";
-}
-
-</script>
-<!-- 🔥 HISTATS FIX STEALTH -->
-<script>
-(function(){
-
-function loadHistats(){
-  try{
-    var _Hasync = window._Hasync = window._Hasync || [];
-
-    _Hasync.push(['Histats.start', '1,5021277,4,0,0,0,00000000']);
-    _Hasync.push(['Histats.fasi', '1']);
-    _Hasync.push(['Histats.track_hits', '']);
-
-    var hs = document.createElement('script');
-    hs.type = 'text/javascript';
-    hs.async = true;
-    hs.src = 'https://s10.histats.com/js15_as.js';
-
-    document.head.appendChild(hs);
-
-  }catch(e){
-    console.log("Histats error:", e);
-  }
-}
-
-/* 🔥 trigger aman (tidak ganggu struktur kamu) */
-if(document.readyState === "complete"){
-  setTimeout(loadHistats, 1500);
-}else{
-  window.addEventListener("load", function(){
-    setTimeout(loadHistats, 1500);
-  });
-}
-
-})();
-</script>
-</body>
-</html>
+‎<!DOCTYPE html>
+‎<html lang="id">
+‎<head>
+‎<meta charset="UTF-8">
+‎<meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎<title>Telebokep Gallery</title>
+‎
+‎<link rel="manifest" href="manifest.json">
+‎
+‎<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+‎<style>
+‎  :root{
+‎  --main-color:#0088cc;
+‎  }
+‎*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+‎
+‎body{
+‎background:#0b0b0b;
+‎color:white;
+‎padding-top:40px;
+‎}
+‎
+‎/* 🔥 BANNER */
+‎.sticky-banner{
+‎position:fixed;
+‎top:0;
+‎width:100%;
+‎background:linear-gradient(90deg,#0ea5e9,#2563eb);
+‎color:white;
+‎font-size:12px;
+‎padding:6px;
+‎z-index:9999;
+‎overflow:hidden;
+‎white-space:nowrap;
+‎cursor:pointer;
+‎}
+‎
+‎.marquee{
+‎display:inline-block;
+‎padding-left:100%;
+‎animation:scroll 12s linear infinite;
+‎}
+‎
+‎@keyframes scroll{
+‎0%{transform:translateX(0);}
+‎100%{transform:translateX(-100%);}
+‎}
+‎
+‎/* BG */
+‎body::before{
+‎content:"";
+‎position:fixed;
+‎width:100%;
+‎height:100%;
+‎background:radial-gradient(circle at 50% 10%, rgba(0,150,255,0.12), transparent 70%);
+‎z-index:-1;
+‎}
+‎
+‎/* HEADER */
+‎.header{
+‎  text-align:center;
+‎  padding:25px;
+‎  font-size:56px;
+‎  font-family:'Bebas Neue', sans-serif;
+‎  letter-spacing:4px;
+‎
+‎  color:var(--main-color); /* 🔥 warna ikut berubah */
+‎
+‎  transform:skewX(-12deg);
+‎
+‎  /* ❌ TANPA SHADOW */
+‎
+‎  animation:logoPulse 2s ease-in-out infinite alternate;
+‎}
+‎  
+‎@keyframes logoPulse{
+‎  0%{
+‎    transform:skewX(-12deg) scale(1);
+‎  }
+‎  100%{
+‎    transform:skewX(-12deg) scale(1.04);
+‎  }
+‎}
+‎/* ONLINE */
+‎.online{
+‎text-align:center;
+‎font-size:13px;
+‎color:#00ffc6;
+‎margin-bottom:10px;
+‎}
+‎
+‎/* GRID */
+‎.container{
+‎display:grid;
+‎grid-template-columns:repeat(3,1fr);
+‎gap:12px;
+‎padding:12px;
+‎}
+‎
+‎/* CARD */
+‎.card{
+‎background:#111;
+‎border-radius:12px;
+‎overflow:hidden;
+‎cursor:pointer;
+‎transition:0.25s;
+‎}
+‎
+‎.card:hover{
+‎transform:translateY(-5px);
+‎box-shadow:0 10px 20px rgba(0,0,0,0.6);
+‎}
+‎
+‎/* 🔥 CANVAS IMAGE */
+‎.img-box canvas{
+‎width:100%;
+‎height:130px;
+‎object-fit:cover;
+‎}
+‎
+‎/* WATCH */
+‎.card-info{
+‎text-align:center;
+‎font-size:12px;
+‎padding:6px;
+‎background:#0ea5e9;
+‎font-weight:600;
+‎}
+‎
+‎/* JOIN */
+‎.force-popup{
+‎position:fixed;
+‎top:0;left:0;
+‎width:100%;height:100%;
+‎background:rgba(0,0,0,0.95);
+‎display:none;
+‎align-items:center;
+‎justify-content:center;
+‎z-index:10000;
+‎}
+‎
+‎.force-box{
+‎background:#121212;
+‎padding:25px;
+‎border-radius:16px;
+‎text-align:center;
+‎width:85%;
+‎max-width:320px;
+‎}
+‎
+‎.join-btn{
+‎display:block;
+‎margin-top:15px;
+‎padding:12px;
+‎border-radius:12px;
+‎background:#0088cc;
+‎color:white;
+‎text-decoration:none;
+‎font-weight:600;
+‎}
+‎
+‎/* POPUP VIDEO */
+‎.preview{
+‎position:fixed;
+‎top:0;left:0;
+‎width:100%;height:100%;
+‎display:none;
+‎align-items:center;
+‎justify-content:center;
+‎background:rgba(0,0,0,0.7);
+‎backdrop-filter:blur(8px);
+‎z-index:9999;
+‎}
+‎
+‎.preview-box{
+‎width:90%;
+‎max-width:380px;
+‎background:#111;
+‎padding:20px;
+‎border-radius:16px;
+‎text-align:center;
+‎}
+‎
+‎.preview-text{
+‎font-size:13px;
+‎line-height:1.6;
+‎margin-bottom:18px;
+‎}
+‎
+‎.preview-actions{
+‎display:flex;
+‎gap:10px;
+‎}
+‎
+‎.preview-btn{
+‎flex:1;
+‎padding:12px;
+‎border-radius:10px;
+‎color:white;
+‎text-decoration:none;
+‎font-weight:600;
+‎}
+‎
+‎.watch{background:#22c55e;}
+‎.download{background:#3b82f6;}
+‎
+‎.close-btn{
+‎margin-top:12px;
+‎font-size:13px;
+‎opacity:0.7;
+‎cursor:pointer;
+‎}
+‎
+‎/* TOAST */
+‎.toast{
+‎position:fixed;
+‎bottom:20px;
+‎right:-300px;
+‎background:#111;
+‎padding:12px 16px;
+‎border-radius:12px;
+‎font-size:12px;
+‎box-shadow:0 0 15px rgba(0,0,0,0.6);
+‎transition:all 0.5s ease;
+‎}
+‎.toast.show{right:20px;}
+‎</style>
+‎</head>
+‎
+‎<body>
+‎
+‎<div class="sticky-banner" onclick="window.open('https://t.me/+jhoktmNhrtQzYjA1')">
+‎  <div class="marquee" id="bannerText"></div>
+‎</div>
+‎
+‎<div class="header">TELEBOKEP</div>
+‎
+‎<div class="online">🟢 <span id="onlineCount">0</span> online</div>
+‎
+‎<div id="list" class="container"></div>
+‎
+‎<!-- JOIN -->
+‎<div class="force-popup" id="joinPopup">
+‎  <div class="force-box">
+‎    <h3>Join Telegram</h3>
+‎
+‎    <p style="font-size:12px;margin-top:10px;">
+‎      Bergabung untuk membuka akses konten.
+‎    </p>
+‎
+‎    <div style="font-size:11px;opacity:0.6;margin-top:10px;">
+‎      Akses akan terbuka setelah bergabung. Kembali ke halaman ini untuk melanjutkan.
+‎    </div>
+‎
+‎    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">
+‎      🚀 Join Telegram
+‎    </a>
+‎
+‎    <!-- 🔥 PESAN DI BAWAH TOMBOL -->
+‎    <div style="
+‎      font-size:11px;
+‎      opacity:0.5;
+‎      margin-top:12px;
+‎      line-height:1.5;
+‎      border-top:1px solid rgba(255,255,255,0.08);
+‎      padding-top:10px;
+‎      animation:fadeIn 0.6s;
+‎    ">
+‎      Beberapa jaringan mungkin membatasi tampilan. Gunakan VPN atau ganti DNS agar semua konten tampil dengan sempurna.
+‎    </div>
+‎
+‎  </div>
+‎</div>
+‎
+‎<!-- POPUP -->
+‎<div id="preview" class="preview">
+‎  <div class="preview-box">
+‎    <div class="preview-text">
+‎      Nonton sekarang dan bisa di save juga, Update konten setiap hari Disini.<br><br>
+‎      Lanjutkan untuk akses konten lainnya melalui Telegram.
+‎    </div>
+‎    <div class="preview-actions">
+‎      <a id="watchBtn" target="_blank" class="preview-btn watch">▶ WATCH</a>
+‎      <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="preview-btn download">🚀 TELEGRAM</a>
+‎    </div>
+‎    <div class="close-btn" onclick="closePreview()">Tutup</div>
+‎  </div>
+‎</div>
+‎
+‎<div id="toast" class="toast"></div>
+‎
+‎<script>
+‎
+‎/* 🔥 ANTI BASIC */
+‎document.addEventListener("contextmenu", e=>e.preventDefault());
+‎document.addEventListener("dragstart", e=>e.preventDefault());
+‎document.addEventListener("selectstart", e=>e.preventDefault());
+‎
+‎/* 🔥 RANDOM BANNER */
+‎const texts=[
+‎"🔥 Update konten setiap hari",
+‎"🚀 Akses lebih cepat via Telegram",
+‎"✨ Simpan halaman ini",
+‎"💎 Konten eksklusif setiap hari"
+‎];
+‎bannerText.innerText=texts[Math.floor(Math.random()*texts.length)];
+‎
+‎/* LOAD DATA + ENCRYPT + CANVAS */
+‎fetch('data.json')
+‎.then(r=>r.json())
+‎.then(data=>{
+‎let html="";
+‎data.reverse().forEach(item=>{
+‎let encoded = btoa(item.img);
+‎
+‎html+=`
+‎<div class="card" onclick="openPreview('${item.link}')">
+‎<div class="img-box" data-img="${encoded}"></div>
+‎<div class="card-info">▶ WATCH</div>
+‎</div>`;
+‎});
+‎list.innerHTML=html;
+‎
+‎/* RENDER CANVAS */
+‎document.querySelectorAll('.img-box').forEach(el=>{
+‎let img = new Image();
+‎img.src = atob(el.dataset.img);
+‎
+‎img.onload = ()=>{
+‎let canvas=document.createElement("canvas");
+‎let ctx=canvas.getContext("2d");
+‎
+‎canvas.width=img.width;
+‎canvas.height=img.height;
+‎
+‎ctx.drawImage(img,0,0);
+‎el.appendChild(canvas);
+‎};
+‎});
+‎
+‎});
+‎
+‎/* FLOW */
+‎function openPreview(link){
+‎if(!localStorage.getItem("joined")){
+‎joinPopup.style.display="flex";
+‎return;
+‎}
+‎preview.style.display="flex";
+‎watchBtn.href=link;
+‎}
+‎
+‎function joinDone(){
+‎localStorage.setItem("joined","true");
+‎joinPopup.style.display="none";
+‎}
+‎
+‎if(!localStorage.getItem("joined")){
+‎setTimeout(()=>{joinPopup.style.display="flex"},2000);
+‎}
+‎
+‎function closePreview(){
+‎preview.style.display="none";
+‎}
+‎
+‎/* ONLINE */
+‎let online=120;
+‎setInterval(()=>{
+‎online+=Math.random()*10-5;
+‎onlineCount.innerText=Math.floor(online);
+‎},2000);
+‎
+‎/* 🔥 TOAST REAL */
+‎function showToast(){
+‎let random = Math.floor(Math.random()*5)+1;
+‎
+‎toast.innerText = random + " orang Join Telegram";
+‎toast.classList.add("show");
+‎
+‎setTimeout(()=>{
+‎toast.classList.remove("show");
+‎},2500);
+‎
+‎let nextDelay = Math.floor(Math.random()*4000)+3000;
+‎setTimeout(showToast, nextDelay);
+‎}
+‎setTimeout(showToast, 3000);
+‎
+‎/* 🔥 ANTI BOT */
+‎if(navigator.webdriver){
+‎document.body.innerHTML="Blocked";
+‎}
+‎
+‎</script>
+‎<!-- 🔥 HISTATS FIX STEALTH -->
+‎<script>
+‎(function(){
+‎
+‎function loadHistats(){
+‎  try{
+‎    var _Hasync = window._Hasync = window._Hasync || [];
+‎
+‎    _Hasync.push(['Histats.start', '1,5021277,4,0,0,0,00000000']);
+‎    _Hasync.push(['Histats.fasi', '1']);
+‎    _Hasync.push(['Histats.track_hits', '']);
+‎
+‎    var hs = document.createElement('script');
+‎    hs.type = 'text/javascript';
+‎    hs.async = true;
+‎    hs.src = 'https://s10.histats.com/js15_as.js';
+‎
+‎    document.head.appendChild(hs);
+‎
+‎  }catch(e){
+‎    console.log("Histats error:", e);
+‎  }
+‎}
+‎
+‎/* 🔥 trigger aman (tidak ganggu struktur kamu) */
+‎if(document.readyState === "complete"){
+‎  setTimeout(loadHistats, 1500);
+‎}else{
+‎  window.addEventListener("load", function(){
+‎    setTimeout(loadHistats, 1500);
+‎  });
+‎}
+‎
+‎})();
+‎</script>
+‎<script>
+‎(function(){
+‎
+‎const colors = [
+‎  "#0088cc",
+‎  "#ff2d55",
+‎  "#facc15",
+‎  "#ef4444",
+‎  "#8b5cf6",
+‎  "#22c55e"
+‎];
+‎
+‎const randomColor = colors[Math.floor(Math.random()*colors.length)];
+‎
+‎document.documentElement.style.setProperty('--main-color', randomColor);
+‎
+‎// 🔥 AUTO GANTI TANPA EDIT CSS SATU-SATU
+‎const style = document.createElement("style");
+‎style.innerHTML = `
+‎
+‎.join-btn{
+‎  background:${randomColor} !important;
+‎  box-shadow:0 0 15px ${randomColor};
+‎}
+‎
+‎.card-info{
+‎  background:${randomColor} !important;
+‎}
+‎
+‎.sticky-banner{
+‎  background:linear-gradient(90deg, ${randomColor}, #2563eb) !important;
+‎}
+‎
+‎`;
+‎
+‎document.head.appendChild(style);
+‎
+‎})();
+‎</script>
+‎</body>
+‎</html>
+‎
