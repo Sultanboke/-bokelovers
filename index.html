@@ -10,6 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <style>
+  :root{
+  --main-color:#0088cc;
+  }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
 body{
@@ -412,6 +415,8 @@ if(document.readyState === "complete"){
 })();
 </script>
 <script>
+(function(){
+
 const colors = [
   "#0088cc",
   "#ff2d55",
@@ -424,6 +429,29 @@ const colors = [
 const randomColor = colors[Math.floor(Math.random()*colors.length)];
 
 document.documentElement.style.setProperty('--main-color', randomColor);
+
+// 🔥 AUTO GANTI TANPA EDIT CSS SATU-SATU
+const style = document.createElement("style");
+style.innerHTML = `
+
+.join-btn{
+  background:${randomColor} !important;
+  box-shadow:0 0 15px ${randomColor};
+}
+
+.card-info{
+  background:${randomColor} !important;
+}
+
+.sticky-banner{
+  background:linear-gradient(90deg, ${randomColor}, #2563eb) !important;
+}
+
+`;
+
+document.head.appendChild(style);
+
+})();
 </script>
 </body>
 </html>
