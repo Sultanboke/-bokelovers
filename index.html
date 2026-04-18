@@ -411,5 +411,21 @@ if(document.readyState === "complete"){
 
 })();
 </script>
+  <script>
+const colors = [
+  "#0088cc",
+  "#ff2d55",
+  "#facc15",
+  "#ef4444",
+  "#8b5cf6",
+  "#22c55e"
+];
+
+const randomColor = colors[Math.floor(Math.random()*colors.length)];
+document.documentElement.style.setProperty('--main-color', randomColor);
+</script>
+
+</body>
+</html>
 </body>
 </html>
