@@ -59,31 +59,31 @@ z-index:-1;
 /* HEADER */
 .header{
   text-align:center;
-  padding:20px;
-  font-size:48px;
+  padding:25px;
+  font-size:56px;
   font-family:'Bebas Neue', sans-serif;
-  letter-spacing:3px;
+  letter-spacing:4px;
+  color:#f1f1f1;
 
-  color:#e5e5e5;
-
-  transform:skewX(-10deg);
+  transform:skewX(-12deg);
 
   text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
     2px 2px 0 #000,
-    4px 4px 15px rgba(0,0,0,0.8);
+    4px 4px 0 rgba(0,0,0,0.8),
+    8px 8px 15px rgba(0,0,0,0.9);
+
+  animation:logoPulse 2s ease-in-out infinite alternate;
 }
   
-@keyframes glow{
-  from{
-    text-shadow:
-      0 0 5px var(--main-color),
-      0 0 15px var(--main-color);
+@keyframes logoPulse{
+  0%{
+    transform:skewX(-12deg) scale(1);
   }
-  to{
-    text-shadow:
-      0 0 15px var(--main-color),
-      0 0 30px var(--main-color),
-      0 0 60px var(--main-color);
+  100%{
+    transform:skewX(-12deg) scale(1.04);
   }
 }
 /* ONLINE */
