@@ -82,18 +82,16 @@ z-index:-1;
 
 /* 🔥 LOGO IMAGE */
 .logo-img{
-  width:180px;
-  max-width:80%;
+  width:120px;
+  max-width:60%;
   display:block;
   margin:auto;
 
-  /* ❌ MATIKAN SEMUA FILTER WARNA */
-  filter:none;
-  mix-blend-mode:normal;
+  /* 🔥 WARNA IKUT THEME TANPA MERUSAK */
+  filter: drop-shadow(0 0 8px var(--main-color));
 
   transition:0.3s;
 }
-
 /* 🔥 HOVER HALUS */
 .logo-img:hover{
   transform:scale(1.05);
