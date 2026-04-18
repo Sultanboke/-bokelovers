@@ -7,8 +7,7 @@
 
 <link rel="manifest" href="manifest.json">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
   :root{
   --main-color:#0088cc;
@@ -59,15 +58,35 @@ z-index:-1;
 
 /* HEADER */
 .header{
-text-align:center;
-padding:20px;
-font-size:28px;
-font-family:'Orbitron';
-letter-spacing:2px;
-color:#00c6ff;
-text-shadow:0 0 12px rgba(0,198,255,0.6);
-}
+  text-align:center;
+  padding:20px;
+  font-size:34px;
+  font-family:'Orbitron', 'Bebas Neue', sans-serif;
+  letter-spacing:4px;
 
+  color:var(--main-color);
+
+  text-shadow:
+    0 0 10px var(--main-color),
+    0 0 20px var(--main-color),
+    0 0 40px rgba(255,255,255,0.2);
+
+  animation:glow 2s ease-in-out infinite alternate;
+}
+  
+@keyframes glow{
+  from{
+    text-shadow:
+      0 0 5px var(--main-color),
+      0 0 15px var(--main-color);
+  }
+  to{
+    text-shadow:
+      0 0 15px var(--main-color),
+      0 0 30px var(--main-color),
+      0 0 60px var(--main-color);
+  }
+}
 /* ONLINE */
 .online{
 text-align:center;
