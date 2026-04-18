@@ -303,7 +303,7 @@ fetch('data.json')
 .then(r=>r.json())
 .then(data=>{
 let html="";
-data.reverse().forEach(item=>{
+data.reverse().slice(0,12).forEach(item=>{
 let encoded=btoa(item.img);
 
 html+=`
