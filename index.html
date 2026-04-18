@@ -7,7 +7,7 @@
 
 <link rel="manifest" href="manifest.json">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
   :root{
   --main-color:#0088cc;
@@ -60,18 +60,17 @@ z-index:-1;
 .header{
   text-align:center;
   padding:20px;
-  font-size:34px;
-  font-family:'Orbitron', 'Bebas Neue', sans-serif;
-  letter-spacing:4px;
+  font-size:48px;
+  font-family:'Bebas Neue', sans-serif;
+  letter-spacing:3px;
 
-  color:var(--main-color);
+  color:#e5e5e5;
+
+  transform:skewX(-10deg);
 
   text-shadow:
-    0 0 10px var(--main-color),
-    0 0 20px var(--main-color),
-    0 0 40px rgba(255,255,255,0.2);
-
-  animation:glow 2s ease-in-out infinite alternate;
+    2px 2px 0 #000,
+    4px 4px 15px rgba(0,0,0,0.8);
 }
   
 @keyframes glow{
