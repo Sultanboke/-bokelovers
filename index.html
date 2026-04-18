@@ -300,12 +300,77 @@ const texts=[
 ];
 bannerText.innerText=texts[Math.floor(Math.random()*texts.length)];
 
+let allData = [];
+let currentPage = 1;
+let perPage = 12;
+
 fetch('data.json')
 .then(r=>r.json())
 .then(data=>{
-let html="";
-data.reverse().slice(0,12).forEach(item=>{
-let encoded=btoa(item.img);
+  allData = data.reverse();
+  renderPage(1);
+});
+
+function renderPage(page){
+  currentPage = page;
+
+  let start = (page-1)*perPage;
+  let end = start + perPage;
+
+  let html = "";
+
+  allData.slice(start,end).forEach(item=>{
+    let encoded = btoa(item.img);
+
+    html += `
+    <div class="card" onclick="openPreview('${item.link}')">
+      <div class="img-box" data-img="${encoded}"></div>
+      <div class="card-info">▶ WATCH</div>
+    </div>`;
+  });
+
+  list.innerHTML = html;
+
+  renderPagination();
+
+  window.scrollTo({top:0,behavior:"smooth"});
+
+  document.querySelectorAll('.img-box').forEach(el=>{
+    let img = new Image();
+    img.src = atob(el.dataset.img);
+
+    img.onload = ()=>{
+      let canvas=document.createElement("canvas");
+      let ctx=canvas.getContext("2d");
+
+      canvas.width=300;
+      canvas.height=200;
+
+      ctx.drawImage(img,0,0,300,200);
+      el.appendChild(canvas);
+    };
+  });
+}
+
+function renderPagination(){
+  let totalPage = Math.ceil(allData.length / perPage);
+
+  let html = "";
+
+  if(currentPage > 1){
+    html += `<button onclick="renderPage(${currentPage-1})">⬅</button>`;
+  }
+
+  for(let i=1;i<=totalPage;i++){
+    html += `<button onclick="renderPage(${i})" class="${i===currentPage?'active':''}">${i}</button>`;
+  }
+
+  if(currentPage < totalPage){
+    html += `<button onclick="renderPage(${currentPage+1})">➡</button>`;
+  }
+
+  pagination.innerHTML = html;
+  }
 
 html+=`
 <div class="card" onclick="openPreview('${item.link}')">
