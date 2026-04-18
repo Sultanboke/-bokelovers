@@ -219,6 +219,30 @@ document.getElementById("onlineCount").innerText=Math.floor(online);
 },2000);
 
 </script>
+<script>
+(function(){
 
+function loadHistats(){
+  try{
+    var _Hasync = window._Hasync = window._Hasync || [];
+
+    _Hasync.push(['Histats.start', '1,5021277,4,0,0,0,00000000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+
+    var hs = document.createElement('script');
+    hs.async = true;
+    hs.src = 'https://s10.histats.com/js15_as.js';
+
+    document.head.appendChild(hs);
+
+  }catch(e){}
+}
+
+/* delay biar ringan */
+setTimeout(loadHistats, 1500);
+
+})();
+    </script>
 </body>
 </html>
