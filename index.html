@@ -7,337 +7,224 @@
 
 <link rel="manifest" href="manifest.json">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0d0d0d;color:white;padding-top:40px;}
 
-body{
-background:#0b0b0b;
-color:white;
-padding-top:40px;
-}
-
-/* 🔥 BANNER */
+/* MARQUEE */
 .sticky-banner{
-position:fixed;
-top:0;
-width:100%;
-background:linear-gradient(90deg,#0ea5e9,#2563eb);
-color:white;
-font-size:12px;
-padding:6px;
-z-index:9999;
-overflow:hidden;
-white-space:nowrap;
-cursor:pointer;
+position:fixed;top:0;width:100%;
+background:linear-gradient(90deg,#0088cc,#229ED9);
+color:white;font-size:13px;padding:8px;
+z-index:9999;overflow:hidden;white-space:nowrap;
 }
-
 .marquee{
 display:inline-block;
 padding-left:100%;
 animation:scroll 12s linear infinite;
 }
-
 @keyframes scroll{
 0%{transform:translateX(0);}
 100%{transform:translateX(-100%);}
 }
 
-/* BG */
-body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background:radial-gradient(circle at 50% 10%, rgba(0,150,255,0.12), transparent 70%);
-z-index:-1;
-}
+/* POPUP */
+.force-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;align-items:center;justify-content:center;z-index:10000;}
+.force-box{background:#111;padding:25px;border-radius:15px;text-align:center;width:85%;max-width:340px;}
+.force-box p{font-size:12px;color:#ff4d4d;margin-bottom:12px;}
+.join-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;color:white;font-weight:600;background:#0088cc;}
+.note{font-size:11px;opacity:0.6;margin-top:10px;}
 
-/* HEADER */
 .header{
-text-align:center;
-padding:20px;
-font-size:28px;
-font-family:'Orbitron';
-letter-spacing:2px;
-color:#00c6ff;
-text-shadow:0 0 12px rgba(0,198,255,0.6);
+text-align:center;padding:20px;font-size:28px;
+font-family:'Bebas Neue';letter-spacing:2px;
+background:linear-gradient(90deg,#ff416c,#ff4b2b);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 
-/* ONLINE */
-.online{
-text-align:center;
-font-size:13px;
-color:#00ffc6;
-margin-bottom:10px;
+.topbar{display:flex;justify-content:center;padding:10px;}
+.tg-btn{
+padding:8px 16px;border-radius:10px;
+text-decoration:none;color:white;font-size:13px;
+background:#0088cc;display:flex;align-items:center;gap:6px;
 }
+
+.online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
 /* GRID */
-.container{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
-padding:12px;
-}
+.container{display:grid;gap:12px;padding:12px;}
+@media (min-width:0px){.container{grid-template-columns:repeat(3,1fr);}}
+@media (min-width:600px){.container{grid-template-columns:repeat(4,1fr);}}
+@media (min-width:900px){.container{grid-template-columns:repeat(5,1fr);}}
 
-/* CARD */
+/* CARD UPGRADE */
 .card{
-background:#111;
-border-radius:12px;
+background:#1a1a1a;
+border-radius:14px;
 overflow:hidden;
 cursor:pointer;
-transition:0.25s;
+position:relative;
+transition:0.2s;
 }
-
-.card:hover{
-transform:translateY(-5px);
-box-shadow:0 10px 20px rgba(0,0,0,0.6);
-}
-
 .card img{
 width:100%;
 height:130px;
 object-fit:cover;
 }
 
-/* WATCH */
-.card-info{
-text-align:center;
-font-size:12px;
-padding:6px;
-background:#0ea5e9;
-font-weight:600;
+/* HOVER */
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px rgba(255,255,255,0.2);
 }
 
-/* JOIN */
-.force-popup{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.95);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:10000;
+/* CLICK EFFECT */
+.card:active{
+transform:scale(0.95);
 }
 
-.force-box{
-background:#121212;
-padding:25px;
-border-radius:16px;
-text-align:center;
-width:85%;
-max-width:320px;
+/* RIPPLE */
+.card::after{
+content:"";
+position:absolute;
+top:50%;left:50%;
+width:0;height:0;
+background:rgba(255,255,255,0.3);
+border-radius:50%;
+transform:translate(-50%,-50%);
+opacity:0;
+}
+.card:active::after{
+width:200%;
+height:200%;
+opacity:1;
+transition:0.4s;
 }
 
-.join-btn{
-display:block;
-margin-top:15px;
-padding:12px;
-border-radius:12px;
-background:#0088cc;
-color:white;
-text-decoration:none;
-font-weight:600;
-}
+.card-info{text-align:center;font-size:11px;padding:6px;opacity:0.8;}
 
-/* POPUP VIDEO */
+/* PREVIEW */
 .preview{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-display:none;
-align-items:center;
-justify-content:center;
-background:rgba(0,0,0,0.7);
-backdrop-filter:blur(8px);
-z-index:9999;
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.9);
+display:none;align-items:center;justify-content:center;
 }
-
-.preview-box{
-width:90%;
-max-width:380px;
-background:#111;
-padding:20px;
-border-radius:16px;
-text-align:center;
-}
-
-.preview-text{
-font-size:13px;
-line-height:1.6;
-margin-bottom:18px;
-}
-
-.preview-actions{
-display:flex;
-gap:10px;
-}
-
-.preview-btn{
-flex:1;
-padding:12px;
-border-radius:10px;
-color:white;
-text-decoration:none;
-font-weight:600;
-}
-
+.preview-box{background:#111;border-radius:18px;width:90%;max-width:360px;}
+.preview-box img{width:100%;height:180px;object-fit:cover;}
+.preview-content{padding:15px;text-align:center;}
+.desc{font-size:12px;opacity:0.75;margin-bottom:12px;}
+.preview-actions{display:flex;gap:10px;}
+.preview-btn{flex:1;padding:10px;border-radius:10px;text-decoration:none;color:white;}
 .watch{background:#22c55e;}
 .download{background:#3b82f6;}
+.close-btn{margin-top:10px;font-size:12px;opacity:0.6;cursor:pointer;}
 
-.close-btn{
-margin-top:12px;
-font-size:13px;
-opacity:0.7;
-cursor:pointer;
-}
+.toast{position:fixed;bottom:20px;left:20px;background:#1a1a1a;padding:10px;border-radius:8px;display:none;}
 
-/* 🔥 TOAST (UPGRADE ANIMASI) */
-.toast{
-position:fixed;
-bottom:20px;
-right:-300px;
-background:#111;
-padding:12px 16px;
-border-radius:12px;
-font-size:12px;
-box-shadow:0 0 15px rgba(0,0,0,0.6);
-transition:all 0.5s ease;
-}
-
-.toast.show{
-right:20px;
-}
+.footer{text-align:center;padding:20px;font-size:12px;opacity:0.6;}
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 CLICKABLE BANNER -->
-<div class="sticky-banner" onclick="window.open('https://t.me/+jhoktmNhrtQzYjA1')">
-  <div class="marquee" id="bannerText"></div>
+<div class="sticky-banner">
+  <div class="marquee">
+    🚀 Tambahkan website ini ke layar utama HP kamu untuk akses cepat & update konten setiap hari tanpa terlewat 🔥
+  </div>
+</div>
+
+<div class="force-popup">
+  <div class="force-box">
+    <h2>Join Telegram</h2>
+    <p>Gabung terlebih dahulu untuk membuka semua konten terbaru</p>
+
+    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">
+      🚀 Join Telegram
+    </a>
+
+    <div class="note">Setelah join, kembali ke halaman ini</div>
+  </div>
 </div>
 
 <div class="header">TELEBOKEP</div>
+
+<div class="topbar">
+<a href="https://t.me/+jhoktmNhrtQzYjA1" class="tg-btn">
+<svg viewBox="0 0 24 24" width="16" fill="white">
+<path d="M9.04 15.57l-.39 4.27c.56 0 .8-.24 1.09-.53l2.61-2.5 5.41 3.96c.99.55 1.7.26 1.96-.92l3.56-16.65c.31-1.45-.52-2.02-1.48-1.66L1.64 9.21c-1.42.55-1.4 1.34-.24 1.7l5.44 1.7L19.69 5.5"/>
+</svg>
+telebokep
+</a>
+</div>
 
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
 
 <div id="list" class="container"></div>
 
-<!-- JOIN -->
-<div class="force-popup" id="joinPopup">
-  <div class="force-box">
-    <h3>Join Telegram</h3>
+<div class="footer">© 2026 Telebokep</div>
 
-    <p style="font-size:12px;margin-top:10px;">
-      Bergabung untuk membuka akses konten.
-    </p>
-
-    <div style="font-size:11px;opacity:0.6;margin-top:10px;">
-      Akses akan terbuka setelah bergabung. Kembali ke halaman ini untuk melanjutkan.
-    </div>
-
-    <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="join-btn" onclick="joinDone()">🚀 Join Telegram</a>
-  </div>
-</div>
-
-<!-- POPUP VIDEO -->
+<!-- PREVIEW -->
 <div id="preview" class="preview">
   <div class="preview-box">
-
-    <div class="preview-text">
-      Konten berasal dari sumber publik.<br><br>
-      Lanjutkan untuk akses penuh melalui Telegram.
+    <img id="previewImg">
+    <div class="preview-content">
+      <p class="desc">Tonton video kualitas terbaik, bisa disimpan & ditonton kapan saja.</p>
+      <div class="preview-actions">
+        <a id="watchBtn" target="_blank" class="preview-btn watch">▶ Watch</a>
+        <a id="downloadBtn" target="_blank" class="preview-btn download">⬇ Download</a>
+      </div>
+      <div class="close-btn" onclick="closePreview()">Tutup</div>
     </div>
-
-    <div class="preview-actions">
-      <a id="watchBtn" target="_blank" class="preview-btn watch">▶ WATCH</a>
-      <a href="https://t.me/+jhoktmNhrtQzYjA1" target="_blank" class="preview-btn download">🚀 TELEGRAM</a>
-    </div>
-
-    <div class="close-btn" onclick="closePreview()">Tutup</div>
-
   </div>
 </div>
 
 <div id="toast" class="toast"></div>
 
 <script>
+const ratings=[4.6,4.1,4.9,4.3,4.7,4.0,4.5,4.7];
 
-/* 🔥 RANDOM BANNER TEXT */
-const texts=[
-"🔥 Update konten setiap hari • Klik untuk akses cepat",
-"🚀 Akses lebih cepat melalui Telegram sekarang",
-"✨ Simpan halaman ini untuk update terbaru",
-"💎 Konten eksklusif tersedia setiap hari"
-];
-bannerText.innerText=texts[Math.floor(Math.random()*texts.length)];
-
-/* LOAD DATA */
-fetch('data.json')
+fetch('data.json?v='+Date.now())
 .then(r=>r.json())
 .then(data=>{
 let html="";
-data.reverse().forEach(item=>{
-html+=`
-<div class="card" onclick="openPreview('${item.link}')">
+data.reverse().forEach((item,i)=>{
+html+=`<div class="card" onclick="openPreview('${item.img}','${item.link}')">
 <img src="${item.img}">
-<div class="card-info">▶ WATCH</div>
+<div class="card-info">⭐ ${ratings[i%ratings.length]}</div>
 </div>`;
 });
 list.innerHTML=html;
 });
 
-/* FLOW */
-function openPreview(link){
-if(!localStorage.getItem("joined")){
-joinPopup.style.display="flex";
-return;
-}
+function openPreview(img,link){
 preview.style.display="flex";
+previewImg.src=img;
 watchBtn.href=link;
+downloadBtn.href=link;
 }
+function closePreview(){preview.style.display="none";}
+preview.onclick=e=>{if(e.target.id==="preview")closePreview();}
 
-function joinDone(){
-localStorage.setItem("joined","true");
-joinPopup.style.display="none";
-}
+let online=100;
+setInterval(()=>{online+=Math.random()*10-5;onlineCount.innerText=Math.floor(online)},2000);
 
+function joinDone(){localStorage.setItem("joined","true");}
 if(!localStorage.getItem("joined")){
-setTimeout(()=>{joinPopup.style.display="flex"},2000);
+setTimeout(()=>{document.querySelector(".force-popup").style.display="flex"},3000);
 }
 
-function closePreview(){
-preview.style.display="none";
-}
-
-/* ONLINE */
-let online=120;
 setInterval(()=>{
-online+=Math.random()*10-5;
-onlineCount.innerText=Math.floor(online);
-},2000);
+toast.innerText=Math.floor(Math.random()*6+1)+" user join";
+toast.style.display="block";
+setTimeout(()=>toast.style.display="none",3000);
+},7000);
 
-/* 🔥 NOTIF REAL + SLIDE */
-function showToast(){
-let random = Math.floor(Math.random()*5)+1;
-
-toast.innerText = random + " orang Join Telegram";
-toast.classList.add("show");
-
-setTimeout(()=>{
-toast.classList.remove("show");
-},2500);
-
-let nextDelay = Math.floor(Math.random()*4000)+3000;
-setTimeout(showToast, nextDelay);
+/* PWA */
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('service-worker.js');
 }
-
-/* START */
-setTimeout(showToast, 3000);
-
 </script>
 
 </body>
