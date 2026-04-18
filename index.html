@@ -63,17 +63,12 @@ z-index:-1;
   font-size:56px;
   font-family:'Bebas Neue', sans-serif;
   letter-spacing:4px;
-  color:#f1f1f1;
+
+  color:var(--main-color); /* 🔥 warna ikut berubah */
 
   transform:skewX(-12deg);
 
-  text-shadow:
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000,
-    4px 4px 0 rgba(0,0,0,0.8),
-    8px 8px 15px rgba(0,0,0,0.9);
+  /* ❌ TANPA SHADOW */
 
   animation:logoPulse 2s ease-in-out infinite alternate;
 }
