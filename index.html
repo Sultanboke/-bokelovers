@@ -36,71 +36,90 @@ background:linear-gradient(90deg,#ff416c,#ff4b2b);
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
 /* GRID */
-.container{display:grid;gap:12px;padding:12px;grid-template-columns:repeat(3,1fr);}
+.container{
+display:grid;
+gap:12px;
+padding:12px;
+grid-template-columns:repeat(3,1fr);
+}
 
 /* CARD */
-.card{background:#1a1a1a;border-radius:12px;overflow:hidden;}
+.card{
+background:#1a1a1a;
+border-radius:12px;
+overflow:hidden;
+}
 
-/* CANVAS (ANTI DOWNLOAD) */
+/* 🔥 FIX GAMBAR TIDAK LONJONG */
+.img-box{
+width:100%;
+aspect-ratio:1/1; /* kotak */
+overflow:hidden;
+}
 .img-box canvas{
 width:100%;
-height:130px;
+height:100%;
 object-fit:cover;
-pointer-events:none;
 }
 
 /* ACTION */
-.actions{display:flex;gap:6px;padding:6px;}
-.btn{flex:1;display:flex;align-items:center;justify-content:center;padding:8px;border-radius:8px;background:#2a2a2a;}
+.actions{
+display:flex;
+gap:8px;
+padding:8px;
+}
+.btn{
+flex:1;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:10px;
+border-radius:10px;
+background:#2a2a2a;
+font-size:18px;
+}
+.play{color:#22c55e;}
+.download{color:#3b82f6;}
 
 /* PAGINATION */
-.pagination{display:flex;justify-content:center;gap:10px;padding:20px;}
-.page-btn{padding:8px 12px;background:#222;border-radius:6px;cursor:pointer;}
+.pagination{
+display:flex;
+justify-content:center;
+gap:8px;
+padding:20px;
+}
+.page-btn{
+padding:8px 12px;
+background:#222;
+border-radius:6px;
+cursor:pointer;
+}
 .page-btn.active{background:#ff416c;}
-
-/* POPUP */
-.popup{
-position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.9);
-display:none;align-items:center;justify-content:center;
-z-index:99999;
-}
-.popup-box{
-background:#111;padding:25px;border-radius:15px;text-align:center;
-width:85%;max-width:320px;
-}
-.popup-btn{
-display:block;margin:10px 0;padding:10px;
-border-radius:8px;text-decoration:none;color:white;
-background:#0088cc;
-}
-.close-btn{margin-top:10px;color:#aaa;cursor:pointer;}
-
-/* TOAST */
-.toast{
-position:fixed;bottom:20px;left:20px;
-background:#1a1a1a;padding:10px 15px;
-border-radius:8px;font-size:13px;
-display:none;
-}
 
 /* FOOTER */
 .footer{
-text-align:center;padding:20px;font-size:12px;
-opacity:0.6;border-top:1px solid #222;
+text-align:center;
+padding:20px;
+font-size:12px;
+opacity:0.6;
+border-top:1px solid #222;
 }
 </style>
 </head>
 
-<body oncontextmenu="return false">
+<body>
 
-<div class="sticky-banner">🚀 Join Telegram</div>
+<div class="sticky-banner">
+🚀 Join Telegram:
+<a href="https://t.me/+3_7no00jKVg0MThl" target="_blank" style="color:white;">Japanese</a> |
+<a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank" style="color:white;">Indo Viral</a>
+</div>
 
 <div class="header">🔥 TELEBOKEP GALLERY 🔥</div>
 
 <div class="topbar">
-<a href="#" class="tg-btn jap">Japanese</a>
-<a href="#" class="tg-btn indo">Indo Viral</a>
+<a href="https://t.me/+3_7no00jKVg0MThl" target="_blank" class="tg-btn jap">Japanese</a>
+<a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank" class="tg-btn indo">Indo Viral</a>
 </div>
 
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
@@ -112,28 +131,7 @@ opacity:0.6;border-top:1px solid #222;
 © 2026 by Telegram
 </div>
 
-<!-- POPUP JOIN -->
-<div id="popup" class="popup">
-<div class="popup-box">
-<h3>🚀 Join Telegram</h3>
-<p style="font-size:13px;margin-top:10px;">
-Wajib join untuk akses konten 🔥
-</p>
-
-<a href="#" target="_blank" class="popup-btn" onclick="joinDone()">JOIN SEKARANG</a>
-
-<div class="close-btn">Tidak bisa ditutup</div>
-</div>
-</div>
-
-<div id="toast" class="toast"></div>
-
 <script>
-document.addEventListener("contextmenu", e=>e.preventDefault());
-document.addEventListener("keydown", e=>{
-if(e.keyCode==123) return false;
-if(e.ctrlKey && e.shiftKey && e.keyCode==73) return false;
-});
 
 /* DATA */
 const perPage=12;
@@ -145,34 +143,33 @@ fetch('data.json')
 .then(data=>{
 allData=data.reverse();
 renderPage(1);
-renderPagination();
 });
 
 /* RENDER */
 function renderPage(page){
+currentPage=page;
 const list=document.getElementById("list");
 list.innerHTML="";
 
-const start=(page-1)*perPage;
-const items=allData.slice(start,start+perPage);
+let start=(page-1)*perPage;
+let items=allData.slice(start,start+perPage);
 
 items.forEach(item=>{
 list.innerHTML+=`
 <div class="card">
 <div class="img-box" data-img="${item.img}"></div>
 <div class="actions">
-<a href="${item.link}" target="_blank" class="btn">▶</a>
-<a href="${item.link}" target="_blank" class="btn">⬇</a>
+<a href="${item.link}" target="_blank" class="btn play">▶</a>
+<a href="${item.link}" target="_blank" class="btn download">⬇</a>
 </div>
 </div>`;
 });
 
 renderCanvas();
-currentPage=page;
-updateActive();
+renderPagination();
 }
 
-/* CANVAS (ANTI DOWNLOAD) */
+/* CANVAS */
 function renderCanvas(){
 document.querySelectorAll('.img-box').forEach(el=>{
 let img=new Image();
@@ -182,63 +179,45 @@ img.onload=()=>{
 let canvas=document.createElement("canvas");
 let ctx=canvas.getContext("2d");
 
-canvas.width=300;
-canvas.height=200;
+canvas.width=img.width;
+canvas.height=img.height;
 
-ctx.drawImage(img,0,0,300,200);
+ctx.drawImage(img,0,0);
 el.appendChild(canvas);
 };
 });
 }
 
-/* PAGINATION */
+/* PAGINATION SIMPLE */
 function renderPagination(){
-const total=Math.ceil(allData.length/perPage);
-const pagination=document.getElementById("pagination");
-pagination.innerHTML="";
+let total=Math.ceil(allData.length/perPage);
+let html="";
 
-for(let i=1;i<=total;i++){
-pagination.innerHTML+=`<div class="page-btn" onclick="renderPage(${i})">${i}</div>`;
+/* BACK */
+if(currentPage>1){
+html+=`<div class="page-btn" onclick="renderPage(${currentPage-1})">⬅</div>`;
 }
+
+/* PAGE 1-3 */
+for(let i=currentPage;i<currentPage+3 && i<=total;i++){
+html+=`<div class="page-btn ${i===currentPage?'active':''}" onclick="renderPage(${i})">${i}</div>`;
 }
-function updateActive(){
-document.querySelectorAll(".page-btn").forEach((btn,i)=>{
-btn.classList.toggle("active",i+1===currentPage);
-});
+
+/* NEXT */
+if(currentPage<total){
+html+=`<div class="page-btn" onclick="renderPage(${currentPage+1})">➡</div>`;
+}
+
+pagination.innerHTML=html;
 }
 
 /* ONLINE */
-let online=90;
+let online=100;
 setInterval(()=>{
 online+=Math.random()*6-3;
 document.getElementById("onlineCount").innerText=Math.floor(online);
 },2000);
 
-/* POPUP DELAY 3 DETIK */
-setTimeout(()=>{
-if(!localStorage.getItem("join")){
-document.getElementById("popup").style.display="flex";
-}
-},3000);
-
-function joinDone(){
-localStorage.setItem("join","yes");
-document.getElementById("popup").style.display="none";
-}
-
-/* TOAST */
-function showToast(){
-const t=document.getElementById("toast");
-t.innerText=Math.floor(Math.random()*5+1)+" orang join Telegram";
-t.style.display="block";
-setTimeout(()=>t.style.display="none",2500);
-}
-setInterval(showToast,7000);
-
-/* ANTI BOT */
-if(navigator.webdriver){
-document.body.innerHTML="Blocked";
-}
 </script>
 
 </body>
