@@ -9,75 +9,92 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#0d0d0d;color:white;padding-top:40px;}
+body{background:#0d0d0d;color:white;padding-top:40px;overflow-x:hidden;}
 
+/* STICKY */
 .sticky-banner{
 position:fixed;top:0;width:100%;
 background:#0088cc;color:white;
-text-align:center;padding:8px;font-size:13px;z-index:9999;
+text-align:center;padding:8px;
+font-size:13px;z-index:9999;
 }
-.header{text-align:center;padding:20px;font-size:20px;font-weight:700;
-background:linear-gradient(90deg,#ff416c,#ff4b2b);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
+/* HEADER */
+.header{
+text-align:center;padding:20px;font-size:20px;font-weight:700;
+background:linear-gradient(90deg,#ff416c,#ff4b2b);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+/* BUTTON */
 .topbar{display:flex;gap:10px;justify-content:center;padding:10px;}
 .tg-btn{padding:8px 12px;border-radius:8px;text-decoration:none;color:white;font-size:13px;}
 .jap{background:#229ED9;}
 .indo{background:#0088cc;}
 
+/* ONLINE */
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
-.container{display:grid;gap:12px;padding:12px;}
-@media (min-width:0px){.container{grid-template-columns:repeat(3,1fr);}}
-@media (min-width:600px){.container{grid-template-columns:repeat(4,1fr);}}
-@media (min-width:900px){.container{grid-template-columns:repeat(5,1fr);}}
+/* GRID */
+.container{display:grid;gap:12px;padding:12px;grid-template-columns:repeat(3,1fr);}
 
+/* CARD */
 .card{background:#1a1a1a;border-radius:12px;overflow:hidden;}
-.card canvas{width:100%;height:130px;object-fit:cover;}
 
+/* CANVAS (ANTI DOWNLOAD) */
+.img-box canvas{
+width:100%;
+height:130px;
+object-fit:cover;
+pointer-events:none;
+}
+
+/* ACTION */
 .actions{display:flex;gap:6px;padding:6px;}
 .btn{flex:1;display:flex;align-items:center;justify-content:center;padding:8px;border-radius:8px;background:#2a2a2a;}
 
-.pagination{display:flex;justify-content:center;gap:8px;padding:20px;}
+/* PAGINATION */
+.pagination{display:flex;justify-content:center;gap:10px;padding:20px;}
 .page-btn{padding:8px 12px;background:#222;border-radius:6px;cursor:pointer;}
 .page-btn.active{background:#ff416c;}
 
+/* POPUP */
 .popup{
 position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.8);
+background:rgba(0,0,0,0.9);
 display:none;align-items:center;justify-content:center;
-z-index:9999;
+z-index:99999;
 }
-
 .popup-box{
 background:#111;padding:25px;border-radius:15px;text-align:center;
 width:85%;max-width:320px;
 }
+.popup-btn{
+display:block;margin:10px 0;padding:10px;
+border-radius:8px;text-decoration:none;color:white;
+background:#0088cc;
+}
+.close-btn{margin-top:10px;color:#aaa;cursor:pointer;}
 
+/* TOAST */
 .toast{
 position:fixed;bottom:20px;left:20px;
 background:#1a1a1a;padding:10px 15px;
-border-radius:8px;font-size:13px;display:none;
+border-radius:8px;font-size:13px;
+display:none;
 }
 
-/* FORCE JOIN */
-#forceJoin{
-position:fixed;
-top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.95);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:99999;
+/* FOOTER */
+.footer{
+text-align:center;padding:20px;font-size:12px;
+opacity:0.6;border-top:1px solid #222;
 }
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false">
 
-<div class="sticky-banner">
-🚀 Join Telegram
-</div>
+<div class="sticky-banner">🚀 Join Telegram</div>
 
 <div class="header">🔥 TELEBOKEP GALLERY 🔥</div>
 
@@ -91,29 +108,35 @@ z-index:99999;
 <div id="list" class="container"></div>
 <div id="pagination" class="pagination"></div>
 
-<!-- FORCE JOIN -->
-<div id="forceJoin">
+<div class="footer">
+© 2026 by Telegram
+</div>
+
+<!-- POPUP JOIN -->
+<div id="popup" class="popup">
 <div class="popup-box">
 <h3>🚀 Join Telegram</h3>
-<p>Gabung untuk membuka semua konten</p>
-<a href="#" onclick="joined()" class="tg-btn indo">JOIN SEKARANG</a>
+<p style="font-size:13px;margin-top:10px;">
+Wajib join untuk akses konten 🔥
+</p>
+
+<a href="#" target="_blank" class="popup-btn" onclick="joinDone()">JOIN SEKARANG</a>
+
+<div class="close-btn">Tidak bisa ditutup</div>
 </div>
 </div>
 
 <div id="toast" class="toast"></div>
 
 <script>
-
-/* 🔒 ANTI */
-document.addEventListener("contextmenu",e=>e.preventDefault());
-document.addEventListener("dragstart",e=>e.preventDefault());
-document.addEventListener("keydown",e=>{
+document.addEventListener("contextmenu", e=>e.preventDefault());
+document.addEventListener("keydown", e=>{
 if(e.keyCode==123) return false;
 if(e.ctrlKey && e.shiftKey && e.keyCode==73) return false;
 });
 
 /* DATA */
-let perPage=15;
+const perPage=12;
 let currentPage=1;
 let allData=[];
 
@@ -127,51 +150,54 @@ renderPagination();
 
 /* RENDER */
 function renderPage(page){
-let container=document.getElementById("list");
-container.innerHTML="";
+const list=document.getElementById("list");
+list.innerHTML="";
 
-let start=(page-1)*perPage;
-let items=allData.slice(start,start+perPage);
+const start=(page-1)*perPage;
+const items=allData.slice(start,start+perPage);
 
 items.forEach(item=>{
-let card=document.createElement("div");
-card.className="card";
+list.innerHTML+=`
+<div class="card">
+<div class="img-box" data-img="${item.img}"></div>
+<div class="actions">
+<a href="${item.link}" target="_blank" class="btn">▶</a>
+<a href="${item.link}" target="_blank" class="btn">⬇</a>
+</div>
+</div>`;
+});
 
-/* canvas image */
+renderCanvas();
+currentPage=page;
+updateActive();
+}
+
+/* CANVAS (ANTI DOWNLOAD) */
+function renderCanvas(){
+document.querySelectorAll('.img-box').forEach(el=>{
 let img=new Image();
-img.src=atob(item.img);
+img.src=el.dataset.img;
 
 img.onload=()=>{
 let canvas=document.createElement("canvas");
 let ctx=canvas.getContext("2d");
 
-canvas.width=img.width;
-canvas.height=img.height;
+canvas.width=300;
+canvas.height=200;
 
-ctx.drawImage(img,0,0);
-card.appendChild(canvas);
+ctx.drawImage(img,0,0,300,200);
+el.appendChild(canvas);
 };
-
-card.innerHTML+=`
-<div class="actions">
-<a href="${atob(item.link)}" target="_blank" class="btn">▶</a>
-<a href="${atob(item.link)}" target="_blank" class="btn">⬇</a>
-</div>
-`;
-
-container.appendChild(card);
 });
-
-currentPage=page;
-updateActive();
 }
 
 /* PAGINATION */
 function renderPagination(){
-let totalPages=Math.ceil(allData.length/perPage);
-let pagination=document.getElementById("pagination");
+const total=Math.ceil(allData.length/perPage);
+const pagination=document.getElementById("pagination");
 pagination.innerHTML="";
-for(let i=1;i<=totalPages;i++){
+
+for(let i=1;i<=total;i++){
 pagination.innerHTML+=`<div class="page-btn" onclick="renderPage(${i})">${i}</div>`;
 }
 }
@@ -182,38 +208,37 @@ btn.classList.toggle("active",i+1===currentPage);
 }
 
 /* ONLINE */
-let online=100;
+let online=90;
 setInterval(()=>{
-online+=Math.floor(Math.random()*10)-5;
-document.getElementById("onlineCount").innerText=online;
+online+=Math.random()*6-3;
+document.getElementById("onlineCount").innerText=Math.floor(online);
 },2000);
 
-/* 🔥 FORCE JOIN DELAY */
+/* POPUP DELAY 3 DETIK */
 setTimeout(()=>{
-if(!localStorage.getItem("joined")){
-document.getElementById("forceJoin").style.display="flex";
+if(!localStorage.getItem("join")){
+document.getElementById("popup").style.display="flex";
 }
 },3000);
 
-function joined(){
-localStorage.setItem("joined","true");
-document.getElementById("forceJoin").style.display="none";
+function joinDone(){
+localStorage.setItem("join","yes");
+document.getElementById("popup").style.display="none";
 }
 
-/* 🔥 TOAST */
+/* TOAST */
 function showToast(){
-let toast=document.getElementById("toast");
-toast.innerText=Math.floor(Math.random()*5+1)+" orang join Telegram";
-toast.style.display="block";
-setTimeout(()=>toast.style.display="none",3000);
+const t=document.getElementById("toast");
+t.innerText=Math.floor(Math.random()*5+1)+" orang join Telegram";
+t.style.display="block";
+setTimeout(()=>t.style.display="none",2500);
 }
 setInterval(showToast,7000);
 
-/* 🔥 ANTI BOT */
+/* ANTI BOT */
 if(navigator.webdriver){
 document.body.innerHTML="Blocked";
 }
-
 </script>
 
 </body>
