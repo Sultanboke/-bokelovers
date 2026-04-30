@@ -1,221 +1,166 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unlock Akses</title>
+<title>Unlock Access</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
 body{
-background: radial-gradient(circle at top, #111, #000);
-color:#fff;
+background:#000;
 display:flex;
 align-items:center;
 justify-content:center;
 height:100vh;
-overflow:hidden;
+color:#fff;
 }
 
-/* CONTAINER */
-.wrapper{
+.box{
 width:100%;
 max-width:360px;
-padding:15px;
-}
-
-/* CARD */
-.box{
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
-border-radius:18px;
+background:#111;
 padding:20px;
-box-shadow:0 0 40px rgba(0,0,0,0.6);
+border-radius:16px;
 text-align:center;
-animation:fadeIn .6s ease;
 }
 
-/* ANIMATION */
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-/* IMAGE */
+/* CANVAS */
 .preview{
 width:100%;
 aspect-ratio:1/1;
-border-radius:14px;
+border-radius:12px;
 overflow:hidden;
 margin-bottom:15px;
-position:relative;
 }
 
-.preview img{
+canvas{
 width:100%;
 height:100%;
-object-fit:cover;
-filter:blur(12px);
-transform:scale(1.1);
-pointer-events:none;
-user-select:none;
--webkit-user-drag:none;
 }
 
 /* TEXT */
 .title{
 font-size:18px;
-margin-bottom:5px;
 font-weight:600;
+margin-bottom:10px;
 }
 
-.sub{
-font-size:13px;
-opacity:0.7;
-margin-bottom:15px;
-}
-
-/* PAY BUTTON */
-.pay{
-display:block;
-padding:12px;
-border-radius:12px;
-background:linear-gradient(135deg,#ffb703,#fb8500);
-color:#000;
-font-weight:600;
-text-decoration:none;
-margin-bottom:12px;
-transition:.3s;
-}
-
-.pay:hover{
-transform:scale(1.03);
-}
-
-/* INPUT */
 input{
 width:100%;
 padding:12px;
-border-radius:12px;
 border:none;
-outline:none;
+border-radius:10px;
 background:#1a1a1a;
 color:#fff;
 margin-bottom:10px;
 }
 
-/* BUTTON */
-.unlock{
+button{
 width:100%;
 padding:12px;
 border:none;
-border-radius:12px;
-background:linear-gradient(135deg,#3b82f6,#2563eb);
+border-radius:10px;
+background:#2563eb;
 color:#fff;
-font-weight:600;
 cursor:pointer;
-transition:.3s;
 }
 
-.unlock:hover{
-transform:scale(1.03);
+.pay{
+display:block;
+margin-bottom:10px;
+padding:10px;
+background:#f59e0b;
+color:#000;
+border-radius:10px;
+text-decoration:none;
+font-weight:600;
 }
 
-/* FOOTER */
-.footer{
-margin-top:10px;
-font-size:11px;
-opacity:.5;
-}
 </style>
 </head>
 
-<body oncontextmenu="return false;">
+<body oncontextmenu="return false">
 
-<div class="wrapper">
-  <div class="box">
+<div class="box">
 
-    <div class="preview">
-      <img id="previewImg">
-    </div>
-
-    <div class="title">🔒 Konten Premium</div>
-    <div class="sub">Masukkan kode untuk membuka akses</div>
-
-    <a href="https://telebokep.com/accesscode/" target="_blank" class="pay">
-      💰 Bayar 5 USDT
-    </a>
-
-    <input id="code" placeholder="Masukkan kode akses">
-
-    <button class="unlock" onclick="unlock()">Unlock Sekarang</button>
-
-    <div class="footer">Akses aman & cepat</div>
-
+  <div class="preview">
+    <canvas id="canvas"></canvas>
   </div>
+
+  <div class="title">Premium Locked Content</div>
+
+  <a href="https://telebokep.com/accesscode/" target="_blank" class="pay">
+    Pay 5 USDT
+  </a>
+
+  <input id="code" placeholder="Enter access code">
+
+  <button onclick="unlock()">Unlock Now</button>
+
 </div>
 
 <script>
 
-/* 🔐 MASTER CODE */
 const MASTER_CODE = "VIP123";
 
-/* AMBIL ID */
-const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(location.search);
 const id = params.get("id");
 
 let currentItem = null;
 
-/* LOAD DATA */
 fetch('../data/data.json')
 .then(r=>r.json())
 .then(data=>{
 
   const item = data.find(x=>x.id===id);
-
-  if(!item){
-    document.body.innerHTML="Konten tidak ditemukan";
-    return;
-  }
+  if(!item) return;
 
   currentItem = item;
 
-  /* tampilkan preview */
-  document.getElementById("previewImg").src = item.img;
+  draw(atob(item.img));
 
-  /* 🔥 AUTO SKIP kalau sudah unlock */
   const unlocked = JSON.parse(localStorage.getItem("unlocked")||"{}");
 
   if(unlocked["ALL"]){
-    window.location.href = "../view/?id=" + currentItem.id;
+    location.href = "../view/?id=" + item.id;
   }
 
 });
 
-/* UNLOCK */
+function draw(url){
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  const img = new Image();
+  img.crossOrigin="anonymous";
+  img.src = url;
+
+  img.onload = ()=>{
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    ctx.filter = "blur(12px)";
+    ctx.drawImage(img,0,0);
+  };
+}
+
 function unlock(){
   const code = document.getElementById("code").value.trim();
 
   if(code === MASTER_CODE){
 
-    let unlocked = JSON.parse(localStorage.getItem("unlocked")||"{}");
+    localStorage.setItem("unlocked", JSON.stringify({ALL:true}));
 
-    unlocked["ALL"] = true;
-    localStorage.setItem("unlocked", JSON.stringify(unlocked));
-
-    /* 🔥 REDIRECT KE VIEW */
-    window.location.href = "../view/?id=" + currentItem.id;
+    location.href = "../view/?id=" + currentItem.id;
 
   } else {
-    alert("Kode salah!");
+    alert("Invalid code");
   }
 }
-
-/* EXTRA PROTECTION (basic) */
-document.addEventListener('keydown', e=>{
-  if(e.key === "F12") e.preventDefault();
-});
 
 </script>
 
