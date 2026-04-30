@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akses Konten</title>
+
+<style>
+body{background:#0d0d0d;color:#fff;font-family:sans-serif;text-align:center;padding:20px;}
+
+.box{
+background:#111;
+padding:20px;
+border-radius:12px;
+max-width:320px;
+margin:auto;
+}
+
+/* preview */
+img{
+width:100%;
+border-radius:10px;
+margin-bottom:10px;
+filter:blur(8px);
+}
+
+/* input */
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+}
+
+/* button */
+button{
+margin-top:10px;
+padding:10px;
+width:100%;
+border:none;
+border-radius:8px;
+background:#3b82f6;
+color:#fff;
+cursor:pointer;
+}
+
+/* link */
+.link-btn{
+display:none;
+margin-top:10px;
+padding:10px;
+background:#22c55e;
+border-radius:8px;
+color:white;
+text-decoration:none;
+}
+
+/* pay btn */
+.pay{
+display:block;
+margin-top:10px;
+padding:10px;
+background:#f59e0b;
+border-radius:8px;
+color:#000;
+text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🔒 Akses Premium</h2>
+
+<div class="box">
+
+  <img id="preview">
+
+  <p>Bayar <b>5 USDT</b> untuk membuka konten</p>
+
+  <a href="https://telebokep.com/accesscode/" target="_blank" class="pay">
+    💰 Bayar di sini
+  </a>
+
+  <input id="code" placeholder="Masukkan kode">
+
+  <button onclick="unlock()">Unlock</button>
+
+  <a id="openLink" class="link-btn" target="_blank">▶ Nonton / Buka di sini</a>
+
+</div>
+
+<script>
+
+/* MASTER CODE */
+const MASTER_CODE = "VIP123";
+
+/* ambil ID */
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+let currentItem = null;
+
+/* LOAD DATA */
+fetch('../data/data.json')
+.then(r=>r.json())
+.then(data=>{
+
+  const item = data.find(x=>x.id===id);
+
+  if(!item){
+    document.body.innerHTML="Konten tidak ditemukan";
+    return;
+  }
+
+  currentItem = item;
+
+  document.getElementById("preview").src = item.img;
+
+  /* kalau sudah unlock */
+  const unlocked = JSON.parse(localStorage.getItem("unlocked")||"{}");
+
+  if(unlocked["ALL"]){
+    showLink();
+  }
+
+});
+
+/* UNLOCK */
+function unlock(){
+  const code = document.getElementById("code").value.trim();
+
+  if(code === MASTER_CODE){
+
+    let unlocked = JSON.parse(localStorage.getItem("unlocked")||"{}");
+    unlocked["ALL"] = true;
+    localStorage.setItem("unlocked", JSON.stringify(unlocked));
+
+    showLink();
+
+  } else {
+    alert("Kode salah!");
+  }
+}
+
+/* TAMPILKAN LINK */
+function showLink(){
+  const btn = document.getElementById("openLink");
+  btn.style.display = "block";
+  btn.href = currentItem.link;
+}
+
+</script>
+
+</body>
+</html>
