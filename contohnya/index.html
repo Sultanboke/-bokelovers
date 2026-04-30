@@ -11,7 +11,6 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#0d0d0d;color:white;padding-top:40px;overflow-x:hidden;}
 
-/* STICKY */
 .sticky-banner{
 position:fixed;top:0;width:100%;
 background:#0088cc;color:white;
@@ -19,23 +18,19 @@ text-align:center;padding:8px;
 font-size:13px;z-index:9999;
 }
 
-/* HEADER */
 .header{
 text-align:center;padding:20px;font-size:20px;font-weight:700;
 background:linear-gradient(90deg,#ff416c,#ff4b2b);
 -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 
-/* BUTTON */
 .topbar{display:flex;gap:10px;justify-content:center;padding:10px;}
 .tg-btn{padding:8px 12px;border-radius:8px;text-decoration:none;color:white;font-size:13px;}
 .jap{background:#229ED9;}
 .indo{background:#0088cc;}
 
-/* ONLINE */
 .online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
-/* GRID */
 .container{
 display:grid;
 gap:12px;
@@ -43,26 +38,24 @@ padding:12px;
 grid-template-columns:repeat(3,1fr);
 }
 
-/* CARD */
 .card{
 background:#1a1a1a;
 border-radius:12px;
 overflow:hidden;
 }
 
-/* 🔥 FIX GAMBAR TIDAK LONJONG */
 .img-box{
 width:100%;
-aspect-ratio:1/1; /* kotak */
+aspect-ratio:1/1;
 overflow:hidden;
 }
-.img-box canvas{
+.img-box canvas,
+.img-box img{
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-/* ACTION */
 .actions{
 display:flex;
 gap:8px;
@@ -81,7 +74,6 @@ font-size:18px;
 .play{color:#22c55e;}
 .download{color:#3b82f6;}
 
-/* PAGINATION */
 .pagination{
 display:flex;
 justify-content:center;
@@ -96,7 +88,6 @@ cursor:pointer;
 }
 .page-btn.active{background:#ff416c;}
 
-/* FOOTER */
 .footer{
 text-align:center;
 padding:20px;
@@ -138,11 +129,17 @@ const perPage=12;
 let currentPage=1;
 let allData=[];
 
+console.log("FETCH START");
+
 fetch('data/data.json')
 .then(r=>r.json())
 .then(data=>{
+console.log("DATA MASUK:", data);
 allData=data.reverse();
 renderPage(1);
+})
+.catch(err=>{
+console.error("FETCH ERROR:", err);
 });
 
 /* RENDER */
@@ -169,10 +166,12 @@ renderCanvas();
 renderPagination();
 }
 
-/* CANVAS */
+/* FIX CANVAS + FALLBACK */
 function renderCanvas(){
 document.querySelectorAll('.img-box').forEach(el=>{
+
 let img=new Image();
+img.crossOrigin="anonymous";
 img.src=el.dataset.img;
 
 img.onload=()=>{
@@ -185,30 +184,32 @@ canvas.height=img.height;
 ctx.drawImage(img,0,0);
 el.appendChild(canvas);
 };
+
+img.onerror=()=>{
+el.innerHTML=`<img src="${el.dataset.img}">`;
+};
+
 });
 }
 
-/* PAGINATION SIMPLE */
+/* PAGINATION */
 function renderPagination(){
 let total=Math.ceil(allData.length/perPage);
 let html="";
 
-/* BACK */
 if(currentPage>1){
 html+=`<div class="page-btn" onclick="renderPage(${currentPage-1})">⬅</div>`;
 }
 
-/* PAGE 1-3 */
 for(let i=currentPage;i<currentPage+3 && i<=total;i++){
 html+=`<div class="page-btn ${i===currentPage?'active':''}" onclick="renderPage(${i})">${i}</div>`;
 }
 
-/* NEXT */
 if(currentPage<total){
 html+=`<div class="page-btn" onclick="renderPage(${currentPage+1})">➡</div>`;
 }
 
-pagination.innerHTML=html;
+document.getElementById("pagination").innerHTML=html;
 }
 
 /* ONLINE */
@@ -219,30 +220,6 @@ document.getElementById("onlineCount").innerText=Math.floor(online);
 },2000);
 
 </script>
-<script>
-(function(){
 
-function loadHistats(){
-  try{
-    var _Hasync = window._Hasync = window._Hasync || [];
-
-    _Hasync.push(['Histats.start', '1,5021277,4,0,0,0,00000000']);
-    _Hasync.push(['Histats.fasi', '1']);
-    _Hasync.push(['Histats.track_hits', '']);
-
-    var hs = document.createElement('script');
-    hs.async = true;
-    hs.src = 'https://s10.histats.com/js15_as.js';
-
-    document.head.appendChild(hs);
-
-  }catch(e){}
-}
-
-/* delay biar ringan */
-setTimeout(loadHistats, 1500);
-
-})();
-    </script>
 </body>
 </html>
