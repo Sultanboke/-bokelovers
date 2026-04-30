@@ -15,12 +15,13 @@ display:flex;
 align-items:center;
 justify-content:center;
 height:100vh;
+overflow:hidden;
 }
 
 /* CONTAINER */
 .wrapper{
 width:100%;
-max-width:350px;
+max-width:360px;
 padding:15px;
 }
 
@@ -57,6 +58,9 @@ height:100%;
 object-fit:cover;
 filter:blur(12px);
 transform:scale(1.1);
+pointer-events:none;
+user-select:none;
+-webkit-user-drag:none;
 }
 
 /* TEXT */
@@ -72,7 +76,7 @@ opacity:0.7;
 margin-bottom:15px;
 }
 
-/* BUTTON PAY */
+/* PAY BUTTON */
 .pay{
 display:block;
 padding:12px;
@@ -101,7 +105,7 @@ color:#fff;
 margin-bottom:10px;
 }
 
-/* UNLOCK BUTTON */
+/* BUTTON */
 .unlock{
 width:100%;
 padding:12px;
@@ -118,20 +122,7 @@ transition:.3s;
 transform:scale(1.03);
 }
 
-/* RESULT BUTTON */
-.open-link{
-display:none;
-margin-top:10px;
-padding:12px;
-border-radius:12px;
-background:linear-gradient(135deg,#22c55e,#16a34a);
-color:#fff;
-text-decoration:none;
-font-weight:600;
-animation:fadeIn .5s ease;
-}
-
-/* SMALL */
+/* FOOTER */
 .footer{
 margin-top:10px;
 font-size:11px;
@@ -140,7 +131,7 @@ opacity:.5;
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 
 <div class="wrapper">
   <div class="box">
@@ -150,7 +141,7 @@ opacity:.5;
     </div>
 
     <div class="title">🔒 Konten Premium</div>
-    <div class="sub">Unlock akses dengan kode</div>
+    <div class="sub">Masukkan kode untuk membuka akses</div>
 
     <a href="https://telebokep.com/accesscode/" target="_blank" class="pay">
       💰 Bayar 5 USDT
@@ -160,10 +151,6 @@ opacity:.5;
 
     <button class="unlock" onclick="unlock()">Unlock Sekarang</button>
 
-    <a id="openBtn" class="open-link" target="_blank">
-      ▶ Buka / Nonton Sekarang
-    </a>
-
     <div class="footer">Akses aman & cepat</div>
 
   </div>
@@ -171,10 +158,10 @@ opacity:.5;
 
 <script>
 
-/* MASTER CODE */
+/* 🔐 MASTER CODE */
 const MASTER_CODE = "VIP123";
 
-/* GET ID */
+/* AMBIL ID */
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -188,18 +175,20 @@ fetch('../data/data.json')
   const item = data.find(x=>x.id===id);
 
   if(!item){
-    document.body.innerHTML="Data tidak ditemukan";
+    document.body.innerHTML="Konten tidak ditemukan";
     return;
   }
 
   currentItem = item;
+
+  /* tampilkan preview */
   document.getElementById("previewImg").src = item.img;
 
-  /* AUTO UNLOCK */
+  /* 🔥 AUTO SKIP kalau sudah unlock */
   const unlocked = JSON.parse(localStorage.getItem("unlocked")||"{}");
 
   if(unlocked["ALL"]){
-    showLink();
+    window.location.href = "../view/?id=" + currentItem.id;
   }
 
 });
@@ -211,22 +200,22 @@ function unlock(){
   if(code === MASTER_CODE){
 
     let unlocked = JSON.parse(localStorage.getItem("unlocked")||"{}");
+
     unlocked["ALL"] = true;
     localStorage.setItem("unlocked", JSON.stringify(unlocked));
 
-    showLink();
+    /* 🔥 REDIRECT KE VIEW */
+    window.location.href = "../view/?id=" + currentItem.id;
 
   } else {
     alert("Kode salah!");
   }
 }
 
-/* SHOW LINK */
-function showLink(){
-  const btn = document.getElementById("openBtn");
-  btn.style.display="block";
-  btn.href = currentItem.link;
-}
+/* EXTRA PROTECTION (basic) */
+document.addEventListener('keydown', e=>{
+  if(e.key === "F12") e.preventDefault();
+});
 
 </script>
 
