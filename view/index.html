@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Konten Premium</title>
+<title>Content Access</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
 body{
-background: radial-gradient(circle at top, #111, #000);
-color:#fff;
+background:#000;
 display:flex;
 align-items:center;
 justify-content:center;
 height:100vh;
+color:#fff;
 }
 
-/* CONTAINER */
+/* FIX HEIGHT NO SHIFT */
 .wrapper{
 width:100%;
 max-width:360px;
@@ -26,81 +28,58 @@ padding:15px;
 
 /* CARD */
 .box{
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
-border-radius:18px;
+background:#111;
 padding:20px;
-box-shadow:0 0 40px rgba(0,0,0,0.6);
+border-radius:16px;
 text-align:center;
-animation:fadeIn .6s ease;
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-/* IMAGE (NO BLUR) */
+/* IMAGE */
 .preview{
 width:100%;
 aspect-ratio:1/1;
-border-radius:14px;
+border-radius:12px;
 overflow:hidden;
 margin-bottom:15px;
 }
 
-.preview img{
+.preview canvas{
 width:100%;
 height:100%;
-object-fit:cover;
-}
-
-/* TITLE */
-.title{
-font-size:18px;
-font-weight:600;
-margin-bottom:5px;
-}
-
-.sub{
-font-size:13px;
-opacity:0.7;
-margin-bottom:15px;
 }
 
 /* BUTTON */
-.open{
+.btn{
 display:block;
 padding:14px;
-border-radius:12px;
 background:linear-gradient(135deg,#22c55e,#16a34a);
+border-radius:12px;
 color:#fff;
 text-decoration:none;
 font-weight:600;
-transition:.3s;
 }
 
-.open:hover{
-transform:scale(1.05);
+.title{
+margin-bottom:10px;
+font-weight:600;
 }
 
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false">
 
 <div class="wrapper">
   <div class="box">
 
     <div class="preview">
-      <img id="img">
+      <canvas id="canvas"></canvas>
     </div>
 
-    <div class="title">🎬 Konten Siap Dibuka</div>
-    <div class="sub">Klik tombol di bawah untuk lanjut</div>
+    <div class="title">Ready to Access</div>
 
-    <a id="openLink" target="_blank" class="open">
-      ▶ Nonton / Download Sekarang
+    <a id="openBtn" target="_blank" class="btn">
+      ▶ Watch / Open Now
     </a>
 
   </div>
@@ -108,28 +87,38 @@ transform:scale(1.05);
 
 <script>
 
-/* AMBIL ID */
-const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(location.search);
 const id = params.get("id");
 
-/* LOAD DATA */
 fetch('../data/data.json')
 .then(r=>r.json())
 .then(data=>{
 
   const item = data.find(x=>x.id===id);
+  if(!item) return;
 
-  if(!item){
-    document.body.innerHTML="Konten tidak ditemukan";
-    return;
-  }
+  draw(atob(item.img));
 
-  document.getElementById("img").src = item.img;
-
-  /* LINK ASLI DI SINI (tidak ditampilkan di UI sebelumnya) */
-  document.getElementById("openLink").href = item.link;
+  document.getElementById("openBtn").href = item.link;
 
 });
+
+function draw(url){
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  const img = new Image();
+  img.crossOrigin="anonymous";
+  img.src = url;
+
+  img.onload = ()=>{
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    ctx.drawImage(img,0,0);
+  };
+}
+
 </script>
 
 </body>
