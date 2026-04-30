@@ -138,7 +138,7 @@ const perPage=12;
 let currentPage=1;
 let allData=[];
 
-fetch('data.json')
+fetch('data/data.json')
 .then(r=>r.json())
 .then(data=>{
 allData=data.reverse();
