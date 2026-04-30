@@ -7,186 +7,98 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
-body{background:#0d0d0d;color:#fff;padding:10px;}
+body{background:#0d0d0d;color:#fff;padding:15px;}
 
-h2{text-align:center;margin-bottom:15px;}
+h2{text-align:center;margin-bottom:15px;letter-spacing:1px;}
 
 .container{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:10px;
+gap:12px;
 }
 
+/* CARD */
 .card{
 background:#1a1a1a;
-border-radius:10px;
+border-radius:12px;
 overflow:hidden;
+transition:0.3s;
 }
 
+/* IMAGE */
 .img-box{
+position:relative;
 width:100%;
 aspect-ratio:1/1;
 overflow:hidden;
 }
+
 .img-box img{
 width:100%;
 height:100%;
 object-fit:cover;
+filter:blur(8px); /* 🔥 blur sebelum unlock */
+transform:scale(1.1);
 }
 
+/* OVERLAY */
+.overlay{
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,0.4);
+font-size:14px;
+}
+
+/* BUTTON */
 .btn{
 display:block;
 text-align:center;
-padding:8px;
+padding:10px;
 background:#22c55e;
-color:white;
+color:#fff;
 text-decoration:none;
+font-size:14px;
 }
 
-/* MODAL */
-#lockModal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.85);
-z-index:999;
-justify-content:center;
-align-items:center;
+/* disable image select */
+img{
+pointer-events:none;
+user-select:none;
+-webkit-user-drag:none;
 }
 
-.modal-box{
-background:#111;
-padding:20px;
-border-radius:10px;
-width:90%;
-max-width:320px;
-text-align:center;
-}
-
-input{
-width:100%;
-padding:10px;
-margin-top:10px;
-border:none;
-border-radius:6px;
-}
-
-button{
-margin-top:10px;
-padding:10px;
-width:100%;
-border:none;
-border-radius:6px;
-background:#3b82f6;
-color:white;
-cursor:pointer;
-}
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false;"> <!-- 🔥 disable klik kanan -->
 
-<h2>🔥 PREMIUM GALLERY 🔥</h2>
+<h2>🔥 PREMIUM CONTENT 🔥</h2>
 
 <div id="list" class="container"></div>
 
-<!-- MODAL -->
-<div id="lockModal">
-  <div class="modal-box">
-
-    <h3>🔒 Akses Terkunci</h3>
-
-    <img id="previewImg" src="" style="width:100%;border-radius:8px;margin:10px 0;">
-
-    <p>Bayar <b>5 USDT</b> untuk akses</p>
-
-    <a href="https://telebokep.com/accesscode/" target="_blank" class="btn">
-      💰 Bayar di sini
-    </a>
-
-    <input id="unlockCode" placeholder="Masukkan kode">
-
-    <button onclick="submitCode()">Buka Akses</button>
-    <button onclick="closeModal()" style="background:#444;">Tutup</button>
-
-  </div>
-</div>
-
 <script>
 
-/* MASTER CODE (ganti ini saja) */
-const MASTER_CODE = "VIP123";
-
-/* DATA */
-let allData = [];
-let currentItem = null;
-
-/* FETCH JSON */
+/* LOAD DATA */
 fetch('data/data.json')
-.then(r => r.json())
-.then(data => {
-  allData = data;
-  render();
-});
-
-/* RENDER */
-function render(){
+.then(r=>r.json())
+.then(data=>{
   const list = document.getElementById("list");
-  list.innerHTML = "";
 
-  allData.forEach(item => {
+  data.forEach(item=>{
     list.innerHTML += `
     <div class="card">
       <div class="img-box">
         <img src="${item.img}">
+        <div class="overlay">🔒 Premium</div>
       </div>
-      <a href="javascript:void(0)" onclick='openContent(${JSON.stringify(item)})' class="btn">
-        Buka
-      </a>
+      <a href="access/?id=${item.id}" class="btn">Buka Akses</a>
     </div>
     `;
   });
-}
-
-/* OPEN */
-function openContent(item){
-
-  const unlocked = JSON.parse(localStorage.getItem("unlocked") || "{}");
-
-  if(unlocked["ALL"]){
-    window.location.href = item.link;
-    return;
-  }
-
-  currentItem = item;
-
-  document.getElementById("previewImg").src = item.img;
-  document.getElementById("lockModal").style.display = "flex";
-}
-
-/* CLOSE */
-function closeModal(){
-  document.getElementById("lockModal").style.display = "none";
-}
-
-/* SUBMIT CODE */
-function submitCode(){
-  const code = document.getElementById("unlockCode").value.trim();
-
-  if(code === MASTER_CODE){
-
-    let unlocked = JSON.parse(localStorage.getItem("unlocked") || "{}");
-
-    unlocked["ALL"] = true;
-
-    localStorage.setItem("unlocked", JSON.stringify(unlocked));
-
-    window.location.href = currentItem.link;
-
-  } else {
-    alert("Kode salah!");
-  }
-}
+});
 
 </script>
 
