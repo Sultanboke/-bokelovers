@@ -23,7 +23,7 @@ margin-bottom:25px;
 }
 
 .header h1{
-font-size:26px;
+font-size:28px;
 font-weight:700;
 background:linear-gradient(90deg,#22c55e,#3b82f6);
 -webkit-background-clip:text;
@@ -49,13 +49,14 @@ background:rgba(255,255,255,0.04);
 border-radius:18px;
 overflow:hidden;
 backdrop-filter:blur(12px);
-transition:.35s;
+transition:.4s;
 box-shadow:0 10px 25px rgba(0,0,0,0.6);
+position:relative;
 }
 
 .card:hover{
-transform:translateY(-6px) scale(1.02);
-box-shadow:0 15px 35px rgba(34,197,94,0.25);
+transform:translateY(-6px) scale(1.03);
+box-shadow:0 15px 35px rgba(34,197,94,0.35);
 }
 
 /* IMAGE */
@@ -63,7 +64,6 @@ box-shadow:0 15px 35px rgba(34,197,94,0.25);
 width:100%;
 aspect-ratio:1/1;
 overflow:hidden;
-position:relative;
 background:#000;
 }
 
@@ -73,11 +73,32 @@ height:100%;
 display:block;
 }
 
+/* 🔥 NEW BADGE */
+.badge{
+position:absolute;
+top:8px;
+left:8px;
+background:linear-gradient(135deg,#ff3b3b,#ff0000);
+padding:4px 8px;
+border-radius:8px;
+font-size:10px;
+font-weight:700;
+letter-spacing:.5px;
+box-shadow:0 0 10px rgba(255,0,0,0.7);
+animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
+}
+
 /* BUTTON */
 .btn{
 display:block;
 text-align:center;
-padding:8px 10px;
+padding:8px;
 margin:10px;
 border-radius:12px;
 background:linear-gradient(135deg,#22c55e,#4ade80);
@@ -85,14 +106,13 @@ color:#fff;
 text-decoration:none;
 font-weight:600;
 font-size:12px;
-letter-spacing:.3px;
 transition:.3s;
 box-shadow:0 5px 15px rgba(34,197,94,0.3);
 }
 
 .btn:hover{
 transform:scale(1.05);
-box-shadow:0 8px 20px rgba(34,197,94,0.5);
+box-shadow:0 8px 20px rgba(34,197,94,0.6);
 }
 </style>
 </head>
@@ -108,58 +128,71 @@ box-shadow:0 8px 20px rgba(34,197,94,0.5);
 
 <script>
 
-/* decode base64 */
+/* BASE64 */
 function decode(str){
   return atob(str);
 }
 
-/* draw canvas (NO BLUR) */
-function drawCanvas(canvas, url){
-
+/* CANVAS DRAW */
+function drawCanvas(canvas,url){
   const ctx = canvas.getContext("2d");
   const img = new Image();
+  img.crossOrigin="anonymous";
+  img.src=url;
 
-  img.crossOrigin = "anonymous";
-  img.src = url;
-
-  img.onload = ()=>{
-
-    const size = Math.min(img.width, img.height);
-
-    canvas.width = size;
-    canvas.height = size;
+  img.onload=()=>{
+    const size=Math.min(img.width,img.height);
+    canvas.width=size;
+    canvas.height=size;
 
     ctx.drawImage(
       img,
-      (img.width - size)/2,
-      (img.height - size)/2,
+      (img.width-size)/2,
+      (img.height-size)/2,
       size,
       size,
-      0,
-      0,
-      size,
-      size
+      0,0,size,size
     );
-
   };
-
 }
 
-/* LOAD DATA */
+/* 🔥 NEW SYSTEM */
+const NEW_DURATION = 24 * 60 * 60 * 1000; // 24 jam
+
+function getNewState(data){
+  let saved = JSON.parse(localStorage.getItem("newSystem") || "{}");
+
+  // kalau jumlah data berubah = upload baru
+  if(saved.total !== data.length){
+    saved = {
+      time: Date.now(),
+      total: data.length
+    };
+    localStorage.setItem("newSystem", JSON.stringify(saved));
+  }
+
+  return saved;
+}
+
+/* LOAD */
 fetch('data/data.json')
 .then(r=>r.json())
 .then(data=>{
 
   const list = document.getElementById("list");
-  list.innerHTML = "";
+  list.innerHTML="";
 
-  // 🔥 biar terbaru di atas
+  const state = getNewState(data);
+
+  const isNewActive = (Date.now() - state.time) < NEW_DURATION;
+
   data.reverse().forEach((item,i)=>{
 
     const card = document.createElement("div");
-    card.className = "card";
+    card.className="card";
 
-    card.innerHTML = `
+    card.innerHTML=`
+      ${ (isNewActive && i < 3) ? '<div class="badge">NEW</div>' : '' }
       <div class="img-box">
         <canvas id="c${i}"></canvas>
       </div>
@@ -170,21 +203,15 @@ fetch('data/data.json')
 
     list.appendChild(card);
 
-    const canvas = document.getElementById("c"+i);
-    drawCanvas(canvas, decode(item.img));
-
+    drawCanvas(document.getElementById("c"+i), decode(item.img));
   });
 
-})
-.catch(err=>{
-  console.log("JSON ERROR:", err);
 });
 
-/* block basic inspect */
+/* block inspect basic */
 document.addEventListener('keydown',e=>{
   if(e.key==="F12") e.preventDefault();
 });
-
 </script>
 
 </body>
