@@ -3,92 +3,170 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Akses Konten</title>
+<title>Unlock Akses</title>
 
 <style>
-body{background:#0d0d0d;color:#fff;font-family:sans-serif;text-align:center;padding:20px;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
-.box{
-background:#111;
-padding:20px;
-border-radius:12px;
-max-width:320px;
-margin:auto;
-}
-
-/* preview */
-img{
-width:100%;
-border-radius:10px;
-margin-bottom:10px;
-filter:blur(8px);
-}
-
-/* input */
-input{
-width:100%;
-padding:10px;
-margin-top:10px;
-border:none;
-border-radius:8px;
-}
-
-/* button */
-button{
-margin-top:10px;
-padding:10px;
-width:100%;
-border:none;
-border-radius:8px;
-background:#3b82f6;
+body{
+background: radial-gradient(circle at top, #111, #000);
 color:#fff;
-cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+height:100vh;
 }
 
-/* link */
-.link-btn{
-display:none;
-margin-top:10px;
-padding:10px;
-background:#22c55e;
-border-radius:8px;
-color:white;
-text-decoration:none;
+/* CONTAINER */
+.wrapper{
+width:100%;
+max-width:350px;
+padding:15px;
 }
 
-/* pay btn */
+/* CARD */
+.box{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+border-radius:18px;
+padding:20px;
+box-shadow:0 0 40px rgba(0,0,0,0.6);
+text-align:center;
+animation:fadeIn .6s ease;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* IMAGE */
+.preview{
+width:100%;
+aspect-ratio:1/1;
+border-radius:14px;
+overflow:hidden;
+margin-bottom:15px;
+position:relative;
+}
+
+.preview img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:blur(12px);
+transform:scale(1.1);
+}
+
+/* TEXT */
+.title{
+font-size:18px;
+margin-bottom:5px;
+font-weight:600;
+}
+
+.sub{
+font-size:13px;
+opacity:0.7;
+margin-bottom:15px;
+}
+
+/* BUTTON PAY */
 .pay{
 display:block;
-margin-top:10px;
-padding:10px;
-background:#f59e0b;
-border-radius:8px;
+padding:12px;
+border-radius:12px;
+background:linear-gradient(135deg,#ffb703,#fb8500);
 color:#000;
+font-weight:600;
 text-decoration:none;
+margin-bottom:12px;
+transition:.3s;
+}
+
+.pay:hover{
+transform:scale(1.03);
+}
+
+/* INPUT */
+input{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:none;
+outline:none;
+background:#1a1a1a;
+color:#fff;
+margin-bottom:10px;
+}
+
+/* UNLOCK BUTTON */
+.unlock{
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:linear-gradient(135deg,#3b82f6,#2563eb);
+color:#fff;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.unlock:hover{
+transform:scale(1.03);
+}
+
+/* RESULT BUTTON */
+.open-link{
+display:none;
+margin-top:10px;
+padding:12px;
+border-radius:12px;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+color:#fff;
+text-decoration:none;
+font-weight:600;
+animation:fadeIn .5s ease;
+}
+
+/* SMALL */
+.footer{
+margin-top:10px;
+font-size:11px;
+opacity:.5;
 }
 </style>
 </head>
 
 <body>
 
-<h2>🔒 Akses Premium</h2>
+<div class="wrapper">
+  <div class="box">
 
-<div class="box">
+    <div class="preview">
+      <img id="previewImg">
+    </div>
 
-  <img id="preview">
+    <div class="title">🔒 Konten Premium</div>
+    <div class="sub">Unlock akses dengan kode</div>
 
-  <p>Bayar <b>5 USDT</b> untuk membuka konten</p>
+    <a href="https://telebokep.com/accesscode/" target="_blank" class="pay">
+      💰 Bayar 5 USDT
+    </a>
 
-  <a href="https://telebokep.com/accesscode/" target="_blank" class="pay">
-    💰 Bayar di sini
-  </a>
+    <input id="code" placeholder="Masukkan kode akses">
 
-  <input id="code" placeholder="Masukkan kode">
+    <button class="unlock" onclick="unlock()">Unlock Sekarang</button>
 
-  <button onclick="unlock()">Unlock</button>
+    <a id="openBtn" class="open-link" target="_blank">
+      ▶ Buka / Nonton Sekarang
+    </a>
 
-  <a id="openLink" class="link-btn" target="_blank">▶ Nonton / Buka di sini</a>
+    <div class="footer">Akses aman & cepat</div>
 
+  </div>
 </div>
 
 <script>
@@ -96,7 +174,7 @@ text-decoration:none;
 /* MASTER CODE */
 const MASTER_CODE = "VIP123";
 
-/* ambil ID */
+/* GET ID */
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -110,15 +188,14 @@ fetch('../data/data.json')
   const item = data.find(x=>x.id===id);
 
   if(!item){
-    document.body.innerHTML="Konten tidak ditemukan";
+    document.body.innerHTML="Data tidak ditemukan";
     return;
   }
 
   currentItem = item;
+  document.getElementById("previewImg").src = item.img;
 
-  document.getElementById("preview").src = item.img;
-
-  /* kalau sudah unlock */
+  /* AUTO UNLOCK */
   const unlocked = JSON.parse(localStorage.getItem("unlocked")||"{}");
 
   if(unlocked["ALL"]){
@@ -144,10 +221,10 @@ function unlock(){
   }
 }
 
-/* TAMPILKAN LINK */
+/* SHOW LINK */
 function showLink(){
-  const btn = document.getElementById("openLink");
-  btn.style.display = "block";
+  const btn = document.getElementById("openBtn");
+  btn.style.display="block";
   btn.href = currentItem.link;
 }
 
