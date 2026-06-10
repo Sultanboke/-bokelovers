@@ -205,8 +205,12 @@ message.innerHTML =
 '<span class="success">Access Granted. Redirecting...</span>';
 
 setTimeout(() => {
-window.location.href =
-"/content/";
+
+    sessionStorage.setItem('verified', 'true');
+
+    window.location.href =
+    '/content/';
+
 }, 1200);
 
 }else{
