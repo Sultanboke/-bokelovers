@@ -37,7 +37,7 @@ padding:32px;
 }
 
 .container{
-max-width:720px;
+max-width:760px;
 text-align:center;
 }
 
@@ -50,18 +50,17 @@ font-size:12px;
 font-weight:600;
 letter-spacing:2px;
 color:#8f8f8f;
-margin-bottom:40px;
-backdrop-filter:blur(10px);
+margin-bottom:42px;
 }
 
 .glitch{
 position:relative;
 display:inline-block;
-font-size:clamp(56px,10vw,100px);
+font-size:clamp(58px,10vw,105px);
 font-weight:800;
-line-height:0.95;
+line-height:.95;
 letter-spacing:-4px;
-animation:glitch-skew 6s infinite;
+animation:glitch-skew 7s infinite;
 }
 
 .glitch::before,
@@ -72,120 +71,95 @@ left:0;
 top:0;
 width:100%;
 height:100%;
-overflow:hidden;
 }
 
 .glitch::before{
 left:2px;
-opacity:.8;
 clip-path:inset(0 0 55% 0);
-animation:glitch-top 4s infinite linear alternate-reverse;
+opacity:.7;
+animation:glitch-top 5s infinite;
 }
 
 .glitch::after{
 left:-2px;
-opacity:.6;
 clip-path:inset(55% 0 0 0);
-animation:glitch-bottom 3s infinite linear alternate-reverse;
+opacity:.5;
+animation:glitch-bottom 4s infinite;
 }
 
 @keyframes glitch-top{
-0%,90%,100%{
-transform:none;
-}
-91%{
-transform:translate(-2px,-2px);
-}
-92%{
-transform:translate(2px,1px);
-}
-93%{
-transform:none;
-}
+0%,96%,100%{transform:none;}
+97%{transform:translate(-2px,-1px);}
+98%{transform:translate(2px,1px);}
+99%{transform:none;}
 }
 
 @keyframes glitch-bottom{
-0%,88%,100%{
-transform:none;
-}
-89%{
-transform:translate(2px,1px);
-}
-90%{
-transform:translate(-3px,-1px);
-}
-91%{
-transform:none;
-}
+0%,94%,100%{transform:none;}
+95%{transform:translate(2px,0);}
+96%{transform:translate(-3px,1px);}
+97%{transform:none;}
 }
 
 @keyframes glitch-skew{
-0%,94%,100%{
-transform:none;
-}
-95%{
-transform:skewX(6deg);
-}
-96%{
-transform:skewX(-6deg);
-}
-97%{
-transform:none;
-}
+0%,94%,100%{transform:none;}
+95%{transform:skewX(5deg);}
+96%{transform:skewX(-5deg);}
+97%{transform:none;}
 }
 
 .description{
-margin-top:32px;
-max-width:560px;
+margin-top:34px;
+max-width:580px;
 margin-left:auto;
 margin-right:auto;
 font-size:18px;
-line-height:1.8;
-color:#8c8c8c;
+line-height:1.9;
+color:#8a8a8a;
 }
 
 .button{
 display:inline-flex;
-justify-content:center;
 align-items:center;
-margin-top:42px;
+justify-content:center;
+margin-top:48px;
 padding:18px 34px;
-background:#fff;
-color:#000;
 text-decoration:none;
+color:#fff;
+border:1px solid rgba(255,255,255,.12);
 border-radius:999px;
 font-weight:700;
 font-size:15px;
+background:rgba(255,255,255,.02);
+backdrop-filter:blur(10px);
 transition:.25s ease;
 }
 
 .button:hover{
-transform:translateY(-2px);
+background:#fff;
+color:#000;
 }
 
 .cta{
-margin-top:22px;
-font-size:14px;
-line-height:1.8;
-color:#666;
-letter-spacing:.5px;
-max-width:500px;
-margin-left:auto;
-margin-right:auto;
+margin-top:24px;
+font-size:13px;
+line-height:1.9;
+color:#5d5d5d;
+letter-spacing:1px;
+text-transform:uppercase;
 }
 
 .footer{
-margin-top:38px;
+margin-top:42px;
 font-size:12px;
-letter-spacing:2px;
-color:#4d4d4d;
+letter-spacing:3px;
+color:#404040;
 }
 
 @media(max-width:768px){
 
 .glitch{
-font-size:64px;
-letter-spacing:-3px;
+font-size:68px;
 }
 
 .description{
@@ -194,7 +168,7 @@ font-size:16px;
 
 .button{
 width:100%;
-max-width:320px;
+max-width:300px;
 }
 
 }
@@ -215,9 +189,9 @@ Private Access
 </h1>
 
 <p class="description">
-A private circle built for selected members.
-No public sharing. No unnecessary noise.
-Only exclusive access for those who know where to look.
+A curated circle for selected members.
+Built around privacy, consistency, and access to information
+not intended for the public timeline.
 </p>
 
 <a href="https://t.me/+ZkeKQ8hiPMw5MDk1" target="_blank" class="button">
@@ -225,12 +199,11 @@ Request Invitation
 </a>
 
 <p class="cta">
-Exclusive access at no cost.<br>
-Fresh updates and exclusive content shared daily inside the community.
+Daily updates • Exclusive content • Invitation only
 </p>
 
 <div class="footer">
-INVITATION ONLY
+FOR THOSE WHO KNOW
 </div>
 
 </div>
