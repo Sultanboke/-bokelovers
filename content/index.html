@@ -216,7 +216,7 @@ fetch('./data.json')
 const container =
 document.getElementById('content');
 
-data.forEach(item => {
+data.reverse().forEach(item => {
 
 container.innerHTML += `
 <div class="item">
