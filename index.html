@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elite Circle • Private Telegram</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    .hero-bg {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #0a0a0a 100%);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .tg-blue {
+      color: #229ED9;
+    }
+    .glow {
+      box-shadow: 0 0 40px rgba(34, 158, 217, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden" x-data="{ scrolled: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 50)">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 transition-all" :class="{ 'bg-black/80 backdrop-blur-lg border-b border-white/10': scrolled }">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fa-brands fa-telegram text-3xl tg-blue"></i>
+        <span class="text-2xl font-bold tracking-tight">Elite Circle</span>
+      </div>
+      
+      <a href="https://t.me/+yourlink" target="_blank"
+         class="px-8 py-3 bg-[#229ED9] hover:bg-[#1a8ac4] rounded-2xl font-semibold flex items-center gap-2 transition-all hover:scale-105">
+        <i class="fa-brands fa-telegram"></i>
+        <span>Bergabung Sekarang</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-bg min-h-screen flex items-center pt-20">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8">
+        <div class="inline-flex items-center gap-2 bg-white/10 px-5 py-2 rounded-full text-sm border border-white/20">
+          <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <span>Eksklusif • Terbatas</span>
+        </div>
+        
+        <h1 class="text-6xl md:text-7xl font-bold leading-tight tracking-tighter">
+          Masuk ke Lingkaran<br>
+          <span class="bg-gradient-to-r from-[#229ED9] to-purple-400 bg-clip-text text-transparent">Privasi &amp; Keunggulan</span>
+        </h1>
+        
+        <p class="text-xl text-gray-300 max-w-lg">
+          Komunitas premium Telegram yang hanya diakses oleh orang-orang terpilih. 
+          Informasi berkualitas, networking, dan kesempatan eksklusif.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="https://t.me/+yourlink" target="_blank"
+             class="px-10 py-5 bg-[#229ED9] hover:bg-[#1a8ac4] rounded-3xl font-semibold text-lg flex items-center gap-3 transition-all hover:scale-105 glow">
+            <i class="fa-brands fa-telegram text-2xl"></i>
+            <span>Bergabung ke Private Channel</span>
+          </a>
+          
+          <button onclick="document.getElementById('benefits').scrollIntoView({ behavior: 'smooth' })"
+                  class="px-10 py-5 border border-white/30 hover:border-white/60 rounded-3xl font-medium text-lg transition">
+            Pelajari Lebih Lanjut
+          </button>
+        </div>
+
+        <div class="flex items-center gap-8 text-sm">
+          <div>
+            <span class="text-3xl font-bold text-[#229ED9]">500+</span><br>
+            <span class="text-gray-400">Member Aktif</span>
+          </div>
+          <div>
+            <span class="text-3xl font-bold">98%</span><br>
+            <span class="text-gray-400">Retention Rate</span>
+          </div>
+          <div>
+            <span class="text-3xl font-bold">24/7</span><br>
+            <span class="text-gray-400">Support</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual -->
+      <div class="hidden md:flex justify-center">
+        <div class="relative">
+          <div class="absolute -inset-10 bg-gradient-to-r from-[#229ED9] to-purple-500 rounded-[4rem] blur-3xl opacity-30"></div>
+          <div class="glass rounded-3xl p-8 w-80 shadow-2xl border border-white/10">
+            <div class="bg-black/70 rounded-2xl p-6 text-center">
+              <i class="fa-brands fa-telegram text-7xl tg-blue mb-6"></i>
+              <h3 class="text-2xl font-semibold mb-2">Elite Circle</h3>
+              <p class="text-gray-400 text-sm">Private • Trusted • Exclusive</p>
+              
+              <div class="mt-8 py-4 border-t border-white/10 text-left text-sm space-y-3">
+                <div class="flex justify-between"><span class="text-gray-400">Status</span><span class="text-green-400">● Online</span></div>
+                <div class="flex justify-between"><span class="text-gray-400">Member</span><span>512</span></div>
+                <div class="flex justify-between"><span class="text-gray-400">Last Update</span><span>Hari ini</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section id="benefits" class="py-24 bg-zinc-950">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-5xl font-bold mb-4">Mengapa Bergabung?</h2>
+        <p class="text-gray-400 max-w-md mx-auto">Pengalaman yang tidak akan kamu dapatkan di komunitas biasa</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass rounded-3xl p-8 hover:scale-105 transition-all group">
+          <div class="w-14 h-14 bg-gradient-to-br from-[#229ED9] to-purple-500 rounded-2xl flex items-center justify-center text-3xl mb-6">🔒</div>
+          <h3 class="text-2xl font-semibold mb-3">Privasi Terjamin</h3>
+          <p class="text-gray-400">Konten eksklusif yang tidak tersebar di luar lingkaran ini.</p>
+        </div>
+        
+        <div class="glass rounded-3xl p-8 hover:scale-105 transition-all group">
+          <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center text-3xl mb-6">🌟</div>
+          <h3 class="text-2xl font-semibold mb-3">Konten Premium</h3>
+          <p class="text-gray-400">Insight, signal, opportunity, dan networking level tinggi.</p>
+        </div>
+        
+        <div class="glass rounded-3xl p-8 hover:scale-105 transition-all group">
+          <div class="w-14 h-14 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-2xl flex items-center justify-center text-3xl mb-6">👥</div>
+          <h3 class="text-2xl font-semibold mb-3">Komunitas Berkualitas</h3>
+          <p class="text-gray-400">Bertemu dengan orang-orang berpikiran sama dan berprestasi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section class="py-32 bg-gradient-to-b from-transparent via-[#229ED9]/10 to-transparent">
+    <div class="max-w-4xl mx-auto text-center px-6">
+      <h2 class="text-5xl font-bold mb-6">Siap menjadi bagian dari lingkaran elit?</h2>
+      <p class="text-xl text-gray-300 mb-10">Slot terbatas. Bergabung sekarang sebelum ditutup.</p>
+      
+      <a href="https://t.me/+yourlink" target="_blank"
+         class="inline-flex items-center gap-4 px-16 py-8 bg-white text-black rounded-3xl text-2xl font-bold hover:bg-[#229ED9] hover:text-white transition-all hover:scale-105 glow">
+        <i class="fa-brands fa-telegram text-4xl"></i>
+        JOIN PRIVATE TELEGRAM
+      </a>
+      
+      <p class="text-xs text-gray-500 mt-8">🔐 Akses langsung • Privasi terjaga • Cancel anytime</p>
+    </div>
+  </section>
+
+  <footer class="py-12 border-t border-white/10 text-center text-gray-500 text-sm">
+    <p>© 2026 Elite Circle • Private Community</p>
+  </footer>
+
+  <script>
+    // Ganti dengan link Telegram kamu
+    const telegramLink = "https://t.me/+yourlinkhere";
+    
+    console.log('%cElite Circle Landing Page Loaded ✨', 'color: #229ED9; font-size: 14px; font-weight: bold');
+  </script>
+</body>
+  </html>
