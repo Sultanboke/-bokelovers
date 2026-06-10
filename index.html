@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,21 +17,27 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Plus Jakarta Sans',sans-serif;
+}
+
+html,
+body{
+width:100%;
+height:100%;
+overflow:hidden;
 }
 
 body{
+font-family:'Plus Jakarta Sans',sans-serif;
 background:#050505;
 color:#fff;
-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:30px;
+padding:32px;
 }
 
 .container{
-max-width:700px;
+max-width:720px;
 text-align:center;
 }
 
@@ -40,55 +46,162 @@ display:inline-block;
 padding:8px 16px;
 border:1px solid rgba(255,255,255,.08);
 border-radius:999px;
-font-size:13px;
+font-size:12px;
+font-weight:600;
 letter-spacing:2px;
-color:#8a8a8a;
+color:#8f8f8f;
 margin-bottom:40px;
+backdrop-filter:blur(10px);
 }
 
-h1{
-font-size:clamp(52px,9vw,96px);
+.glitch{
+position:relative;
+display:inline-block;
+font-size:clamp(56px,10vw,100px);
 font-weight:800;
 line-height:0.95;
 letter-spacing:-4px;
-margin-bottom:30px;
+animation:glitch-skew 6s infinite;
 }
 
-p{
+.glitch::before,
+.glitch::after{
+content:attr(data-text);
+position:absolute;
+left:0;
+top:0;
+width:100%;
+height:100%;
+overflow:hidden;
+}
+
+.glitch::before{
+left:2px;
+opacity:.8;
+clip-path:inset(0 0 55% 0);
+animation:glitch-top 4s infinite linear alternate-reverse;
+}
+
+.glitch::after{
+left:-2px;
+opacity:.6;
+clip-path:inset(55% 0 0 0);
+animation:glitch-bottom 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-top{
+0%,90%,100%{
+transform:none;
+}
+91%{
+transform:translate(-2px,-2px);
+}
+92%{
+transform:translate(2px,1px);
+}
+93%{
+transform:none;
+}
+}
+
+@keyframes glitch-bottom{
+0%,88%,100%{
+transform:none;
+}
+89%{
+transform:translate(2px,1px);
+}
+90%{
+transform:translate(-3px,-1px);
+}
+91%{
+transform:none;
+}
+}
+
+@keyframes glitch-skew{
+0%,94%,100%{
+transform:none;
+}
+95%{
+transform:skewX(6deg);
+}
+96%{
+transform:skewX(-6deg);
+}
+97%{
+transform:none;
+}
+}
+
+.description{
+margin-top:32px;
+max-width:560px;
+margin-left:auto;
+margin-right:auto;
 font-size:18px;
 line-height:1.8;
-color:#8f8f8f;
-max-width:550px;
-margin:auto;
+color:#8c8c8c;
 }
 
 .button{
 display:inline-flex;
-align-items:center;
 justify-content:center;
-margin-top:50px;
+align-items:center;
+margin-top:42px;
 padding:18px 34px;
-text-decoration:none;
-color:#000;
 background:#fff;
+color:#000;
+text-decoration:none;
 border-radius:999px;
 font-weight:700;
-transition:.3s;
+font-size:15px;
+transition:.25s ease;
 }
 
 .button:hover{
 transform:translateY(-2px);
 }
 
+.cta{
+margin-top:22px;
+font-size:14px;
+line-height:1.8;
+color:#666;
+letter-spacing:.5px;
+max-width:500px;
+margin-left:auto;
+margin-right:auto;
+}
+
 .footer{
-margin-top:40px;
-font-size:13px;
+margin-top:38px;
+font-size:12px;
 letter-spacing:2px;
-color:#555;
+color:#4d4d4d;
+}
+
+@media(max-width:768px){
+
+.glitch{
+font-size:64px;
+letter-spacing:-3px;
+}
+
+.description{
+font-size:16px;
+}
+
+.button{
+width:100%;
+max-width:320px;
+}
+
 }
 
 </style>
 </head>
+
 <body>
 
 <div class="container">
@@ -97,20 +210,24 @@ color:#555;
 PRIVATE • 21+
 </div>
 
-<h1>
-Private<br>
-Access
+<h1 class="glitch" data-text="Private Access">
+Private Access
 </h1>
 
-<p>
-A private circle for selected members.
-Limited access. No public sharing.
-No unnecessary noise.
+<p class="description">
+A private circle built for selected members.
+No public sharing. No unnecessary noise.
+Only exclusive access for those who know where to look.
 </p>
 
-<a href="https://t.me/+ZkeKQ8hiPMw5MDk1" class="button">
+<a href="https://t.me/+ZkeKQ8hiPMw5MDk1" target="_blank" class="button">
 Request Invitation
 </a>
+
+<p class="cta">
+Exclusive access at no cost.<br>
+Fresh updates and exclusive content shared daily inside the community.
+</p>
 
 <div class="footer">
 INVITATION ONLY
