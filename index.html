@@ -3,117 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join Telegram: Japanese | Indo Viral</title>
+  <title>21+ Japanese Viral • Rare Content</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
-    .thumbnail {
-      aspect-ratio: 16 / 9;
-      background-size: cover;
-      background-position: center;
+    body {
+      background: linear-gradient(180deg, #0a0a0a 0%, #1a0033 100%);
     }
-    .play-btn {
-      transition: all 0.2s;
+    .btn-telegram {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .video-card:hover .play-btn {
-      transform: scale(1.1);
-      color: #22c55e;
+    .btn-telegram:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.6);
     }
   </style>
 </head>
-<body class="bg-black text-white min-h-screen pb-20">
-
-  <!-- Header -->
-  <div class="bg-[#229ED9] py-3 text-center font-medium text-lg flex items-center justify-center gap-2 sticky top-0 z-50">
-    <i class="fa-solid fa-rocket"></i>
-    Join Telegram: Japanese | Indo Viral
-  </div>
-
-  <!-- Grid Video -->
-  <div class="max-w-7xl mx-auto px-4 py-6">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="video-grid">
-      <!-- Video items akan digenerate oleh JS -->
+<body class="bg-black text-white min-h-screen flex items-center justify-center">
+  
+  <div class="max-w-md w-full px-6 text-center">
+    
+    <!-- Header -->
+    <div class="mb-10">
+      <div class="inline-flex items-center gap-2 bg-pink-600 text-white text-sm font-medium px-5 py-2 rounded-full mb-6">
+        <i class="fa-solid fa-fire"></i>
+        21+ ONLY
+      </div>
+      <h1 class="text-5xl font-bold leading-tight mb-4">
+        Japanese Viral<br>Rare Content
+      </h1>
+      <p class="text-gray-400 text-lg">
+        Koleksi konten eksklusif 21+ yang jarang ditemukan
+      </p>
     </div>
+
+    <!-- Big Join Button -->
+    <a href="https://t.me/+ZkeKQ8hiPMw5MDk1" target="_blank"
+       class="btn-telegram block w-full bg-gradient-to-r from-pink-600 to-purple-600 py-8 rounded-3xl text-2xl font-bold shadow-2xl flex items-center justify-center gap-4">
+      <i class="fa-brands fa-telegram text-4xl"></i>
+      BERGABUNG KE PRIVATE CHANNEL
+    </a>
+
+    <p class="text-gray-500 text-sm mt-8">
+      Konten Viral • Japanese • Indo • Rare 21+<br>
+      Langsung masuk • Privasi terjaga
+    </p>
+
+    <!-- Warning -->
+    <div class="mt-12 text-[10px] text-gray-600">
+      18+ | Hanya untuk dewasa<br>
+      © Private Collection 2026
+    </div>
+
   </div>
 
-  <!-- Pagination -->
-  <div class="flex justify-center gap-2 my-8">
-    <button onclick="changePage(1)" class="w-10 h-10 flex items-center justify-center bg-pink-600 rounded-lg font-bold">1</button>
-    <button onclick="changePage(2)" class="w-10 h-10 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg">2</button>
-    <button onclick="changePage(3)" class="w-10 h-10 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg">3</button>
-    <button class="w-10 h-10 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 rounded-lg">
-      <i class="fa-solid fa-arrow-right"></i>
-    </button>
-  </div>
-
-  <!-- Footer -->
-  <div class="text-center text-gray-500 text-sm py-6 border-t border-gray-800">
-    © 2026 by Telegram
-  </div>
-
-  <script>
-    // GANTI LINK TELEGRAM INI
-    const telegramLink = "https://t.me/+yourlinkhere";
-
-    const videos = [
-      { title: "Japanese Wife Massage", img: "https://picsum.photos/id/1015/600/340" },
-      { title: "Hot Spring Scene", img: "https://picsum.photos/id/201/600/340" },
-      { title: "Couple Moment", img: "https://picsum.photos/id/237/600/340" },
-      { title: "Indo Japanese Mix", img: "https://picsum.photos/id/180/600/340" },
-      { title: "Late Night Talk", img: "https://picsum.photos/id/251/600/340" },
-      { title: "Romantic Dinner", img: "https://picsum.photos/id/133/600/340" },
-      { title: "Japanese Girl ASMR", img: "https://picsum.photos/id/64/600/340" },
-      { title: "Steamy Scene", img: "https://picsum.photos/id/201/600/340" },
-      { title: "Daily Life Vlog", img: "https://picsum.photos/id/180/600/340" }
-    ];
-
-    function renderVideos() {
-      const grid = document.getElementById('video-grid');
-      grid.innerHTML = '';
-
-      videos.forEach(video => {
-        const card = document.createElement('div');
-        card.className = "video-card bg-zinc-900 rounded-xl overflow-hidden cursor-pointer";
-        card.innerHTML = `
-          <div class="thumbnail relative" style="background-image: url('${video.img}')">
-            <div class="absolute inset-0 bg-black/30 flex items-center justify-center play-btn">
-              <i class="fa-solid fa-play text-5xl text-white drop-shadow-lg"></i>
-            </div>
-          </div>
-          <div class="p-3">
-            <p class="font-medium line-clamp-2 text-sm">${video.title}</p>
-            <div class="flex gap-3 mt-3">
-              <button onclick="goToTelegram(event)" 
-                      class="flex-1 bg-green-500 hover:bg-green-600 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
-                <i class="fa-solid fa-play"></i> Play
-              </button>
-              <button onclick="goToTelegram(event)" 
-                      class="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
-                <i class="fa-solid fa-download"></i> Download
-              </button>
-            </div>
-          </div>
-        `;
-        // Klik seluruh card juga ke Telegram
-        card.addEventListener('click', (e) => {
-          if (!e.target.closest('button')) goToTelegram(e);
-        });
-        grid.appendChild(card);
-      });
-    }
-
-    function goToTelegram(e) {
-      e.stopImmediatePropagation();
-      window.open(telegramLink, '_blank');
-    }
-
-    function changePage(page) {
-      alert(`Halaman ${page} (Demo - bisa dihubungkan ke lebih banyak video nanti)`);
-      // Bisa ditambah logika load video berbeda per halaman
-    }
-
-    // Render saat halaman dimuat
-    window.onload = renderVideos;
-  </script>
 </body>
 </html>
