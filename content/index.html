@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
+
+<script>
 if (sessionStorage.getItem('verified') !== 'true') {
     window.location.href = '/verify/';
 }
 </script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <meta name="robots" content="noindex,nofollow">
 
 <title>Access Granted</title>
@@ -30,11 +31,11 @@ body{
 background:#050505;
 color:#fff;
 font-family:'Plus Jakarta Sans',sans-serif;
-padding:24px;
+padding:20px;
 }
 
 .container{
-max-width:900px;
+max-width:700px;
 margin:auto;
 }
 
@@ -43,19 +44,19 @@ position:sticky;
 top:0;
 z-index:999;
 background:#050505;
-padding-bottom:24px;
-margin-bottom:30px;
+padding-bottom:20px;
+margin-bottom:25px;
 }
 
 .join-btn{
 display:block;
 width:100%;
 text-align:center;
-padding:18px;
+padding:16px;
 border-radius:999px;
 text-decoration:none;
 font-weight:700;
-font-size:15px;
+font-size:14px;
 background:#fff;
 color:#000;
 transition:.25s;
@@ -68,9 +69,10 @@ transform:translateY(-2px);
 .glitch{
 position:relative;
 display:inline-block;
-font-size:42px;
+font-size:34px;
 font-weight:800;
-margin-top:30px;
+line-height:1.1;
+margin-top:25px;
 }
 
 .glitch:before,
@@ -83,12 +85,12 @@ top:0;
 
 .glitch:before{
 animation:glitch1 3s infinite;
-opacity:.6;
+opacity:.5;
 }
 
 .glitch:after{
 animation:glitch2 2s infinite;
-opacity:.4;
+opacity:.3;
 }
 
 @keyframes glitch1{
@@ -105,36 +107,48 @@ opacity:.4;
 
 .subtitle{
 margin-top:12px;
-color:#777;
-font-size:15px;
+margin-bottom:30px;
+font-size:14px;
 line-height:1.8;
-margin-bottom:40px;
+color:#7a7a7a;
+}
+
+.notice{
+padding:14px 16px;
+border:1px solid rgba(255,255,255,.08);
+border-radius:14px;
+background:rgba(255,255,255,.02);
+margin-bottom:30px;
+font-size:13px;
+line-height:1.8;
+color:#8c8c8c;
 }
 
 .section-title{
-font-size:12px;
-letter-spacing:3px;
+font-size:11px;
+letter-spacing:2px;
 color:#666;
-margin-bottom:25px;
+margin-bottom:20px;
 text-transform:uppercase;
 }
 
 .item{
-padding:26px 0;
-border-bottom:1px solid rgba(255,255,255,.06);
+padding:20px 0;
+border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .item h2{
-font-size:26px;
-font-weight:700;
-line-height:1.4;
-margin-bottom:10px;
+font-size:20px;
+font-weight:600;
+line-height:1.5;
+margin-bottom:8px;
+color:#fff;
 }
 
 .item a{
-color:#9f9f9f;
+font-size:14px;
+color:#9a9a9a;
 text-decoration:none;
-font-size:15px;
 word-break:break-all;
 }
 
@@ -143,15 +157,17 @@ color:#fff;
 }
 
 .footer{
-margin-top:60px;
+margin-top:40px;
+padding-bottom:20px;
 text-align:center;
-font-size:12px;
-letter-spacing:3px;
+font-size:10px;
+letter-spacing:4px;
 color:#444;
-padding-bottom:30px;
+text-transform:uppercase;
 }
 
 </style>
+
 </head>
 <body>
 
@@ -171,6 +187,11 @@ Access Granted
 <p class="subtitle">
 Latest updates available for members. New content is added regularly.
 </p>
+
+<div class="notice">
+Browse the latest updates below. New content is added regularly.
+You can join the private Telegram group anytime using the button above.
+</div>
 
 </div>
 
