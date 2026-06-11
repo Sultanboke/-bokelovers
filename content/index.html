@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 
 <script>
 if (sessionStorage.getItem('verified') !== 'true') {
+    sessionStorage.setItem(
+        'redirectAfterVerify',
+        window.location.href
+    );
     window.location.href = '/verify/';
 }
 </script>
@@ -12,12 +16,12 @@ if (sessionStorage.getItem('verified') !== 'true') {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
 
-<title>Access Granted</title>
+<title>Private Content</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -31,125 +35,40 @@ body{
 background:#050505;
 color:#fff;
 font-family:'Plus Jakarta Sans',sans-serif;
-padding:20px;
+padding:24px;
 }
 
 .container{
-max-width:700px;
+max-width:900px;
 margin:auto;
 }
 
-.header{
-position:sticky;
-top:0;
-z-index:999;
-background:#050505;
-padding-bottom:20px;
-margin-bottom:25px;
-}
-
-.join-btn{
-display:block;
-width:100%;
+.page-title{
 text-align:center;
-padding:16px;
-border-radius:999px;
-text-decoration:none;
-font-weight:700;
-font-size:14px;
-background:#fff;
-color:#000;
-transition:.25s;
-}
-
-.join-btn:hover{
-transform:translateY(-2px);
-}
-
-.glitch{
-position:relative;
-display:inline-block;
-font-size:34px;
-font-weight:800;
-line-height:1.1;
-margin-top:25px;
-}
-
-.glitch:before,
-.glitch:after{
-content:attr(data-text);
-position:absolute;
-left:0;
-top:0;
-}
-
-.glitch:before{
-animation:glitch1 3s infinite;
-opacity:.5;
-}
-
-.glitch:after{
-animation:glitch2 2s infinite;
-opacity:.3;
-}
-
-@keyframes glitch1{
-0%,97%,100%{transform:none;}
-98%{transform:translate(-2px,1px);}
-99%{transform:translate(2px,-1px);}
-}
-
-@keyframes glitch2{
-0%,95%,100%{transform:none;}
-96%{transform:translate(2px,0);}
-97%{transform:translate(-2px,0);}
-}
-
-.subtitle{
-margin-top:12px;
-margin-bottom:30px;
-font-size:14px;
-line-height:1.8;
-color:#7a7a7a;
-}
-
-.notice{
-padding:14px 16px;
-border:1px solid rgba(255,255,255,.08);
-border-radius:14px;
-background:rgba(255,255,255,.02);
-margin-bottom:30px;
-font-size:13px;
-line-height:1.8;
-color:#8c8c8c;
-}
-
-.section-title{
-font-size:11px;
-letter-spacing:2px;
-color:#666;
-margin-bottom:20px;
-text-transform:uppercase;
-}
-
-.item{
-padding:20px 0;
-border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.item h2{
 font-size:20px;
-font-weight:600;
-line-height:1.5;
-margin-bottom:8px;
+font-weight:700;
+margin-bottom:40px;
 color:#fff;
 }
 
+.item{
+padding:24px 0;
+border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.item h2{
+font-size:18px;
+font-weight:600;
+line-height:1.5;
+margin-bottom:10px;
+}
+
 .item a{
-font-size:14px;
-color:#9a9a9a;
+color:#8c8c8c;
 text-decoration:none;
+font-size:14px;
 word-break:break-all;
+transition:.2s;
 }
 
 .item a:hover{
@@ -157,13 +76,11 @@ color:#fff;
 }
 
 .footer{
-margin-top:40px;
-padding-bottom:20px;
 text-align:center;
-font-size:10px;
-letter-spacing:4px;
+margin-top:40px;
+font-size:12px;
 color:#444;
-text-transform:uppercase;
+letter-spacing:2px;
 }
 
 </style>
@@ -173,30 +90,8 @@ text-transform:uppercase;
 
 <div class="container">
 
-<div class="header">
-
-<a class="join-btn"
-href="https://t.me/+ZkeKQ8hiPMw5MDk1">
-Join Private Group
-</a>
-
-<h1 class="glitch" data-text="Access Granted">
-Access Granted
-</h1>
-
-<p class="subtitle">
-Latest updates available for members. New content is added regularly.
-</p>
-
-<div class="notice">
-Browse the latest updates below. New content is added regularly.
-You can join the private Telegram group anytime using the button above.
-</div>
-
-</div>
-
-<div class="section-title">
-Latest Updates
+<div class="page-title">
+Selamat Menikmati Link Penyegar Jiwa
 </div>
 
 <div id="content"></div>
@@ -213,10 +108,9 @@ fetch('./zozox.json')
 .then(response => response.json())
 .then(data => {
 
-const container =
-document.getElementById('content');
+const container = document.getElementById('content');
 
-data.reverse().forEach(item => {
+data.forEach(item => {
 
 container.innerHTML += `
 <div class="item">
