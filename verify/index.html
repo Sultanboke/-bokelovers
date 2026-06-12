@@ -206,20 +206,22 @@ message.innerHTML =
 
 setTimeout(() => {
 
-sessionStorage.setItem('verified', 'true');
+    sessionStorage.setItem('verified', 'true');
 
-const redirectUrl =
-sessionStorage.getItem('redirectAfterVerify');
+    const redirectUrl =
+        sessionStorage.getItem('redirectAfterVerify');
 
-if(redirectUrl){
+    if (redirectUrl) {
 
-window.location.href = redirectUrl;
+        sessionStorage.removeItem('redirectAfterVerify');
 
-}else{
+        window.location.href = redirectUrl;
 
-window.location.href = '/content/';
+    } else {
 
-}
+        window.location.href = '/';
+
+    }
 
 }, 1200);
 
