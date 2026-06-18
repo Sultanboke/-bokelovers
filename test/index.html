@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VIP Telegram Access</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
+
+body{
+background:#050505;
+color:#fff;
+padding:20px;
+}
+
+.container{
+max-width:480px;
+margin:auto;
+}
+
+.logo{
+width:90px;
+height:90px;
+border-radius:24px;
+background:#229ED9;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:42px;
+margin:40px auto 20px;
+font-weight:bold;
+}
+
+h1{
+text-align:center;
+font-size:32px;
+margin-bottom:10px;
+}
+
+.desc{
+text-align:center;
+color:#aaa;
+line-height:1.6;
+margin-bottom:30px;
+}
+
+.card{
+background:#111;
+border:1px solid #222;
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
+}
+
+.plan{
+display:flex;
+justify-content:space-between;
+padding:14px;
+background:#181818;
+border-radius:12px;
+margin-top:10px;
+}
+
+.price{
+color:#00ff95;
+font-weight:700;
+}
+
+.wallet{
+margin-top:15px;
+background:#181818;
+padding:15px;
+border-radius:12px;
+font-size:13px;
+word-break:break-all;
+}
+
+.copy{
+width:100%;
+margin-top:10px;
+padding:12px;
+background:#229ED9;
+border:none;
+border-radius:12px;
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+input{
+width:100%;
+padding:14px;
+margin-top:12px;
+background:#181818;
+border:1px solid #333;
+border-radius:12px;
+color:white;
+}
+
+button.submit{
+width:100%;
+padding:16px;
+margin-top:16px;
+border:none;
+border-radius:12px;
+background:#00c853;
+font-size:16px;
+font-weight:700;
+color:white;
+cursor:pointer;
+}
+
+.note{
+font-size:13px;
+color:#999;
+text-align:center;
+margin-top:15px;
+line-height:1.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">✈</div>
+
+<h1>VIP TELEGRAM</h1>
+
+<p class="desc">
+Premium Access • Instant Approval • Daily Updates
+</p>
+
+<div class="card">
+
+<h3>Membership Plans</h3>
+
+<div class="plan">
+<span>1 Month</span>
+<span class="price">10 USDT</span>
+</div>
+
+<div class="plan">
+<span>3 Months</span>
+<span class="price">25 USDT</span>
+</div>
+
+<div class="plan">
+<span>Lifetime</span>
+<span class="price">50 USDT</span>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Pay with USDT (TRC20)</h3>
+
+<div class="wallet" id="wallet">
+TRXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+</div>
+
+<button class="copy" onclick="copyWallet()">
+Copy Wallet Address
+</button>
+
+</div>
+
+<div class="card">
+
+<form
+action="https://docs.google.com/forms/d/e/GOOGLE_FORM_ID/formResponse"
+method="POST"
+target="_blank">
+
+<input
+name="entry.111111111"
+placeholder="Telegram Username"
+required>
+
+<input
+name="entry.222222222"
+placeholder="Transaction ID (TXID)"
+required>
+
+<button class="submit">
+SUBMIT PAYMENT
+</button>
+
+</form>
+
+<p class="note">
+After verification you will receive a private Telegram invite link.
+</p>
+
+</div>
+
+</div>
+
+<script>
+function copyWallet(){
+navigator.clipboard.writeText(
+document.getElementById("wallet").innerText
+);
+alert("Wallet copied!");
+}
+</script>
+
+</body>
+</html>
