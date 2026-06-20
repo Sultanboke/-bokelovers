@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 <title>Private Telegram Access</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,192 +15,169 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
+}
+
+html,
+body{
+width:100%;
+overflow-x:hidden;
 font-family:'Inter',sans-serif;
+background:#070B14;
 }
 
 body{
-background:#060B17;
-height:100vh;
-overflow:hidden;
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:15px;
+padding:16px;
 position:relative;
 }
 
 body::before{
-content:'';
-position:absolute;
-width:450px;
-height:450px;
-background:#229ED9;
-filter:blur(180px);
-opacity:.12;
+content:"";
+position:fixed;
 top:-150px;
 left:-150px;
+width:300px;
+height:300px;
+background:#229ED9;
+opacity:.12;
+filter:blur(100px);
 border-radius:50%;
+pointer-events:none;
 }
 
 body::after{
-content:'';
-position:absolute;
-width:400px;
-height:400px;
-background:#229ED9;
-filter:blur(180px);
-opacity:.08;
+content:"";
+position:fixed;
 bottom:-150px;
 right:-150px;
+width:300px;
+height:300px;
+background:#229ED9;
+opacity:.08;
+filter:blur(100px);
 border-radius:50%;
+pointer-events:none;
 }
 
 .card{
-position:relative;
-z-index:2;
 width:100%;
-max-width:460px;
-background:linear-gradient(
-180deg,
-rgba(255,255,255,.06),
-rgba(255,255,255,.03)
-);
-border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(20px);
-border-radius:35px;
-padding:28px;
-text-align:center;
+max-width:380px;
+background:rgba(255,255,255,.04);
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,.06);
+border-radius:28px;
+padding:24px 20px;
 box-shadow:
-0 20px 80px rgba(0,0,0,.4);
+0 10px 40px rgba(0,0,0,.35);
+text-align:center;
 }
 
 .logo{
-width:95px;
-height:95px;
+width:72px;
+height:72px;
 margin:auto;
-margin-bottom:18px;
+margin-bottom:14px;
 }
 
 .badge{
 display:inline-block;
-padding:10px 18px;
+padding:8px 14px;
 border-radius:999px;
 background:rgba(255,255,255,.05);
 border:1px solid rgba(255,255,255,.06);
-color:#cfd8e3;
-font-size:12px;
+color:#BFC7D6;
+font-size:11px;
 font-weight:600;
 letter-spacing:1px;
-margin-bottom:18px;
+margin-bottom:14px;
 }
 
 h1{
-font-size:42px;
+font-size:30px;
 font-weight:800;
-line-height:1.1;
+line-height:1.15;
 color:white;
-margin-bottom:15px;
+margin-bottom:12px;
 }
 
 .description{
-font-size:17px;
+font-size:14px;
 line-height:1.6;
 color:#9BA7BD;
-margin-bottom:22px;
+margin-bottom:18px;
 }
 
 .benefits{
 display:flex;
 flex-direction:column;
 gap:10px;
-margin-bottom:22px;
+margin-bottom:20px;
 }
 
 .benefit{
 display:flex;
 align-items:center;
-gap:12px;
+gap:10px;
+padding:12px;
+border-radius:14px;
 background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.04);
-padding:14px;
-border-radius:14px;
 text-align:left;
-color:#E8EDF5;
-font-size:15px;
-font-weight:500;
 }
 
 .check{
-width:28px;
-height:28px;
+width:24px;
+height:24px;
 border-radius:50%;
 background:#229ED9;
 display:flex;
 align-items:center;
 justify-content:center;
 color:white;
-font-size:14px;
+font-size:12px;
 font-weight:700;
 flex-shrink:0;
 }
 
+.benefit span{
+font-size:13px;
+color:#E8EDF7;
+font-weight:500;
+}
+
 .join-btn{
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 width:100%;
-height:68px;
-border-radius:18px;
-text-decoration:none;
+height:56px;
+border-radius:16px;
 background:linear-gradient(
 135deg,
 #35B8F8,
 #229ED9
 );
+text-decoration:none;
 color:white;
-font-size:22px;
-font-weight:800;
-margin-top:5px;
+font-size:18px;
+font-weight:700;
 box-shadow:
-0 10px 35px rgba(34,158,217,.35);
-transition:.25s;
+0 8px 24px rgba(34,158,217,.35);
+transition:.2s;
 }
 
-.join-btn:hover{
-transform:translateY(-2px);
+.join-btn:active{
+transform:scale(.98);
 }
 
 .footer{
-margin-top:18px;
-font-size:13px;
-color:#71809C;
-}
-
-@media(max-height:750px){
-
-.logo{
-width:80px;
-height:80px;
-}
-
-h1{
-font-size:36px;
-}
-
-.description{
-font-size:15px;
-}
-
-.benefit{
-padding:12px;
-font-size:14px;
-}
-
-.join-btn{
-height:62px;
-font-size:20px;
-}
-
+margin-top:14px;
+font-size:11px;
+color:#7E8BA0;
+letter-spacing:.3px;
 }
 
 </style>
@@ -223,7 +202,7 @@ Exclusive Telegram Community
 </h1>
 
 <div class="description">
-Get instant access to exclusive content, daily updates and premium resources available only to members.
+Get instant access to exclusive content, daily updates, and premium resources available only to members.
 </div>
 
 <div class="benefits">
@@ -250,7 +229,7 @@ Join Telegram Now →
 </a>
 
 <div class="footer">
-Secure • Private • Unlimited Access
+Secure • Private • Instant Access
 </div>
 
 </div>
