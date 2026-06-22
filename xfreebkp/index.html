@@ -130,6 +130,21 @@ border-top:1px solid #222;
     display:block;
     border-radius:12px;
 }
+
+.middle-banner{
+    grid-column:1 / -1;
+    margin:15px 0;
+    text-align:center;
+}
+
+.middle-banner img{
+    width:100%;
+    max-width:728px;
+    height:auto;
+    display:block;
+    margin:auto;
+    border-radius:12px;
+}
   
 </style>
 </head>
@@ -191,7 +206,8 @@ list.innerHTML="";
 let start=(page-1)*perPage;
 let items=allData.slice(start,start+perPage);
 
-items.forEach(item=>{
+items.forEach((item,index)=>{
+
 list.innerHTML+=`
 <div class="card">
 <div class="img-box" data-img="${item.img}"></div>
@@ -200,6 +216,16 @@ list.innerHTML+=`
 <a href="${item.link}" target="_blank" class="btn download">⬇</a>
 </div>
 </div>`;
+
+if(index===8){
+list.innerHTML+=`
+<div class="middle-banner">
+<a href="LINK_AFFILIATE" target="_blank">
+<img src="featured-top.png" alt="Featured">
+</a>
+</div>`;
+}
+
 });
 
 renderCanvas();
