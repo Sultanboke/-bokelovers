@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About This Website</title>
+<title>Tentang Website</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -16,96 +16,111 @@
 
 body{
     font-family:'Inter',sans-serif;
-    background:#0a0a0a;
+    background:#080808;
     color:#fff;
     min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
     padding:20px;
 }
 
 .container{
-    width:100%;
-    max-width:850px;
+    max-width:900px;
+    margin:auto;
 }
 
 .card{
     background:#111;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:24px;
-    padding:40px 30px;
-    backdrop-filter:blur(10px);
-    box-shadow:0 0 40px rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:28px;
+    padding:35px;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
 }
 
 .badge{
-    display:inline-block;
-    background:rgba(255,255,255,.08);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#171717;
     border:1px solid rgba(255,255,255,.08);
-    color:#d1d5db;
-    padding:8px 14px;
+    padding:10px 16px;
     border-radius:999px;
     font-size:13px;
-    margin-bottom:18px;
+    color:#cfcfcf;
+    margin-bottom:20px;
 }
 
 h1{
-    font-size:34px;
-    font-weight:700;
+    font-size:38px;
+    font-weight:800;
     margin-bottom:12px;
     letter-spacing:-1px;
 }
 
 .subtitle{
     color:#9ca3af;
-    line-height:1.7;
+    line-height:1.8;
     margin-bottom:35px;
 }
 
 .section{
-    margin-bottom:25px;
-    padding:22px;
-    background:#161616;
-    border-radius:18px;
+    background:#151515;
     border:1px solid rgba(255,255,255,.05);
+    border-radius:20px;
+    padding:22px;
+    margin-bottom:18px;
 }
 
 .section h2{
-    font-size:16px;
-    margin-bottom:10px;
-    font-weight:600;
+    font-size:18px;
+    margin-bottom:12px;
 }
 
 .section p{
-    color:#bdbdbd;
-    line-height:1.8;
+    color:#c5c5c5;
+    line-height:1.9;
     font-size:15px;
 }
 
-.telegram{
-    margin-top:35px;
+.telegram-box{
+    margin-top:30px;
+    padding:25px;
     text-align:center;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #111827
+    );
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.08);
 }
 
-.telegram a{
+.telegram-box h3{
+    margin-bottom:10px;
+}
+
+.telegram-box p{
+    color:#c5c5c5;
+    margin-bottom:18px;
+    line-height:1.7;
+}
+
+.telegram-btn{
     display:inline-block;
     text-decoration:none;
     color:#fff;
     background:#229ED9;
-    padding:14px 28px;
+    padding:14px 26px;
     border-radius:14px;
     font-weight:600;
     transition:.3s;
 }
 
-.telegram a:hover{
+.telegram-btn:hover{
     transform:translateY(-2px);
 }
 
 .footer{
-    margin-top:25px;
     text-align:center;
+    margin-top:25px;
     color:#666;
     font-size:13px;
 }
@@ -113,11 +128,11 @@ h1{
 @media(max-width:768px){
 
 .card{
-    padding:25px 20px;
+    padding:22px;
 }
 
 h1{
-    font-size:28px;
+    font-size:30px;
 }
 
 .section{
@@ -131,66 +146,72 @@ h1{
 
 <div class="container">
 
-    <div class="card">
+<div class="card">
 
-        <div class="badge">
-            Premium Information
-        </div>
+<div class="badge">
+✨ Informasi Website
+</div>
 
-        <h1>About This Website</h1>
+<h1>Tentang Website</h1>
 
-        <p class="subtitle">
-            Welcome to our content platform. Please read the information below to ensure the best browsing experience.
-        </p>
+<p class="subtitle">
+Terima kasih telah mengunjungi website kami. Demi memberikan pengalaman terbaik, silakan baca informasi berikut sebelum menikmati seluruh konten yang tersedia.
+</p>
 
-        <div class="section">
-            <h2>📷 Thumbnail Not Visible?</h2>
-            <p>
-                If video thumbnails are not displayed properly, please try using a VPN, changing your DNS settings, or switching to a different internet connection. Some Internet Service Providers (ISP) may restrict access to certain image sources, causing thumbnails to be unavailable.
-            </p>
-        </div>
+<div class="section">
+<h2>📷 Thumbnail Tidak Muncul?</h2>
+<p>
+Jika thumbnail video tidak tampil atau gagal dimuat, silakan gunakan VPN, mengganti DNS, atau mencoba jaringan internet yang berbeda. Beberapa penyedia layanan internet (ISP) dapat membatasi akses ke sumber gambar tertentu sehingga thumbnail tidak dapat ditampilkan dengan normal.
+</p>
+</div>
 
-        <div class="section">
-            <h2>🔥 Daily Content Updates</h2>
-            <p>
-                New content is added every day. We continuously update our collection to provide the latest and most requested videos for our visitors.
-            </p>
-        </div>
+<div class="section">
+<h2>🔥 Update Konten Setiap Hari</h2>
+<p>
+Konten baru ditambahkan secara rutin setiap hari. Kami selalu berusaha menghadirkan koleksi terbaru agar pengunjung dapat menikmati update konten tanpa harus menunggu lama.
+</p>
+</div>
 
-        <div class="section">
-            <h2>📄 Video Titles</h2>
-            <p>
-                Video titles are intentionally hidden on the main website to maintain a clean and minimalist interface. Simply click the thumbnail of any video to view additional information and details.
-            </p>
-        </div>
+<div class="section">
+<h2>📄 Informasi Judul Video</h2>
+<p>
+Untuk menjaga tampilan website tetap bersih, ringan, dan nyaman digunakan, judul lengkap video tidak ditampilkan pada halaman utama. Anda dapat melihat detail lebih lanjut dengan mengklik thumbnail video yang ingin ditonton.
+</p>
+</div>
 
-        <div class="section">
-            <h2>✅ Content Accuracy</h2>
-            <p>
-                All premium content corresponds to the thumbnail image displayed. Please select the content based on the preview image that matches your interest.
-            </p>
-        </div>
+<div class="section">
+<h2>✅ Kesesuaian Konten</h2>
+<p>
+Semua konten premium yang tersedia telah disesuaikan dengan gambar thumbnail yang ditampilkan. Pastikan Anda memilih konten berdasarkan gambar yang sesuai dengan keinginan Anda.
+</p>
+</div>
 
-        <div class="section">
-            <h2>📢 Partnership & Advertising</h2>
-            <p>
-                We welcome advertising opportunities, banner placements, sponsorships, and other business collaborations. Feel free to contact us for further discussion.
-            </p>
-        </div>
+<div class="section">
+<h2>⚡ Pengalaman Terbaik</h2>
+<p>
+Untuk mendapatkan pengalaman terbaik saat mengakses website ini, disarankan menggunakan browser versi terbaru serta koneksi internet yang stabil agar seluruh konten dapat dimuat dengan optimal.
+</p>
+</div>
 
-        <div class="telegram">
-            <a href="https://t.me/gopex" target="_blank">
-                Contact @gopex
-            </a>
-        </div>
+<div class="telegram-box">
+<h3>📢 Kerja Sama & Pemasangan Iklan</h3>
 
-        <div class="footer">
-            © 2026 • Premium Content Platform
-        </div>
+<p>
+Kami membuka peluang untuk kerja sama, promosi, pemasangan banner iklan, sponsorship, maupun bentuk kolaborasi lainnya.
+</p>
 
-    </div>
+<a href="https://t.me/gopex" class="telegram-btn" target="_blank">
+Hubungi @gopex
+</a>
+</div>
+
+<div class="footer">
+© 2026 • Semua Hak Dilindungi
+</div>
+
+</div>
 
 </div>
 
 </body>
-      </html>
+</html>
