@@ -141,15 +141,15 @@ color:#ff7777;
 
 #popup-notif{
 position:fixed;
-top:20px;
-right:20px;
+top:90px;
+left:50%;
+transform:translateX(-50%);
 background:#111;
 color:#fff;
-padding:12px 16px;
+padding:12px 18px;
 border-radius:12px;
 font-size:13px;
 z-index:9999;
-display:none;
 box-shadow:0 0 15px rgba(0,0,0,.5);
 border:1px solid #222;
 }
@@ -254,36 +254,31 @@ verifyCode();
 <script>
 
 const messages = [
-"🔥 1 orang access Asupan Gratis",
-"🔥 2 orang access Asupan Gratis",
-"🔥 3 orang access Asupan Gratis",
-"🔥 4 orang access Asupan Gratis",
-"🔥 5 orang access Asupan Gratis",
-"🔥 6 orang access Asupan Gratis",
-"🔥 7 orang access Asupan Gratis",
-"🔥 8 orang access Asupan Gratis",
-"🔥 9 orang access Asupan Gratis",
-"🔥 10 orang access Asupan Gratis"
+"🔥 1 orang baru mendapatkan akses",
+"🔥 2 orang baru mendapatkan akses",
+"🔥 3 orang sedang online sekarang",
+"🔥 4 orang baru bergabung",
+"🔥 5 orang sedang melihat konten",
+"🔥 6 orang baru mendapatkan akses",
+"🔥 7 orang sedang aktif sekarang",
+"🔥 8 orang baru bergabung",
+"🔥 9 orang sedang melihat konten",
+"🔥 10 orang baru mendapatkan akses"
 ];
 
-function showNotif(){
-
 const box = document.getElementById("popup-notif");
+
+function showNotif(){
 
 const random =
 messages[Math.floor(Math.random()*messages.length)];
 
 box.innerHTML = random;
 
-box.style.display = "block";
-
-setTimeout(()=>{
-box.style.display = "none";
-},3000);
-
 }
 
-setTimeout(showNotif,1000);
+showNotif();
+
 setInterval(showNotif,3000);
 
 </script>
