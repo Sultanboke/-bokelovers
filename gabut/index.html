@@ -98,6 +98,30 @@ font-size:12px;
 opacity:0.6;
 border-top:1px solid #222;
 }
+
+.top-banner{
+    max-width:728px;
+    margin:15px auto;
+    padding:0 10px;
+}
+
+.top-banner img{
+    width:100%;
+    display:block;
+    border-radius:12px;
+}
+
+.bottom-banner{
+    max-width:300px;
+    margin:25px auto;
+}
+
+.bottom-banner img{
+    width:100%;
+    display:block;
+    border-radius:12px;
+}  
+  
 </style>
 </head>
 
@@ -124,6 +148,12 @@ border-top:1px solid #222;
 
 <div id="list" class="container"></div>
 <div id="pagination" class="pagination"></div>
+
+<div class="bottom-banner">
+   <a href="#">
+      <img src="300x250.jpg" alt="Banner Bawah">
+   </a>
+</div>
 
 <div class="footer">
 © 2026 by telebokep
@@ -191,11 +221,6 @@ function renderPagination(){
 let total=Math.ceil(allData.length/perPage);
 let html="";
 
-<div class="bottom-banner">
-    <a href="#">
-        <img src="300x250.jpg" alt="Banner Bawah">
-    </a>
-</div>
   
 /* BACK */
 if(currentPage>1){
