@@ -206,13 +206,13 @@ message.innerHTML =
 
 setTimeout(() => {
 
-    localStorage.setItem('verified', 'true');
+localStorage.setItem('verified','true');
 
-    window.location.href = '/zozo/';
+window.location.href = '/zozo/';
 
-}, 1200);
+},1200);
 
-}
+}else{
 
 message.innerHTML =
 '<span class="error">Invalid access code.</span>';
@@ -223,9 +223,9 @@ message.innerHTML =
 
 document
 .getElementById("codeInput")
-.addEventListener("keypress", function(e){
+.addEventListener("keypress",function(e){
 
-if(e.key === "Enter"){
+if(e.key==="Enter"){
 verifyCode();
 }
 
