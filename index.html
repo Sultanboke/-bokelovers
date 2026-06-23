@@ -210,22 +210,11 @@ const perPage=27;
 let currentPage=1;
 let allData=[];
 
-Promise.all([
-  fetch('databkp/zoxo5.json').then(r=>r.json()),
-  fetch('databkp/zoxo4.json').then(r=>r.json()),
-  fetch('databkp/zoxo3.json').then(r=>r.json()),
-  fetch('databkp/zoxo2.json').then(r=>r.json()),
-  fetch('databkp/zoxo1.json').then(r=>r.json())
-])
-.then(results=>{
-
-  allData = results.flat();
-
+fetch('databkp/zoxo1.json')
+.then(r=>r.json())
+.then(data=>{
+  allData = data;
   renderPage(1);
-
-})
-.catch(err=>{
-  console.error(err);
 });
 
 /* RENDER */
