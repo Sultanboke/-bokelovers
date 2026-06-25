@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+
+<title>Linkdoodvi Updates</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#0d0d0d;
+color:#fff;
+}
+
+marquee{
+background:#229ED9;
+padding:10px;
+font-weight:600;
+font-size:14px;
+}
+
+.header{
+padding:20px;
+text-align:center;
+font-size:28px;
+font-weight:700;
+color:#fff;
+}
+
+.container{
+max-width:850px;
+margin:auto;
+padding:15px;
+}
+
+.post{
+background:#171717;
+border:1px solid #2a2a2a;
+border-radius:16px;
+padding:18px;
+margin-bottom:18px;
+box-shadow:0 0 20px rgba(0,0,0,.25);
+}
+
+.post-title{
+font-size:22px;
+font-weight:700;
+margin-bottom:15px;
+color:#fff;
+word-break:break-word;
+}
+
+.links{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.links a{
+display:block;
+background:#229ED9;
+padding:13px;
+border-radius:10px;
+text-decoration:none;
+color:#fff;
+font-weight:600;
+transition:.25s;
+}
+
+.links a:hover{
+background:#1b8bc5;
+}
+
+.footer{
+padding:25px;
+text-align:center;
+font-size:12px;
+opacity:.6;
+}
+
+</style>
+
+</head>
+<body>
+
+<marquee scrollamount="7">
+🔥 Update Link Terbaru Setiap Hari • Bookmark Halaman Ini • Refresh Untuk Mendapatkan Link Terbaru 🚀
+</marquee>
+
+<div class="header">
+📂 Linkdoodvi Updates
+</div>
+
+<div id="posts" class="container"></div>
+
+<div class="footer">
+© 2026 Linkdoodvi
+</div>
+
+<script>
+
+fetch("posts.json")
+.then(r=>r.json())
+.then(data=>{
+
+data.reverse();
+
+const box=document.getElementById("posts");
+
+data.forEach(post=>{
+
+let html=`
+<div class="post">
+
+<div class="post-title">
+${post.title}
+</div>
+
+<div class="links">
+`;
+
+post.links.forEach((link,index)=>{
+
+html+=`
+<a href="${link}" target="_blank">
+▶ Link ${index+1}
+</a>
+`;
+
+});
+
+html+=`
+</div>
+</div>
+`;
+
+box.innerHTML+=html;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
