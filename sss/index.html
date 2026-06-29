@@ -1,177 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gallery</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Simple Landing</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#090909;
-color:#fff;
+    background:#000;
+    color:#fff;
 }
 
-.running{
-background:#111;
-border-bottom:1px solid #222;
-padding:12px 0;
-font-size:15px;
-font-weight:500;
-color:#ddd;
+.marquee{
+    background:#fff;
+    color:#000;
+    font-size:24px;
+    font-weight:bold;
+    padding:12px 0;
 }
 
 .container{
-max-width:560px;
-margin:35px auto;
-padding:18px;
+    max-width:420px;
+    margin:auto;
+    padding:30px 15px;
 }
 
 .thumbnail{
-overflow:hidden;
-border-radius:18px;
-background:#151515;
-border:1px solid #232323;
-box-shadow:0 12px 35px rgba(0,0,0,.45);
+    width:100%;
+    aspect-ratio:1080/1350;
+    border-radius:8px;
+    overflow:hidden;
+    margin-bottom:25px;
 }
 
 .thumbnail img{
-width:100%;
-display:block;
-aspect-ratio:1080/1350;
-object-fit:cover;
-}
-
-.buttons{
-margin-top:22px;
-display:grid;
-gap:14px;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 }
 
 .btn{
-display:flex;
-align-items:center;
-justify-content:center;
-height:58px;
-background:#181818;
-border:1px solid #2b2b2b;
-border-radius:14px;
-text-decoration:none;
-color:#fff;
-font-size:17px;
-font-weight:600;
-transition:.25s;
+    display:block;
+    width:100%;
+    text-align:center;
+    background:#ff2b2b;
+    color:#fff;
+    text-decoration:none;
+    font-size:24px;
+    font-weight:bold;
+    padding:18px;
+    margin-bottom:15px;
+    border-radius:6px;
+    transition:.2s;
 }
 
 .btn:hover{
-background:#229ED9;
-border-color:#229ED9;
-transform:translateY(-2px);
+    background:#ff5555;
 }
-
-.footer{
-text-align:center;
-font-size:13px;
-color:#777;
-padding:25px;
-}
-
-@media(max-width:600px){
-
-.container{
-padding:14px;
-margin-top:20px;
-}
-
-.btn{
-height:54px;
-font-size:16px;
-}
-
-}
-
 </style>
-
 </head>
 
 <body>
 
-<div class="running">
-<marquee scrollamount="7">
-🔥 New uploads available • Updated regularly • Enjoy browsing our gallery 🔥
+<div class="marquee">
+<marquee scrollamount="8">
+🔥 Welcome • Update Every Day • Join Telegram For More Content •
 </marquee>
 </div>
 
 <div class="container">
 
 <div class="thumbnail">
-<img id="thumb" src="" alt="Thumbnail">
+<img src="thumbnail.jpg">
 </div>
 
-<div class="buttons">
+<a href="#" class="btn">LINK 1</a>
 
-<a id="link1" class="btn" target="_blank">Open Link 1</a>
+<a href="#" class="btn">LINK 2</a>
 
-<a id="link2" class="btn" target="_blank">Open Link 2</a>
+<a href="#" class="btn">LINK 3</a>
 
-<a id="link3" class="btn" target="_blank">Open Link 3</a>
+<a href="#" class="btn">LINK 4</a>
 
-<a id="link4" class="btn" target="_blank">Open Link 4</a>
-
-<a id="link5" class="btn" target="_blank">Open Link 5</a>
+<a href="#" class="btn">LINK 5</a>
 
 </div>
-
-</div>
-
-<div class="footer">
-© 2026 Gallery
-</div>
-
-<script>
-
-fetch("data.json")
-.then(res=>res.json())
-.then(data=>{
-
-const id=new URLSearchParams(location.search).get("id")||0;
-
-const item=data[id];
-
-if(!item)return;
-
-document.getElementById("thumb").src=item.thumbnail;
-
-for(let i=0;i<5;i++){
-
-const btn=document.getElementById("link"+(i+1));
-
-if(item.links[i]){
-
-btn.href=item.links[i];
-
-}else{
-
-btn.style.display="none";
-
-}
-
-}
-
-});
-
-</script>
 
 </body>
 </html>
