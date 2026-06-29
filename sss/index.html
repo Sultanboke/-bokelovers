@@ -1,99 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simple Landing</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Gallery</title>
 
 <style>
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
 }
 
 body{
-    background:#000;
-    color:#fff;
+background:#000;
+color:#fff;
 }
 
 .marquee{
-    background:#fff;
-    color:#000;
-    font-size:24px;
-    font-weight:bold;
-    padding:12px 0;
+background:#fff;
+color:#000;
+padding:10px;
+font-weight:bold;
 }
 
 .container{
-    max-width:420px;
-    margin:auto;
-    padding:30px 15px;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:25px 0 60px;
 }
 
-.thumbnail{
-    width:100%;
-    aspect-ratio:1080/1350;
-    border-radius:8px;
-    overflow:hidden;
-    margin-bottom:25px;
+.card{
+width:300px;
+max-width:90%;
+margin-bottom:45px;
 }
 
-.thumbnail img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+.thumb{
+width:100%;
+border-radius:12px;
+overflow:hidden;
+margin-bottom:15px;
+}
+
+.thumb img{
+width:100%;
+display:block;
 }
 
 .btn{
-    display:block;
-    width:100%;
-    text-align:center;
-    background:#ff2b2b;
-    color:#fff;
-    text-decoration:none;
-    font-size:24px;
-    font-weight:bold;
-    padding:18px;
-    margin-bottom:15px;
-    border-radius:6px;
-    transition:.2s;
+display:block;
+width:100%;
+padding:14px;
+margin-bottom:10px;
+background:#ff2020;
+color:#fff;
+text-align:center;
+text-decoration:none;
+font-size:18px;
+font-weight:bold;
+border-radius:10px;
+transition:.2s;
 }
 
 .btn:hover{
-    background:#ff5555;
+background:#ff4444;
 }
-</style>
-</head>
 
+</style>
+
+</head>
 <body>
 
 <div class="marquee">
-<marquee scrollamount="8">
-🔥 Welcome • Update Every Day • Join Telegram For More Content •
+<marquee scrollamount="7">
+🔥 Updated Daily • Join Telegram • New Content Everyday 🔥
 </marquee>
 </div>
 
-<div class="container">
+<div class="container" id="content"></div>
 
-<div class="thumbnail">
-<img src="thumbnail.jpg">
+<script>
+
+fetch("data.json")
+.then(res=>res.json())
+.then(data=>{
+
+// Membalik urutan supaya data paling bawah tampil paling atas
+data.reverse();
+
+const content=document.getElementById("content");
+
+data.forEach(item=>{
+
+const card=document.createElement("div");
+card.className="card";
+
+let html=`
+<div class="thumb">
+<img src="${item.img}">
 </div>
+`;
 
-<a href="#" class="btn">LINK 1</a>
+item.buttons.forEach(btn=>{
+html+=`
+<a class="btn" href="${btn.url}" target="_blank">
+${btn.text}
+</a>
+`;
+});
 
-<a href="#" class="btn">LINK 2</a>
+card.innerHTML=html;
 
-<a href="#" class="btn">LINK 3</a>
+content.appendChild(card);
 
-<a href="#" class="btn">LINK 4</a>
+});
 
-<a href="#" class="btn">LINK 5</a>
+});
 
-</div>
+</script>
 
 </body>
 </html>
