@@ -224,13 +224,18 @@ const perPage=36;
 let currentPage=1;
 let allData=[];
 
-Promise.all([
+Promise.allSettled([
   fetch('databkp/zoxo2.json').then(r => r.json()),
   fetch('databkp/zoxo1.json').then(r => r.json())
-])
-.then(([zoxo2, zoxo1]) => {
+]).then(results => {
 
-  allData = [...zoxo2.reverse(), ...zoxo1.reverse()];
+  allData = [];
+
+  results.forEach(result => {
+    if (result.status === "fulfilled") {
+      allData.push(...result.value.reverse());
+    }
+  });
 
   renderPage(1);
 
