@@ -498,41 +498,6 @@ items.filter(x=>
 
 }
 
-const FACEBOOK_URL = "https://omg10.com/4/8457391";
-
-document.addEventListener("click", function(e){
-
-    const link = e.target.closest("a");
-
-    if(!link) return;
-
-    // Jangan arahkan halaman tutorial & disclaimer
-    if(
-        link.href.includes("tutorial.html") ||
-        link.href.includes("disclaimer.html")
-    ){
-        return;
-    }
-
-    const savedLink = sessionStorage.getItem("nextLink");
-
-    // Klik kedua pada link yang sama
-    if(savedLink === link.href){
-
-        sessionStorage.removeItem("nextLink");
-
-        return;
-
-    }
-
-    // Klik pertama
-    e.preventDefault();
-
-    sessionStorage.setItem("nextLink", link.href);
-
-    window.location.href = FACEBOOK_URL;
-
-});
 
 (function(){
 
