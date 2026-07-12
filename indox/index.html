@@ -298,12 +298,20 @@ color:inherit;
 🎬 Tutorial Watch
 </a>
 
+<a href="#" class="menu-btn" onclick="showFavorites()">
+❤️ My Favorites
+</a>
+<a href="#" class="menu-btn" onclick="render(items)">
+🏠 Semua Konten
+</a>  
+  
 <a href="https://xfreebokep.xyz/Disclaimer/" class="menu-btn">
 ⚠️ Disclaimer
 </a>
 
 </div>
 
+  
 <div class="announcement">
 📢 New Collection Added Today • Check The Latest Updates Below!
 </div>  
@@ -544,7 +552,7 @@ let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
 document.querySelectorAll(".favorite").forEach((btn,index)=>{
 
-const id = document.querySelectorAll(".thumb")[index].dataset.id;
+const id = document.querySelectorAll(".open-link")[index].href;
 
 if(favorites.includes(id)){
 btn.textContent = "❤️";
