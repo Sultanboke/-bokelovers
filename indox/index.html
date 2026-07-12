@@ -327,11 +327,11 @@ const PER_PAGE = 30;
 let currentPage = 1;
 
 Promise.allSettled([
-    fetch("databkp/zoxo2.json").then(r => r.json()),
-    fetch("databkp/zoxo1.json").then(r => r.json()),
-    fetch("databkp/zoxo3.json").then(r => r.json()),
-    fetch("databkp/zoxo4.json").then(r => r.json()),
-    fetch("databkp/zoxo5.json").then(r => r.json())
+    fetch("xoxo1.json").then(r => r.json()),
+    fetch("xoxo2.json").then(r => r.json()),
+    fetch("xoxo3.json").then(r => r.json()),
+    fetch("xoxo4.json").then(r => r.json()),
+    fetch("xoxo5.json").then(r => r.json())
 ]).then(results => {
 
     items = [];
