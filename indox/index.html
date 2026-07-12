@@ -394,19 +394,34 @@ const pageItems = list.slice(start, end);
 
 if(pageItems.length === 0){
 
+const isFavoritePage =
+list.length === 0 &&
+JSON.parse(localStorage.getItem("favorites") || "[]").length === 0;
+
 gallery.innerHTML = `
 <div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
-<h2>🔍 Hasil pencarian tidak ditemukan</h2>
-<p style="margin-top:10px;color:#999;">
-Silakan gunakan kata kunci lain.
+
+<h2 style="font-size:24px;">
+${isFavoritePage ? "❤️" : "🔍"}
+</h2>
+
+<h2 style="margin-top:10px;">
+${isFavoritePage ? "Belum ada Favorite" : "Hasil pencarian tidak ditemukan"}
+</h2>
+
+<p style="margin-top:10px;color:#999;line-height:1.7;">
+${isFavoritePage
+? "Tambahkan asupan favorit Anda dengan menekan ikon ❤️ pada setiap konten."
+: "Silakan gunakan kata kunci lain."}
 </p>
+
 </div>
 `;
 
 pagination.innerHTML = "";
 return;
 
-}    
+}
   
 pageItems.forEach((item,i)=>{
 
