@@ -389,7 +389,7 @@ const pageItems = list.slice(start, end);
 
 pageItems.forEach((item,i)=>{
 
-gallery.innerHTML+=`
+gallery.innerHTML += `
 <div class="card">
 
 <div class="thumb" data-id="${start+i}" data-img="${item.img}">
@@ -416,6 +416,7 @@ ${start+i < 6 ? '<div class="badge">NEW</div>' : ''}
 </div>
 
 </div>
+`;
 
 pagination.innerHTML="";
 
@@ -452,7 +453,8 @@ pagination.innerHTML+=`
 
 renderCanvas();
 markWatched();
-  }
+loadFavorites();
+}
 
 function renderCanvas(){
 
