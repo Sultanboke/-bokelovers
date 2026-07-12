@@ -317,12 +317,13 @@ color:inherit;
   
 <div class="top-menu">
 
-<a href="#" class="menu-btn" onclick="showFavorites()">
+<a href="#" class="menu-btn" onclick="event.preventDefault(); showFavorites();">
 ❤️ My Favorites
 </a>
-<a href="#" class="menu-btn" onclick="render(items)">
-🏠 All Konten
-</a>  
+
+<a href="#" class="menu-btn" onclick="event.preventDefault(); render(items);">
+🏠 Semua Konten
+</a>
 
 </div>
 
