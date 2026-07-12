@@ -521,6 +521,7 @@ behavior:"smooth"
 
   }
 let watched = {};
+let watched = {};
 
 function markWatched(){
 
@@ -528,21 +529,30 @@ document.querySelectorAll(".card").forEach(card=>{
 
 const thumb = card.querySelector(".thumb");
 const id = thumb.dataset.id;
+const link = card.querySelector(".open-link");
 
 if(watched[id]){
-thumb.classList.add("viewed");
+    thumb.classList.add("viewed");
 }
 
-card.addEventListener("click",()=>{
+if(link){
+
+link.addEventListener("click",()=>{
+
+setTimeout(()=>{
 
 watched[id] = true;
 thumb.classList.add("viewed");
 
-});
+},500);
 
 });
 
-  }
+}
+
+});
+
+}
     
 search.oninput=()=>{
 
