@@ -321,7 +321,7 @@ color:inherit;
 ❤️ My Favorites
 </a>
 
-<a href="#" class="menu-btn" onclick="event.preventDefault(); render(items);">
+<a href="#" class="menu-btn" onclick="event.preventDefault(); favoriteMode=false; render(items);">
 🏠 All Content
 </a>
 
@@ -348,6 +348,7 @@ let items = [];
 
 const PER_PAGE = 30;
 let currentPage = 1;
+let favoriteMode = false;
 
 Promise.allSettled([
     fetch("xoxo1.json").then(r => r.json()),
@@ -392,33 +393,33 @@ const end = start + PER_PAGE;
 
 const pageItems = list.slice(start, end);
 
-if(pageItems.length === 0){
+if(pageItems.length===0){
 
-const isFavoritePage =
-list.length === 0 &&
-JSON.parse(localStorage.getItem("favorites") || "[]").length === 0;
+if(favoriteMode){
 
-gallery.innerHTML = `
+gallery.innerHTML=`
 <div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
-
-<h2 style="font-size:24px;">
-${isFavoritePage ? "❤️" : "🔍"}
-</h2>
-
-<h2 style="margin-top:10px;">
-${isFavoritePage ? "Belum ada Favorite" : "Hasil pencarian tidak ditemukan"}
-</h2>
-
-<p style="margin-top:10px;color:#999;line-height:1.7;">
-${isFavoritePage
-? "Tambahkan asupan favorit Anda dengan menekan ikon ❤️ pada setiap konten."
-: "Silakan gunakan kata kunci lain."}
+<h2>❤️ Favorit Anda Masih Kosong</h2>
+<p style="margin-top:10px;color:#999;">
+Tambahkan asupan favorit Anda dengan menekan ikon ❤️ pada setiap konten.
 </p>
-
 </div>
 `;
 
-pagination.innerHTML = "";
+}else{
+
+gallery.innerHTML=`
+<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+<h2>🔍 Hasil pencarian tidak ditemukan</h2>
+<p style="margin-top:10px;color:#999;">
+Konten yang Anda cari belum tersedia.
+</p>
+</div>
+`;
+
+}
+
+pagination.innerHTML="";
 return;
 
 }
@@ -620,6 +621,8 @@ localStorage.setItem("favorites",JSON.stringify(favorites));
 
 }  
 function showFavorites(){
+
+favoriteMode = true;
 
 const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
