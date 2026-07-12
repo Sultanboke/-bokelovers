@@ -262,6 +262,11 @@ cursor:pointer;
 z-index:999;
 user-select:none;
 }
+.open-link{
+display:block;
+text-decoration:none;
+color:inherit;
+}
   
 </style>
 </head>
@@ -385,26 +390,32 @@ const pageItems = list.slice(start, end);
 pageItems.forEach((item,i)=>{
 
 gallery.innerHTML+=`
-<a class="card" href="${item.link}" target="_blank" style="animation-delay:${i*0.03}s">
+<div class="card">
 
 <div class="thumb" data-id="${start+i}" data-img="${item.img}">
 <div class="skeleton"></div>
+
 <div class="favorite">🤍</div>
+
 ${start+i < 6 ? '<div class="badge">NEW</div>' : ''}
+
 <div class="watched">✓ Watched</div>
+
 </div>
 
 <div class="info">
+
+<a href="${item.link}" target="_blank" class="open-link">
 
 <div class="title">${item.title||"xfreebkp"}</div>
 
 <div class="sub">Click to Open</div>
 
+</a>
+
 </div>
 
-</a>`;
-
-});
+</div>
 
 pagination.innerHTML="";
 
