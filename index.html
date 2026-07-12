@@ -359,6 +359,22 @@ const pageItems = list.slice(start, end);
 
 pageItems.forEach((item,i)=>{
 
+if(pageItems.length === 0){
+
+gallery.innerHTML = `
+<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+<h2>🔍 Hasil pencarian tidak ditemukan</h2>
+<p style="margin-top:10px;color:#999;">
+Silakan gunakan kata kunci lain.
+</p>
+</div>
+`;
+
+pagination.innerHTML = "";
+return;
+
+}  
+  
 gallery.innerHTML+=`
 <a class="card" href="${item.link}" target="_blank" style="animation-delay:${i*0.03}s">
 
