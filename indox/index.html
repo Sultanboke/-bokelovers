@@ -582,7 +582,20 @@ localStorage.setItem("favorites",JSON.stringify(favorites));
 });
 
 }  
+function showFavorites(){
 
+const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+const favItems = items.filter(item =>
+    favorites.includes(item.link)
+);
+
+currentPage = 1;
+
+render(favItems);
+
+}
+  
 (function(){
 
 function loadHistats(){
