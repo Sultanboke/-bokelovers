@@ -330,7 +330,7 @@ XFREEBOKEP
 ❤️ My Favorites
 </a>
 
-<a href="#" class="menu-btn" onclick="event.preventDefault(); favoriteMode=false; render(items);">
+<a href="#" class="menu-btn" onclick="event.preventDefault(); favoriteMode=false; searchMode=false; search.value=''; render(items);">
 🏠 All Content
 </a>
 
@@ -358,6 +358,7 @@ let items = [];
 const PER_PAGE = 30;
 let currentPage = 1;
 let favoriteMode = false;
+let searchMode = false;
 
 Promise.allSettled([
     fetch("xoxo1.json").then(r => r.json()),
@@ -443,8 +444,9 @@ gallery.innerHTML += `
 
 <div class="favorite">🤍</div>
 
-${start+i < 6 ? '<div class="badge">NEW</div>' : ''}
-
+${!favoriteMode && !searchMode && start+i < 6
+? '<div class="badge">NEW</div>'
+: ''}
 <div class="watched">✓ Watched</div>
 
 </div>
@@ -583,6 +585,10 @@ search.oninput=()=>{
 currentPage = 1;
 
 const q = search.value.toLowerCase();
+
+searchMode = q !== "";
+
+favoriteMode = false;
 
 render(
 items.filter(x=>
