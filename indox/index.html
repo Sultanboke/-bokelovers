@@ -507,9 +507,18 @@ loadFavorites();
 
 function renderCanvas(){
 
-document.querySelectorAll(".thumb").forEach(el=>{
+const observer = new IntersectionObserver((entries)=>{
 
-if(el.querySelector("canvas")) return;
+entries.forEach(entry=>{
+
+if(!entry.isIntersecting) return;
+
+const el = entry.target;
+
+if(el.querySelector("canvas")){
+observer.unobserve(el);
+return;
+}
 
 let img = new Image();
 img.src = el.dataset.img;
@@ -529,12 +538,23 @@ if(skeleton) skeleton.remove();
 
 el.appendChild(canvas);
 
+observer.unobserve(el);
+
 };
 
 });
 
-}
+},{
+rootMargin:"300px"
+});
 
+document.querySelectorAll(".thumb").forEach(el=>{
+
+observer.observe(el);
+
+});
+
+}
 function changePage(page){
 
 currentPage = page;
