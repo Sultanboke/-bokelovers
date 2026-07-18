@@ -273,6 +273,76 @@ font-weight:800;
 color:#e50914;
 text-decoration:none;
 }
+.access-card{
+margin:30px 18px;
+padding:22px;
+background:linear-gradient(180deg,#171717,#111);
+border:1px solid rgba(255,255,255,.08);
+border-radius:18px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+.access-title{
+font-size:20px;
+font-weight:800;
+margin-bottom:8px;
+}
+
+.access-desc{
+font-size:13px;
+color:#aaa;
+margin-bottom:18px;
+line-height:1.5;
+}
+
+.access-input{
+display:flex;
+align-items:center;
+background:#0d0d0d;
+border:1px solid #2b2b2b;
+border-radius:14px;
+overflow:hidden;
+height:50px;
+}
+
+.access-input input{
+flex:1;
+height:100%;
+background:transparent;
+border:none;
+outline:none;
+padding:0 16px;
+color:#fff;
+font-size:15px;
+}
+
+.access-input input::placeholder{
+color:#666;
+}
+
+.access-input button{
+height:38px;
+margin-right:6px;
+padding:0 18px;
+border:none;
+border-radius:10px;
+background:#e50914;
+color:#fff;
+font-weight:700;
+cursor:pointer;
+transition:.2s;
+}
+
+.access-input button:hover{
+background:#ff1f2d;
+}
+
+#accessMsg{
+margin-top:12px;
+font-size:13px;
+color:#bbb;
+}
   
   
 </style>
@@ -290,7 +360,7 @@ XFREEBOKEP
 </header>
 
 <section class="hero">
-<h1>Asupan Code</h1>
+<h1>ASUPAN 62+</h1>
 
 <div class="running-text">
 <marquee scrollamount="5">
@@ -300,6 +370,7 @@ XFREEBOKEP
 
 <p>Update setiap hari</p>
 </section>
+
   
 <div class="top-menu">
 
@@ -310,9 +381,8 @@ XFREEBOKEP
 <a href="https://xfreebokep.xyz/Disclaimer/" class="menu-btn">
 ⚠️ Disclaimer
 </a>
-
+  
 </div>
-
   
 <div class="announcement">
 📢 New Collection Added Today • Check The Latest Updates Below!
@@ -330,12 +400,35 @@ XFREEBOKEP
 ❤️ My Favorites
 </a>
 
-<a href="#" class="menu-btn" onclick="event.preventDefault(); favoriteMode=false; searchMode=false; search.value=''; render(items);">
-🏠 All Content
-</a>
+<a href="#" class="menu-btn" onclick="event.preventDefault(); favoriteMode=false; searchMode=false; search.value=''; currentList=items; currentPage=1; render(currentList);">🏠 All Content</a>
+<div class="access-card">
+
+<div class="access-title">
+🔒 ASUPAN INDO
+</div>
+
+<div class="access-desc">
+ISI KODE INI "ID2026" UNTUK AKSES.
+</div>
+
+<div class="access-input">
+
+<input
+type="text"
+id="accessCode"
+placeholder="Enter Access Code">
+
+<button id="unlockBtn">
+Unlock
+</button>
 
 </div>
 
+<div id="accessMsg"></div>
+
+</div>
+  
+  
 <div class="donation-box">
     <h3>❤️ Support This Website</h3>
     <p>Your donation helps us keep updating new content every day.</p>
@@ -354,41 +447,78 @@ const search = document.getElementById("search");
 const pagination = document.getElementById("pagination");
 
 let items = [];
+let currentList = [];
 
 const PER_PAGE = 30;
 let currentPage = 1;
 let favoriteMode = false;
 let searchMode = false;
 
+function loadJapan(){
+
 Promise.allSettled([
-    fetch("databkp/zoxo2.json").then(r => r.json()),
-    fetch("databkp/zoxo1.json").then(r => r.json()),
-    fetch("databkp/zoxo3.json").then(r => r.json()),
-    fetch("databkp/zoxo4.json").then(r => r.json()),
-    fetch("databkp/zoxo5.json").then(r => r.json())
-]).then(results => {
+    fetch("databkp/zoxo2.json").then(r=>r.json()),
+    fetch("databkp/zoxo1.json").then(r=>r.json()),
+    fetch("databkp/zoxo3.json").then(r=>r.json()),
+    fetch("databkp/zoxo4.json").then(r=>r.json()),
+    fetch("databkp/zoxo5.json").then(r=>r.json())
+]).then(results=>{
 
-    items = [];
+items=[];
 
-    results.forEach(result => {
+results.forEach(result=>{
 
-        if(result.status === "fulfilled"){
-
-            items.push(...result.value.reverse());
-
-        }
-
-    });
-
-    render(items);
-
-}).catch(()=>{
-
-    gallery.innerHTML =
-    "<p style='padding:20px;color:#999'>Data tidak ditemukan.</p>";
+    if(result.status==="fulfilled"){
+        items.push(...result.value.reverse());
+    }
 
 });
 
+currentList = items;
+currentPage = 1;
+render(currentList);
+
+}).catch(()=>{
+
+    gallery.innerHTML="<p style='padding:20px;color:#999'>Data tidak ditemukan.</p>";
+
+});
+
+}
+
+function loadIndo(){
+
+Promise.allSettled([
+    fetch("dataindo/soso2.json").then(r=>r.json()),
+    fetch("dataindo/soso1.json").then(r=>r.json()),
+    fetch("dataindo/soso3.json").then(r=>r.json()),
+    fetch("dataindo/soso4.json").then(r=>r.json()),
+    fetch("dataindo/soso5.json").then(r=>r.json())
+]).then(results=>{
+
+items=[];
+
+results.forEach(result=>{
+
+    if(result.status==="fulfilled"){
+        items.push(...result.value.reverse());
+    }
+
+});
+
+currentList = items;
+currentPage = 1;
+render(currentList);
+
+}).catch(()=>{
+
+    gallery.innerHTML="<p style='padding:20px;color:#999'>Data tidak ditemukan.</p>";
+
+});
+
+}  
+
+loadJapan();  
   
 function render(list){
 
@@ -555,18 +685,20 @@ observer.observe(el);
 });
 
 }
+  
 function changePage(page){
 
 currentPage = page;
 
-render(items);
+render(currentList);
 
 window.scrollTo({
 top:0,
 behavior:"smooth"
 });
 
-  }
+}
+  
 let watched = {};
 
 function markWatched(){
@@ -600,7 +732,7 @@ thumb.classList.add("viewed");
 
 }
     
-search.oninput=()=>{
+search.oninput = () => {
 
 currentPage = 1;
 
@@ -610,12 +742,11 @@ searchMode = q !== "";
 
 favoriteMode = false;
 
-render(
-items.filter(x=>
-(x.title||"").toLowerCase().includes(q)
-)
-
+currentList = items.filter(x =>
+    (x.title || "").toLowerCase().startsWith(q)
 );
+
+render(currentList);
 
 }
 
@@ -697,6 +828,37 @@ function loadHistats(){
 setTimeout(loadHistats, 1500);
 
 })();  
+
+document.getElementById("unlockBtn").onclick = unlockCollection;
+
+document.getElementById("accessCode").addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
+unlockCollection();
+}
+
+});
+
+function unlockCollection(){
+
+const code=document.getElementById("accessCode").value.trim().toUpperCase();
+
+if(code==="ID2026"){
+
+// Panggil data Indo di sini
+
+loadIndo();
+
+document.getElementById("accessMsg").textContent="✅ Access Granted";
+document.getElementById("accessCode").value="";
+
+}else{
+
+document.getElementById("accessMsg").textContent="❌ Invalid Access Code";
+
+}
+
+}
   
 </script>
 
