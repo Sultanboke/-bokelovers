@@ -1,334 +1,818 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-  <title>xfreebokep Gallery</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-  
-  
+<title>Premium Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#0d0d0d;color:white;padding-top:40px;overflow-x:hidden;}
-
-
-/* HEADER */
-.header{
-text-align:center;padding:20px;font-size:20px;font-weight:700;
-background:linear-gradient(90deg,#ff416c,#ff4b2b);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Inter,sans-serif;
+background:#0a0a0a;color:#fff;
+background-image:radial-gradient(circle at top,#1a1a1a,#0a0a0a 45%);
 }
-
-/* BUTTON */
-.topbar{display:flex;gap:10px;justify-content:center;padding:10px;}
-.tg-btn{padding:8px 12px;border-radius:8px;text-decoration:none;color:white;font-size:13px;}
-.jap{background:#229ED9;}
-.indo{background:#0088cc;}
-
-/* ONLINE */
-.online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
-
-/* GRID */
-.container{
+header{
+position:sticky;top:0;z-index:99;
+display:flex;justify-content:space-between;align-items:center;
+padding:16px 20px;
+background:rgba(10,10,10,.72);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+.logo{font-size:28px;font-weight:800;color:#e50914}
+.search{
+width:180px;padding:10px 14px;border:none;border-radius:999px;
+background:#181818;color:#fff;outline:none
+}
+.hero{
+margin:18px;
+border-radius:24px;
+padding:50px 24px;
+background:linear-gradient(135deg,#1b1b1b,#101010);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+.hero h1{font-size:34px}
+.hero p{color:#aaa;margin-top:8px}
+.grid{
 display:grid;
-gap:12px;
-padding:12px;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+gap:18px;
+padding:18px;
 }
-
-/* CARD */
 .card{
-background:#1a1a1a;
-border-radius:12px;
+display:block;
+text-decoration:none;
+color:#fff;
+border-radius:18px;
+overflow:hidden;
+background:#141414;
+transition:.35s;
+border:1px solid rgba(255,255,255,.06);
+opacity:0;
+transform:translateY(20px);
+animation:fade .5s forwards;
+}
+.thumb{
+position:relative;
+aspect-ratio:2/3;
+background:#222;
 overflow:hidden;
 }
 
-/* 🔥 FIX GAMBAR TIDAK LONJONG */
-.img-box{
-width:100%;
-aspect-ratio:1/1; /* kotak */
-overflow:hidden;
-}
-.img-box canvas{
+.thumb canvas{
 width:100%;
 height:100%;
+display:block;
 object-fit:cover;
+position:absolute;
+top:0;
+left:0;
+z-index:1;
+}
+.badge{
+position:absolute;
+top:10px;
+left:10px;
+background:#e50914;
+color:#fff;
+padding:5px 9px;
+border-radius:999px;
+font-size:11px;
+font-weight:700;
+z-index:999;
+pointer-events:none;
+}
+.watched{
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(34,197,94,.9);
+color:#fff;
+padding:5px 10px;
+border-radius:999px;
+font-size:11px;
+font-weight:700;
+z-index:999;
+display:none;
 }
 
-/* ACTION */
-.actions{
-display:flex;
-gap:8px;
-padding:8px;
+.thumb.viewed .watched{
+display:block;
 }
-.btn{
-flex:1;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:10px;
-border-radius:10px;
-background:#2a2a2a;
-font-size:18px;
+  
+.info{padding:12px}
+.title{
+font-size:15px;font-weight:700;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis
 }
-.play{color:#22c55e;}
-.download{color:#3b82f6;}
-
-/* PAGINATION */
+.sub{font-size:12px;color:#999;margin-top:4px}
+footer{
+text-align:center;padding:30px;color:#666
+}
+@keyframes fade{to{opacity:1;transform:none}}
+@media(max-width:600px){
+.grid{grid-template-columns:repeat(3,1fr);gap:10px;padding:10px}
+.hero{padding:30px 18px}
+.hero h1{font-size:26px}
+.search{width:120px}
+}
 .pagination{
 display:flex;
 justify-content:center;
+flex-wrap:wrap;
 gap:8px;
 padding:20px;
 }
-.page-btn{
-padding:8px 12px;
-background:#222;
-border-radius:6px;
+
+.pagination button{
+padding:10px 15px;
+border:none;
+border-radius:10px;
+background:#1c1c1c;
+color:#fff;
 cursor:pointer;
 }
-.page-btn.active{background:#ff416c;}
 
-/* FOOTER */
-.footer{
+.pagination button.active{
+background:#e50914;
+}
+.top-menu{
+display:flex;
+justify-content:center;
+gap:12px;
+padding:0 18px 18px;
+flex-wrap:wrap;
+}
+
+.menu-btn{
+padding:12px 22px;
+background:#181818;
+color:#fff;
+text-decoration:none;
+font-weight:700;
+border-radius:999px;
+border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+}
+
+.menu-btn:hover{
+background:#e50914;
+transform:translateY(-2px);
+}
+.running-text{
+margin:12px 0;
+padding:8px 12px;
+background:#181818;
+border:1px solid rgba(255,255,255,.08);
+border-radius:10px;
+color:#e50914;
+font-size:14px;
+font-weight:600;
+overflow:hidden;
+}
+
+.running-text marquee{
+width:100%;
+}
+.announcement{
+margin:0 18px 18px;
+padding:12px 16px;
+background:linear-gradient(90deg,#e50914,#ff3b3b);
+color:#fff;
+font-size:14px;
+font-weight:600;
 text-align:center;
+border-radius:12px;
+box-shadow:0 10px 20px rgba(229,9,20,.25);
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.02);}
+}  
+.skeleton{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(90deg,#1d1d1d 25%,#2b2b2b 50%,#1d1d1d 75%);
+background-size:200% 100%;
+animation:skeleton 1.2s infinite;
+z-index:0;
+}
+
+@keyframes skeleton{
+0%{background-position:200% 0;}
+100%{background-position:-200% 0;}
+}
+.donation-box{
+margin:20px 18px;
 padding:20px;
-font-size:12px;
-opacity:0.6;
-border-top:1px solid #222;
+background:#181818;
+border:1px solid rgba(255,255,255,.08);
+border-radius:16px;
+text-align:center;
 }
 
-/* BANNER ATAS */
-.top-banner{
-    max-width:728px;
-    margin:15px auto;
-    padding:0 10px;
+.donation-box h3{
+margin-bottom:8px;
+font-size:22px;
+color:#fff;
 }
 
-.top-banner img{
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:12px;
+.donation-box p{
+color:#bbb;
+font-size:14px;
+margin-bottom:16px;
 }
 
-/* BANNER BAWAH */
-.bottom-banner{
-    max-width:300px;
-    margin:25px auto;
+.donate-btn{
+display:inline-block;
+padding:12px 28px;
+background:#22c55e;
+color:#fff;
+text-decoration:none;
+font-weight:700;
+border-radius:999px;
+transition:.3s;
 }
 
-.bottom-banner img{
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:12px;
+.donate-btn:hover{
+transform:scale(1.05);
+}
+.favorite{
+position:absolute;
+top:10px;
+right:10px;
+width:30px;
+height:30px;
+border-radius:50%;
+background:rgba(0,0,0,.6);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+cursor:pointer;
+z-index:999;
+user-select:none;
+}
+.open-link{
+display:block;
+text-decoration:none;
+color:inherit;
+}
+.logo{
+font-size:28px;
+font-weight:800;
+color:#e50914;
+text-decoration:none;
+}
+.access-card{
+margin:30px 18px;
+padding:22px;
+background:linear-gradient(180deg,#171717,#111);
+border:1px solid rgba(255,255,255,.08);
+border-radius:18px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.35);
 }
 
-.middle-banner{
-    grid-column:1 / -1;
-    margin:15px 0;
-    text-align:center;
+.access-title{
+font-size:20px;
+font-weight:800;
+margin-bottom:8px;
 }
 
-.middle-banner img{
-    width:100%;
-    max-width:728px;
-    height:auto;
-    display:block;
-    margin:auto;
-    border-radius:12px;
+.access-desc{
+font-size:13px;
+color:#aaa;
+margin-bottom:18px;
+line-height:1.5;
 }
 
-/* BUTTON VIP */
-.extra-buttons{
-    text-align:center;
-    margin:0 0 20px;
+.access-input{
+display:flex;
+align-items:center;
+background:#0d0d0d;
+border:1px solid #2b2b2b;
+border-radius:14px;
+overflow:hidden;
+height:50px;
 }
 
-.extra-btn{
-    display:inline-block;
-    background:#229ED9;
-    color:#fff;
-    text-decoration:none;
-    padding:12px 20px;
-    border-radius:10px;
-    font-size:14px;
-    font-weight:600;
-  }
-
-.center-button{
-    display:flex;
-    justify-content:center;
-    margin:12px 0 8px;
+.access-input input{
+flex:1;
+height:100%;
+background:transparent;
+border:none;
+outline:none;
+padding:0 16px;
+color:#fff;
+font-size:15px;
 }
+
+.access-input input::placeholder{
+color:#666;
+}
+
+.access-input button{
+height:38px;
+margin-right:6px;
+padding:0 18px;
+border:none;
+border-radius:10px;
+background:#e50914;
+color:#fff;
+font-weight:700;
+cursor:pointer;
+transition:.2s;
+}
+
+.access-input button:hover{
+background:#ff1f2d;
+}
+
+#accessMsg{
+margin-top:12px;
+font-size:13px;
+color:#bbb;
+}
+  
   
 </style>
 </head>
-
 <body>
 
-<marquee scrollamount="8" style="background:#0088cc;color:#fff;padding:8px;font-size:13px;font-weight:600;">
-🔥 Updated Daily • Fresh Content Every Day • Enable Notifications To Never Miss New Updates •
+<header>
+
+<a href="https://xfreebokep.xyz/" class="logo">
+XFREEBOKEP
+</a>
+
+<input class="search" id="search" placeholder="Search">
+
+</header>
+
+<section class="hero">
+<h1>ASUPAN 62+</h1>
+
+<div class="running-text">
+<marquee scrollamount="5">
+🔥 Updated Every Day • Premium Links • Fast Access • No Fake Links • Enjoy!
 </marquee>
-
-<div class="top-banner">
-    <a href="https://xfreebokep.xyz/terabuy" target="_blank">
-        <img src="featured-top.png" alt="Featured">
-    </a>
 </div>
 
-<div class="center-button">
-    <a href="https://xfreebokep.xyz/caratonton/" target="_blank" class="tg-btn jap">
-        Tutorial Watch
-    </a>
-</div>
+<p>Update setiap hari</p>
+</section>
 
-<div class="header">
-    🔥 xfreebokep Gallery 🔥
-</div>
+  
+<div class="top-menu">
 
-<div class="topbar">
-<a href="https://xfreebokep.xyz/" class="tg-btn jap">Asupan Western</a>
-<a href="https://xfreebokep.xyz/" target="_blank" class="tg-btn indo">Asupan Indo</a>
-</div>
-
-<div class="online">🟢 <span id="onlineCount">0</span> online</div>
-
-<div id="list" class="container"></div>
-<div id="pagination" class="pagination"></div>
-
-<div class="extra-buttons">
-    <a href="https://xfreebokep.xyz/Disclaimer/" class="extra-btn"> 
-      Disclaimer
-    </a>
-</div>
-
-<div class="bottom-banner">
-    <a href="https://xfreebokep.xyz/terabuy" target="_blank">
-        <img src="premium-card.png" alt="Featured">
-    </a>
+<a href="https://xfreebokep.xyz/caratonton/" class="menu-btn">
+🎬 Tutorial Watch
+</a>
+  
+<a href="https://xfreebokep.xyz/Disclaimer/" class="menu-btn">
+⚠️ Disclaimer
+</a>
+  
 </div>
   
-<div class="footer">
-© 2026 by xfreebokep
+<div class="announcement">
+📢 New Collection Added Today • Check The Latest Updates Below!
+</div>  
+
+    
+<div class="grid" id="gallery"></div>
+
+<div id="pagination" class="pagination"></div>
+
+  
+<div class="top-menu">
+
+<a href="#" class="menu-btn" onclick="event.preventDefault(); showFavorites();">
+❤️ My Favorites
+</a>
+
+<a href="#" class="menu-btn" onclick="event.preventDefault(); favoriteMode=false; searchMode=false; search.value=''; currentList=items; currentPage=1; render(currentList);">🏠 All Content</a>
+<div class="access-card">
+
+<div class="access-title">
+🥵 ASUPAN RAREX 2026 💦
 </div>
+
+<div class="access-desc">
+ISI KODE INI 👉"RRX2026"👈 UNTUK AKSES.
+</div>
+
+<div class="access-input">
+
+<input
+type="text"
+id="accessCode"
+placeholder="Enter Access Code">
+
+<button id="unlockBtn">
+Unlock
+</button>
+
+</div>
+
+<div id="accessMsg"></div>
+
+</div>
+  
+  
+<div class="donation-box">
+    <h3>❤️ Support This Website</h3>
+    <p>Your donation helps us keep updating new content every day.</p>
+
+    <a href="https://xfreebokep.xyz/donate/" target="_blank" class="donate-btn">
+        ☕ Donate
+    </a>
+</div>
+
+  
+<footer>© 2026 xfreebokep</footer>
 
 <script>
+const gallery = document.getElementById("gallery");
+const search = document.getElementById("search");
+const pagination = document.getElementById("pagination");
 
-/* DATA */
-const perPage=36;
-let currentPage=1;
-let allData=[];
+let items = [];
+let currentList = [];
 
-fetch('databkp/zoxo1.json')
-.then(r=>r.json())
-.then(data=>{
+const PER_PAGE = 30;
+let currentPage = 1;
+let favoriteMode = false;
+let searchMode = false;
 
-  allData = data.reverse();
+function loadJapan(){
 
-  renderPage(1);
+Promise.allSettled([
+    fetch("databkp/zoxo2.json").then(r=>r.json()),
+    fetch("databkp/zoxo1.json").then(r=>r.json()),
+    fetch("databkp/zoxo3.json").then(r=>r.json()),
+    fetch("databkp/zoxo4.json").then(r=>r.json()),
+    fetch("databkp/zoxo5.json").then(r=>r.json())
+]).then(results=>{
+
+items=[];
+
+results.forEach(result=>{
+
+    if(result.status==="fulfilled"){
+        items.push(...result.value.reverse());
+    }
 
 });
 
-/* RENDER */
-function renderPage(page){
-currentPage=page;
-const list=document.getElementById("list");
-list.innerHTML="";
+currentList = items;
+currentPage = 1;
+render(currentList);
 
-let start=(page-1)*perPage;
-let items=allData.slice(start,start+perPage);
+}).catch(()=>{
 
-items.forEach((item,index)=>{
+    gallery.innerHTML="<p style='padding:20px;color:#999'>Data tidak ditemukan.</p>";
 
-list.innerHTML+=`
-<div class="card">
-<div class="img-box" data-img="${item.img}"></div>
-<div class="actions">
-<a href="${item.link}" target="_blank" class="btn play">▶</a>
-<a href="${item.link}" target="_blank" class="btn download">⬇</a>
-</div>
-</div>`;
+});
 
-if(index === 8 || index === 17 || index === 26){
-list.innerHTML+=`
-<div class="middle-banner">
-<a href="https://xfreebokep.xyz/terabuy" target="_blank">
-<img src="featured-top.png" alt="Featured">
-</a>
-</div>`;
 }
 
+function loadIndo(){
+
+Promise.allSettled([
+    fetch("dataindo/soso2.json").then(r=>r.json()),
+    fetch("dataindo/soso1.json").then(r=>r.json()),
+    fetch("dataindo/soso3.json").then(r=>r.json()),
+    fetch("dataindo/soso4.json").then(r=>r.json()),
+    fetch("dataindo/soso5.json").then(r=>r.json())
+]).then(results=>{
+
+items=[];
+
+results.forEach(result=>{
+
+    if(result.status==="fulfilled"){
+        items.push(...result.value.reverse());
+    }
+
 });
+
+currentList = items;
+currentPage = 1;
+render(currentList);
+
+}).catch(()=>{
+
+    gallery.innerHTML="<p style='padding:20px;color:#999'>Data tidak ditemukan.</p>";
+
+});
+
+}  
+
+loadJapan();  
+  
+function render(list){
+
+gallery.innerHTML="";
+
+const totalPages = Math.ceil(list.length / PER_PAGE);
+
+if(currentPage > totalPages) currentPage = 1;
+
+const start = (currentPage - 1) * PER_PAGE;
+const end = start + PER_PAGE;
+
+const pageItems = list.slice(start, end);
+
+if(pageItems.length===0){
+
+if(favoriteMode){
+
+gallery.innerHTML=`
+<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+<h2>❤️ Favorit Anda Masih Kosong</h2>
+<p style="margin-top:10px;color:#999;">
+Tambahkan asupan favorit Anda dengan menekan ikon ❤️ pada setiap konten.
+</p>
+</div>
+`;
+
+}else{
+
+gallery.innerHTML=`
+<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+<h2>🔍 Hasil pencarian tidak ditemukan</h2>
+<p style="margin-top:10px;color:#999;">
+Konten yang Anda cari belum tersedia.
+</p>
+</div>
+`;
+
+}
+
+pagination.innerHTML="";
+return;
+
+}
+  
+pageItems.forEach((item,i)=>{
+
+gallery.innerHTML += `
+<div class="card">
+
+<div class="thumb" data-id="${start+i}" data-img="${item.img}">
+<div class="skeleton"></div>
+
+<div class="favorite">🤍</div>
+
+${!favoriteMode && !searchMode && start+i < 6
+? '<div class="badge">NEW</div>'
+: ''}
+<div class="watched">✓ Watched</div>
+
+</div>
+
+<div class="info">
+
+<a href="${item.link}" target="_blank" class="open-link">
+
+<div class="title">${item.title||"xfreebkp"}</div>
+
+<div class="sub">Click to Open</div>
+
+</a>
+
+</div>
+
+</div>
+`;
+});  
+
+pagination.innerHTML="";
+
+if(currentPage>1){
+
+pagination.innerHTML+=`
+<button onclick="changePage(${currentPage-1})">◀ Prev</button>
+`;
+
+}
+
+const maxVisible = 3;
+
+let startPage = Math.max(1, currentPage - 1);
+let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+if(endPage - startPage < maxVisible - 1){
+    startPage = Math.max(1, endPage - maxVisible + 1);
+}
+
+for(let i = startPage; i <= endPage; i++){
+    pagination.innerHTML += `
+    <button class="${i===currentPage?'active':''}"
+    onclick="changePage(${i})">${i}</button>`;
+}
+
+if(currentPage<totalPages){
+
+pagination.innerHTML+=`
+<button onclick="changePage(${currentPage+1})">Next ▶</button>
+`;
+
+}
 
 renderCanvas();
-renderPagination();
+markWatched();
+loadFavorites();
 }
 
-/* CANVAS */
 function renderCanvas(){
-document.querySelectorAll('.img-box').forEach(el=>{
-let img=new Image();
-img.src=el.dataset.img;
 
-img.onload=()=>{
-let canvas=document.createElement("canvas");
-let ctx=canvas.getContext("2d");
+const observer = new IntersectionObserver((entries)=>{
 
-canvas.width=img.width;
-canvas.height=img.height;
+entries.forEach(entry=>{
+
+if(!entry.isIntersecting) return;
+
+const el = entry.target;
+
+if(el.querySelector("canvas")){
+observer.unobserve(el);
+return;
+}
+
+let img = new Image();
+img.src = el.dataset.img;
+
+img.onload = ()=>{
+
+let canvas = document.createElement("canvas");
+let ctx = canvas.getContext("2d");
+
+canvas.width = img.width;
+canvas.height = img.height;
 
 ctx.drawImage(img,0,0);
+
+const skeleton = el.querySelector(".skeleton");
+if(skeleton) skeleton.remove();
+
 el.appendChild(canvas);
+
+observer.unobserve(el);
+
 };
+
 });
+
+},{
+rootMargin:"300px"
+});
+
+document.querySelectorAll(".thumb").forEach(el=>{
+
+observer.observe(el);
+
+});
+
+}
+  
+function changePage(page){
+
+currentPage = page;
+
+render(currentList);
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+  
+let watched = {};
+
+function markWatched(){
+
+document.querySelectorAll(".card").forEach(card=>{
+
+const thumb = card.querySelector(".thumb");
+const id = thumb.dataset.id;
+const link = card.querySelector(".open-link");
+
+if(watched[id]){
+    thumb.classList.add("viewed");
 }
 
-/* PAGINATION SIMPLE */
-function renderPagination(){
-let total=Math.ceil(allData.length/perPage);
-let html="";
+if(link){
 
-/* BACK */
-if(currentPage>1){
-html+=`<div class="page-btn" onclick="renderPage(${currentPage-1})">⬅</div>`;
+link.addEventListener("click",()=>{
+
+setTimeout(()=>{
+
+watched[id] = true;
+thumb.classList.add("viewed");
+
+},500);
+
+});
+
 }
 
-/* PAGE 1-3 */
-for(let i=currentPage;i<currentPage+3 && i<=total;i++){
-html+=`<div class="page-btn ${i===currentPage?'active':''}" onclick="renderPage(${i})">${i}</div>`;
+});
+
+}
+    
+search.oninput = () => {
+
+currentPage = 1;
+
+const q = search.value.toLowerCase();
+
+searchMode = q !== "";
+
+favoriteMode = false;
+
+currentList = items.filter(x =>
+    (x.title || "").toLowerCase().startsWith(q)
+);
+
+render(currentList);
+
 }
 
-/* NEXT */
-if(currentPage<total){
-html+=`<div class="page-btn" onclick="renderPage(${currentPage+1})">➡</div>`;
+function loadFavorites(){
+
+let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+document.querySelectorAll(".favorite").forEach((btn,index)=>{
+
+const id = document.querySelectorAll(".open-link")[index].href;
+
+if(favorites.includes(id)){
+btn.textContent = "❤️";
 }
 
-pagination.innerHTML=html;
+btn.onclick = function(e){
+
+e.preventDefault();
+e.stopPropagation();
+
+if(favorites.includes(id)){
+
+favorites = favorites.filter(x=>x!==id);
+btn.textContent = "🤍";
+
+}else{
+
+favorites.push(id);
+btn.textContent = "❤️";
+
 }
 
-/* ONLINE */
-let online=100;
-setInterval(()=>{
-online+=Math.random()*6-3;
-document.getElementById("onlineCount").innerText=Math.floor(online);
-},2000);
+localStorage.setItem("favorites",JSON.stringify(favorites));
 
-</script>
-<script>
+};
+
+});
+
+}  
+function showFavorites(){
+
+favoriteMode = true;
+
+const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+const favItems = items.filter(item =>
+    favorites.includes(item.link)
+);
+
+currentPage = 1;
+
+render(favItems);
+
+}
+  
 (function(){
 
 function loadHistats(){
+
   try{
+
     var _Hasync = window._Hasync = window._Hasync || [];
 
     _Hasync.push(['Histats.start', '1,5035010,4,0,0,0,00000000']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
 
     var hs = document.createElement('script');
     hs.async = true;
@@ -337,12 +821,46 @@ _Hasync.push(['Histats.track_hits', '']);
     document.head.appendChild(hs);
 
   }catch(e){}
+
 }
 
 /* delay biar ringan */
 setTimeout(loadHistats, 1500);
 
-})();
-    </script>
+})();  
+
+document.getElementById("unlockBtn").onclick = unlockCollection;
+
+document.getElementById("accessCode").addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
+unlockCollection();
+}
+
+});
+
+function unlockCollection(){
+
+const code=document.getElementById("accessCode").value.trim().toUpperCase();
+
+if(code==="RRX2026"){
+
+// Panggil data Indo di sini
+
+loadIndo();
+
+document.getElementById("accessMsg").textContent="✅ Access Granted";
+document.getElementById("accessCode").value="";
+
+}else{
+
+document.getElementById("accessMsg").textContent="❌ Invalid Access Code";
+
+}
+
+}
+  
+</script>
+
 </body>
 </html>
